@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Dungeon | TONY'S STUDIO</title><meta name="author" content="Tony Skywalker"><meta name="copyright" content="Tony Skywalker"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#300303"><meta name="description" content="A rogue-like game developed with EasyX and FMOD in C++.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dungeon">
+<meta property="og:url" content="https://blog.tonys-studio.top/posts/Dungeon/">
+<meta property="og:site_name" content="TONY&#39;S STUDIO">
+<meta property="og:description" content="A rogue-like game developed with EasyX and FMOD in C++.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/dungeon.png">
+<meta property="article:published_time" content="2023-01-04T13:45:04.000Z">
+<meta property="article:modified_time" content="2025-02-02T13:30:06.818Z">
+<meta property="article:author" content="Tony Skywalker">
+<meta property="article:tag" content="Repo Available">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="Game">
+<meta property="article:tag" content="EasyX">
+<meta property="article:tag" content="FMOD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/dungeon.png"><link rel="shortcut icon" href="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/favicon.svg"><link rel="canonical" href="https://blog.tonys-studio.top/posts/Dungeon/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-R6O16YoeQt"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#300303')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?68629f5da0a0c3347b896920fbf164b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "h2swkizghx");</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":10,"unescape":false,"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":256,"languages":{"author":"Author: Tony Skywalker","link":"Link: ","source":"Source: TONY'S STUDIO","info":"Copyright belongs to the author. For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source."}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#871798","bgDark":"#C81025","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Dungeon',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  isShuoshuo: false
+}</script><link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/css/barber-shop.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg" style="background-image: url(https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/back_img.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/avatar/avatar.png" onerror="onerror=null;src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/missing.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">39</div></a></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-newspaper"></i><span> Posts</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/support/"><i class="fa-fw fas fa-hand-holding-heart"></i><span> Support</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-jedi fa-beat"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/dungeon.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/logo.svg" alt="Logo"><span class="site-name">TONY'S STUDIO</span></a><a class="nav-page-title" href="/"><span class="site-name">Dungeon</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-newspaper"></i><span> Posts</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> Gallery</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/support/"><i class="fa-fw fas fa-hand-holding-heart"></i><span> Support</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-jedi fa-beat"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Dungeon</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-01-04T13:45:04.000Z" title="Created Jan. 4th, 2023 - 21:45:04 21:45:04">Jan. 4th, 2023 - 21:45:04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-02-02T13:30:06.818Z" title="Updated Feb. 2nd, 2025 - 21:30:06 21:30:06">Feb. 2nd, 2025 - 21:30:06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Software-Engineering/">Software Engineering</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Software-Engineering/Game-Development/">Game Development</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Personal-Projects/">Personal Projects</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>6mins</span></span><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span class="waline-pageview-count" data-path="/posts/Dungeon/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/posts/Dungeon/#post-comment"><span class="waline-comment-count" data-path="/posts/Dungeon/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Dungeon"><a href="#Dungeon" class="headerlink" title="Dungeon"></a>Dungeon</h1><p>Copyright © New Desire Studios 2022 - 2023</p>
+<hr>
+<h2 id="1-Project-Introduction"><a href="#1-Project-Introduction" class="headerlink" title="1. Project Introduction"></a>1. Project Introduction</h2><p>Years ago, I quite like mobile game Soul Knight, and hoped to make a similar one. Recently, I happened to learn some basic design patterns, so I wish this could be my first practice. Before, I did make some games, but they were all small, and poor management can do the job. So this time, I’d also want to create a simple frame for game development, that is to say, a game engine, which could provide more flexibility and expansibility.</p>
+<p>Visit <a target="_blank" rel="noopener" href="https://old.tonys-studio.top/project/dungeon.html">Dungeon</a> for more information!</p>
+<h3 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h3><ul>
+<li><a href="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/file/dungeon/Dungeon-Setup.exe" target="_blank">Dungeon-Setup.exe</a></li>
+<li><a href="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/file/dungeon/Dungeon-Portable.zip" target="_blank">Dungeon-Portable.zip</a></li>
+</ul>
+<h3 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h3><ul>
+<li>Star Dungeon on <a target="_blank" rel="noopener" href="https://github.com/Lord-Turmoil/Dungeon">Github</a>!</li>
+<li>Star Dungeon on <a target="_blank" rel="noopener" href="https://gitee.com/tonys-studio/dungeon">Gitee</a>!</li>
+</ul>
+<h3 id="Screenshots"><a href="#Screenshots" class="headerlink" title="Screenshots"></a>Screenshots</h3><img src="/posts/Dungeon/capture-1.png" alt="capture-1" style="zoom: 33%;">
+
+<img src="/posts/Dungeon/capture-2.png" alt="capture-2" style="zoom: 33%;">
+
+<h2 id="2-Building-Dungeon"><a href="#2-Building-Dungeon" class="headerlink" title="2. Building Dungeon"></a>2. Building Dungeon</h2><p>There are three projects in this Visual Studio solution: Dungeon, Dungine and TinyXML2. <a target="_blank" rel="noopener" href="https://github.com/leethomason/tinyxml2">TinyXML2</a> is a great XML parser so I use this to pack it into a static library. And Dungine is the so callled game engine. Just simply build the solution is OK. Dungeon is the start up project, and Release configuration will output the executable to <code>Publish\</code> directory, while Debug configuration will output to <code>Build\dist\Debug\</code>. All macros for debug are disabled.</p>
+<blockquote>
+<p>Since the resource files is mutable, and is mainly used for debug purpose during coding, I removed them from the source file folder.</p>
+<p>If your want to compile and run it in IDE, please download the latest binary release file at either of these places.</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="http://tonys-studio.top:82/project/dungeon.html">Release Page</a></p>
+</li>
+<li><p><a href="/posts/Dungeon/">My Blog</a></p>
+</li>
+</ul>
+<p>Then, copy the <code>res</code> folder to the root directory of the game project <code>Dungeon</code>. (Which contains <code>Dungeon.vcxproj</code>.)</p>
+</blockquote>
+<h3 id="Build-Environment"><a href="#Build-Environment" class="headerlink" title="Build Environment"></a>Build Environment</h3><ul>
+<li>Windows 11 Pro</li>
+<li>Visual Studio 2022 Community</li>
+<li><a target="_blank" rel="noopener" href="https://easyx.cn/">EasyX 20220901</a></li>
+<li><a target="_blank" rel="noopener" href="https://fmod.com/">FMOD 0.2.2.7</a></li>
+</ul>
+<p>Notice that in EasyX 20220901, prefix for message changed from <code>EM</code> to <code>EX</code>. If you want to keep outdated features, please include <code>&lt;graphics.h&gt;</code> in your code.</p>
+<h2 id="3-How-Does-Dungeon-Work"><a href="#3-How-Does-Dungeon-Work" class="headerlink" title="3. How Does Dungeon Work"></a>3. How Does Dungeon Work</h2><p>The game contains the game engine Dungine (Dungeon Engine) and the game Dungeon itself. It is developed with <a target="_blank" rel="noopener" href="https://easyx.cn/">EasyX</a> for graphics and <a target="_blank" rel="noopener" href="https://fmod.com/">FMOD</a> for audio. Also, tinyxml2 as mentioned before.</p>
+<h3 id="3-1-Dungine"><a href="#3-1-Dungine" class="headerlink" title="3.1 Dungine"></a>3.1 Dungine</h3><p>This is the game engine, including basic classes, encapsulations and a simple UI library. It was build with ECS pattern. </p>
+<h4 id="3-1-1-Game-Object"><a href="#3-1-1-Game-Object" class="headerlink" title="3.1.1 Game Object"></a>3.1.1 Game Object</h4><p>The core of a game frame is to manage all objects. For common objects in game, including characters, weapons, bullets, etc., I used Factory Pattern and Prototype Pattern to create them, and Component Pattern to add properties and behaviors.</p>
+<h4 id="3-1-2-Scene"><a href="#3-1-2-Scene" class="headerlink" title="3.1.2 Scene"></a>3.1.2 Scene</h4><p>Scene manages all game objects. It maintains a object pool, just a pool, no reuse things. One important thing is that adding or removing objects during scene update should be postponed till update finishes.</p>
+<h4 id="3-1-3-Graphics-and-Audio"><a href="#3-1-3-Graphics-and-Audio" class="headerlink" title="3.1.3 Graphics and Audio"></a>3.1.3 Graphics and Audio</h4><p>For graphics, the one and only thing to render is a <code>Symbol</code>, it includes position, layer, rotation angle, scale and alpha info, and is rendered in order of layer and position.</p>
+<p>For audio, I used FMOD, and there are two types of sound. Effect, e.g. click and fire. The other is background music.</p>
+<h4 id="3-1-4-Resource-Management"><a href="#3-1-4-Resource-Management" class="headerlink" title="3.1.4 Resource Management"></a>3.1.4 Resource Management</h4><p>Well, the resource management is not advanced, I made it up without reference.</p>
+<p>When the program starts, it reads all reference of resource in a XML file, and only load it when required. Then, like smart pointer, it will release it if reference count is zero. There are image, audio, and motion resource. Motion resource is sprite sheet for animation.</p>
+<h4 id="3-1-5-UI"><a href="#3-1-5-UI" class="headerlink" title="3.1.5 UI"></a>3.1.5 UI</h4><p>In version 0.1.0, I was inspired by <a target="_blank" rel="noopener" href="https://codebus.cn/contributor/zhurong-easyui">EasyUI</a>. Now, with more consideration, I refactored that, and added more fancy features. However, the basic thing is still, a widget contains drawer and trigger.</p>
+<p>All UI widgets are preferred to be loaded from external XML file, including both absolute and relative positioning, and can also adapt to screen size automatically. Besides, there are some animation effects available, like translation, scaling and alpha change. In version 1.1.0, I introduced animation drawer to support animation widget.</p>
+<p>There is one problem that widgets with animation drawer could not be assigned scaling animation, since animation drawer scales itself to adapt to screen size.</p>
+<p>Interface is the carrier of all events, and is managed by Application, the largest class of all, and the entrance of the program.</p>
+<h4 id="3-1-6-Trivia"><a href="#3-1-6-Trivia" class="headerlink" title="3.1.6 Trivia"></a>3.1.6 Trivia</h4><p>Apart from primary objectives, it provides some other convenient tools, such as XML parse with TinyXML2, some vector calculations, <a target="_blank" rel="noopener" href="https://codebus.cn/sunxiaoyu/quadtree-collision">Quadruple Tree</a>, etc. And some base class for design pattern. Here, Factory Pattern is combined with Prototype to be a Library, so, just get what you want directly from a library.</p>
+<h3 id="3-2-Dungeon"><a href="#3-2-Dungeon" class="headerlink" title="3.2 Dungeon"></a>3.2 Dungeon</h3><p>Well, this part is the actual game logic based on Dungine. The main stuff it does is to concrete game procedure, terrain, objects, and interfaces.</p>
+<h4 id="3-2-1-Walkthrough"><a href="#3-2-1-Walkthrough" class="headerlink" title="3.2.1 Walkthrough"></a>3.2.1 Walkthrough</h4><p><code>Dungeon</code> is the core of the game, derived from <code>Scene</code>. It initialize resources, call terrain generation, and manage some special objects with special behaviors.</p>
+<h4 id="3-2-2-Terrain"><a href="#3-2-2-Terrain" class="headerlink" title="3.2.2 Terrain"></a>3.2.2 Terrain</h4><p>Terrain is one of the most complicated part of the game. It use random Prim algorithm to generate a maze in a 3 * 3 graph. Then it implements the real map based on this plain graph, turning nodes into Arenas, and edges into Bridges.</p>
+<p>Besides, it provides A* algorithm for path finding, and a blank area finding algorihtm.</p>
+<h4 id="3-2-3-Property-and-Behavior"><a href="#3-2-3-Property-and-Behavior" class="headerlink" title="3.2.3 Property and Behavior"></a>3.2.3 Property and Behavior</h4><p>All these are added by component. For example, there are <code>RigidBodyComponent</code>, <code>ColliderBoxComponent</code> for collision, <code>MoveComponent</code> for movement, and <code>AnimComponent</code> for rendering. For interaction and ‘AI’, there is <code>BehaviorComponent</code>, which really reduced dependency of objects.</p>
+<h4 id="3-2-4-Interface"><a href="#3-2-4-Interface" class="headerlink" title="3.2.4 Interface"></a>3.2.4 Interface</h4><p>Interface is where every event takes place, and each of them is an specific class. Interface layout is provided by XML file, but events has to be hooked by hard coding.</p>
+<h4 id="3-2-5-Flexibility"><a href="#3-2-5-Flexibility" class="headerlink" title="3.2.5 Flexibility"></a>3.2.5 Flexibility</h4><p>Most of the game data are loaded from external XML file, so you can easily modify the game without re-compile it. For example, change character properties, add new image or audio, even new character and weapon!</p>
+<h2 id="4-Epilogue"><a href="#4-Epilogue" class="headerlink" title="4. Epilogue"></a>4. Epilogue</h2><p>Almost all image were drawn by myself, some of them were collected from the internet, but made my own modification. In-game sound track comes from the game Undertale, the other were created by my mother.</p>
+<p>I created every character and weapon with personal attachments, so it was never balanced, some weapons are extremely powerful, while others may be a little… weak.</p>
+<p>Thanks for your playing!</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://tonys-studio.top">Tony Skywalker</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://blog.tonys-studio.top/posts/Dungeon/">https://blog.tonys-studio.top/posts/Dungeon/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Repo-Available/">Repo Available</a><a class="post-meta__tags" href="/tags/C-C/">C/C++</a><a class="post-meta__tags" href="/tags/Game/">Game</a><a class="post-meta__tags" href="/tags/EasyX/">EasyX</a><a class="post-meta__tags" href="/tags/FMOD/">FMOD</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/Inter-Thread-Communication/" title="Inter-Thread Communication"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/boba/05/04.jpeg" onerror="onerror=null;src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Inter-Thread Communication</div></div><div class="info-2"><div class="info-item-1">Chapter Eight - Inter Thread Communication</div></div></div></a><a class="pagination-related" href="/posts/Analyze-Java-with-SonarQube-and-SonarScanner/" title="Analyze Java With SonarQube and SonarScanner"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/23/06.jpeg" onerror="onerror=null;src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Analyze Java With SonarQube and SonarScanner</div></div><div class="info-2"><div class="info-item-1">Configure SonarQube step by step.</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/Introduction-to-C-Game-Development/" title="Introduction to C++ Game Development"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/boba/06/02.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Aug. 12th, 2023 - 11:53:56</div><div class="info-item-2">Introduction to C++ Game Development</div></div><div class="info-2"><div class="info-item-1">Get started with C++ game development using EasyX</div></div></div></a><a class="pagination-related" href="/posts/MinIoC-A-Miniature-IoC-Container-in-C/" title="MinIoC: A Miniature IoC Container in C++"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/01/09.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Oct. 6th, 2023 - 13:36:02</div><div class="info-item-2">MinIoC: A Miniature IoC Container in C++</div></div><div class="info-2"><div class="info-item-1">MinIoC is a lightweight IoC container for C++ 11 and later</div></div></div></a><a class="pagination-related" href="/posts/Modern-C-Project-with-CMake/" title="Modern C++ Project With CMake"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/23/04.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Dec. 24th, 2024 - 16:12:08</div><div class="info-item-2">Modern C++ Project With CMake</div></div><div class="info-2"><div class="info-item-1">Build modern C++ project with CMake</div></div></div></a><a class="pagination-related" href="/posts/PassBash/" title="PassBash"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/pash.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Jan. 18th, 2023 - 17:18:28</div><div class="info-item-2">PassBash</div></div><div class="info-2"><div class="info-item-1">A command line password manager with TEA.</div></div></div></a><a class="pagination-related" href="/posts/AOP-in-Spring-Boot/" title="AOP in Spring Boot"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/boba/07/01.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Jul. 12th, 2024 - 11:26:45</div><div class="info-item-2">AOP in Spring Boot</div></div><div class="info-2"><div class="info-item-1">Concept and application of Aspect-oriented programming in Spring Boot</div></div></div></a><a class="pagination-related" href="/posts/Bulk-Task-Optimization-in-C/" title="Bulk Task Optimization in C#"><img class="cover" src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/boba/04/00.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> Dec. 16th, 2023 - 13:45:51</div><div class="info-item-2">Bulk Task Optimization in C#</div></div><div class="info-2"><div class="info-item-1">Optimize bulk task in C# using async/wait.</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/avatar/avatar.png" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/missing.gif'" alt="avatar"/></div><div class="author-info-name">Tony Skywalker</div><div class="author-info-description">Do or do not. There is no try.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">39</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Lord-Turmoil"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Lord-Turmoil" target="_blank" title="Github"><i class="fa-brands fa-github"></i></a><a class="social-icon" href="mailto:swift-phantom@outlook.com" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a><a class="social-icon" href="https://youda.pro/578925" target="_blank" title="ChatBox"><i class="fa-solid fa-comments"></i></a><a class="social-icon" href="https://space.bilibili.com/2030942344" target="_blank" title="BiliBili"><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">It won't be long before the armies of the Republic track us here.<br>You can visit this site at both:<li><a href="http://blog.tonys-studio.top/" target="_blank">Main Site</a></li><li><a href="https://lord-turmoil.github.io/" target="_blank">Github Mirror Site</a></li></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Dungeon"><span class="toc-text">Dungeon</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Project-Introduction"><span class="toc-text">1. Project Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Download"><span class="toc-text">Download</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Screenshots"><span class="toc-text">Screenshots</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Building-Dungeon"><span class="toc-text">2. Building Dungeon</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Build-Environment"><span class="toc-text">Build Environment</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-How-Does-Dungeon-Work"><span class="toc-text">3. How Does Dungeon Work</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Dungine"><span class="toc-text">3.1 Dungine</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-Game-Object"><span class="toc-text">3.1.1 Game Object</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-Scene"><span class="toc-text">3.1.2 Scene</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-Graphics-and-Audio"><span class="toc-text">3.1.3 Graphics and Audio</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-4-Resource-Management"><span class="toc-text">3.1.4 Resource Management</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-5-UI"><span class="toc-text">3.1.5 UI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-6-Trivia"><span class="toc-text">3.1.6 Trivia</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Dungeon"><span class="toc-text">3.2 Dungeon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-Walkthrough"><span class="toc-text">3.2.1 Walkthrough</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-Terrain"><span class="toc-text">3.2.2 Terrain</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-Property-and-Behavior"><span class="toc-text">3.2.3 Property and Behavior</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-Interface"><span class="toc-text">3.2.4 Interface</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-5-Flexibility"><span class="toc-text">3.2.5 Flexibility</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Epilogue"><span class="toc-text">4. Epilogue</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/Setup-Modern-TypeScript-Project/" title="Setup Modern TypeScript Project"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/22/12.jpeg" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="Setup Modern TypeScript Project"/></a><div class="content"><a class="title" href="/posts/Setup-Modern-TypeScript-Project/" title="Setup Modern TypeScript Project">Setup Modern TypeScript Project</a><time datetime="2025-01-10T07:18:43.000Z" title="Created Jan. 10th, 2025 - 15:18:43 15:18:43">Jan. 10th, 2025 - 15:18:43</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Scam-From-Your-Own-Email-Address/" title="Scam From Your Own Email Address"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/scam.png" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="Scam From Your Own Email Address"/></a><div class="content"><a class="title" href="/posts/Scam-From-Your-Own-Email-Address/" title="Scam From Your Own Email Address">Scam From Your Own Email Address</a><time datetime="2025-01-08T15:29:32.000Z" title="Created Jan. 8th, 2025 - 23:29:32 23:29:32">Jan. 8th, 2025 - 23:29:32</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Understanding-TypeScript-Philosophy/" title="Understanding TypeScript Philosophy"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/24/10.jpeg" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="Understanding TypeScript Philosophy"/></a><div class="content"><a class="title" href="/posts/Understanding-TypeScript-Philosophy/" title="Understanding TypeScript Philosophy">Understanding TypeScript Philosophy</a><time datetime="2025-01-04T05:58:47.000Z" title="Created Jan. 4th, 2025 - 13:58:47 13:58:47">Jan. 4th, 2025 - 13:58:47</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Modern-C-Project-with-CMake/" title="Modern C++ Project With CMake"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/mando/23/04.jpeg" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="Modern C++ Project With CMake"/></a><div class="content"><a class="title" href="/posts/Modern-C-Project-with-CMake/" title="Modern C++ Project With CMake">Modern C++ Project With CMake</a><time datetime="2024-12-24T08:12:08.000Z" title="Created Dec. 24th, 2024 - 16:12:08 16:12:08">Dec. 24th, 2024 - 16:12:08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/Into-the-Atomic-World-of-C/" title="Into the Atomic World of C++"><img src="https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/banner/ahsoka/06.jpeg" onerror="this.onerror=null;this.src='https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/404.png'" alt="Into the Atomic World of C++"/></a><div class="content"><a class="title" href="/posts/Into-the-Atomic-World-of-C/" title="Into the Atomic World of C++">Into the Atomic World of C++</a><time datetime="2024-11-27T16:17:55.000Z" title="Created Nov. 28th, 2024 - 00:17:55 00:17:55">Nov. 28th, 2024 - 00:17:55</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/img/top/special/dungeon.png);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By Tony Skywalker</div><div class="footer_custom_text">No bird soars too high if he soars on his own wings</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'forest'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.isShuoshuo
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://comment.tonys-studio.top',
+      pageview: true,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client@2/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client@2/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script src="/js/custom.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Anything you would like to search?🔍" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="Framework Hexo" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="Theme Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="All articles in this blog are licensed under CC BY-NC-SA 4.0 unless stating additionally." title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a><a class="github-badge" target="_blank" href="https://beian.miit.gov.cn/" style="margin-inline:5px" data-title="本站已在京进行备案" title=""><img src="https://img.shields.io/badge/京ICP备-2024050963号-green?style=flat" alt=""/></a><a class="github-badge" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=14080202000495" style="margin-inline:5px" data-title="本站已在晋公网安进行备案" title=""><img src="https://img.shields.io/badge/晋公网安备-14080202000495号-e1d492?style=flat&amp;logo=data:image/png;base64,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" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><!-- hexo injector body_end end --></body></html>
