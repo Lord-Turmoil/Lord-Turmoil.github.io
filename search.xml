@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Uninstall JetBrains Products</title>
+      <link href="/2023/03/18/Uninstall-JetBrains-Products/"/>
+      <url>/2023/03/18/Uninstall-JetBrains-Products/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Uninstall-JetBrains-Products"><a href="#Uninstall-JetBrains-Products" class="headerlink" title="Uninstall JetBrains Products"></a>Uninstall JetBrains Products</h1><hr><p>JetBrains makes good IDEs, but… sometimes they could be a problem.</p><p>You may encounter this error during uninstalling after some major updates.</p><p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173515490.png" alt="image-20230318173515490"></p><p>This is so annoying!!! And in this article, we are going to solve this problem. Unfortunately, the solution is not complex.</p><hr><p>The root of the problem is that the corresponding JetBrains product got major updates, which makes the uninstall program not compatible any more.</p><p>To update the uninstaller, go to JetBrains official site and download the latest version of your IDE, and of course, the local IDE should be the latest, too. Then, go to bin folder and find the latest uninstallation program, then copy it, and override the old one.</p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173643864.png" alt="image-20230318173643864" style="zoom:50%;"><p>After you replace the uninstaller, you can then uninstall it properly.</p><hr><p>This is it, so unfriendly, huh? That’s why I use Visual Studio, the ultimate IDE in the universe!</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Miscellany </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JetBrains </tag>
+            
+            <tag> Troubleshoot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Deploy and Connect MySQL Server</title>
       <link href="/2023/03/11/Deploy-And-Connect-MySQL-Server/"/>
       <url>/2023/03/11/Deploy-And-Connect-MySQL-Server/</url>
