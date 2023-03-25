@@ -4,11 +4,38 @@
   
     
     <entry>
+      <title>Page Directory Self Mapping</title>
+      <link href="/2023/03/25/Page-Directory-Self-Mapping/"/>
+      <url>/2023/03/25/Page-Directory-Self-Mapping/</url>
+      
+        <content type="html"><![CDATA[<h1 style="text-align: center; font-size: 4em"><b>Operating System</b></h1><p style="text-align: center; font-size: 2em"><i>" One vision, one purpose. "</i></p><p style="text-align: center">Copyright &copy; Tony's Studio 2020 - 2023</p><hr><h1 id="Page-Directory-Self-Mapping"><a href="#Page-Directory-Self-Mapping" class="headerlink" title="Page Directory Self Mapping"></a>Page Directory Self Mapping</h1><p>We use mutiple levels of pages to manage virtual memory, but how does it work?</p><h2 id="Basic-Concepts"><a href="#Basic-Concepts" class="headerlink" title="Basic Concepts"></a>Basic Concepts</h2><p>Before we start, there are some concepts that we should be aware of:</p><ul><li>In 32 bit operating system, virtual memory is $4GB$ ($2^{32}$B).</li><li>Usually, page size is 4KB, so it require $4G \div 4K &#x3D; 1M$ page table entry, one page table entry is $4B$, so one process need $4MB$ space to store page table. Therefore, the virtual memory is aligned in $4M$ to make mapping esier.</li><li>The space of page table is mapped to $4G$ virtual memory together with the program. Since $4M$ page table describes all $4GB$ virtual memory, there is one special page that will be mapped to the $4M$ virtual memory that stores page table, which is the so-called page directory.</li><li>For 2-level page table, the 1 level is called page directory. One page directory covers $1K$ page table, while $1K$ page table covers $1K \times 4KB &#x3D; 4MB$ virtual memory. So there are $1K$ page directory, which precisely occupy one page.</li></ul><h2 id="Page-Table-Mapping"><a href="#Page-Table-Mapping" class="headerlink" title="Page Table Mapping"></a>Page Table Mapping</h2><p>Here is a really good figure to show the mapping machanism.</p><img src="/2023/03/25/Page-Directory-Self-Mapping/Self Mapping.svg" alt="Self Mapping" style="zoom:80%;"><blockquote><p>Notice that, page directory and page table all comes from the red $4M$ space in virtual memory.</p><p>Becareful about the mapping relationship.</p></blockquote><h3 id="Page-Table-Base"><a href="#Page-Table-Base" class="headerlink" title="Page Table Base"></a>Page Table Base</h3><p>$PT_{base}$ is assigned by OS, and is fixed. The $4M$ space after it is the page table.</p><h3 id="Page-Directory-Base"><a href="#Page-Directory-Base" class="headerlink" title="Page Directory Base"></a>Page Directory Base</h3><p>$PD_{base}$ is mapped to $PT_{base}$, the $4K$ space after it is the page directory, which covers the $4M$ page table in virtual memory.</p><p>To calculate $PD_{base}$, we just need the offset of it from $PT_{base}$. There are two ways to understand this.</p><div class="tabs" id="pdbase"><ul class="nav-tabs"><li class="tab active"><button type="button" data-href="#pdbase-1">From Page Table</button></li><li class="tab"><button type="button" data-href="#pdbase-2">From Page Directory</button></li></ul><div class="tab-contents"><div class="tab-item-content active" id="pdbase-1"><p>One page table entry ($4B$) covers $4K$ virtual memory, so we just need to find how many $4K$ are there before $PT_{base}$.<br>$$<br>PD_{offset} &#x3D; (PT_{base} &gt;&gt; 12) &lt;&lt; 2<br>$$<br>$$<br>PD_{base} &#x3D; PT_{base} + PD_{offset} &#x3D; PT_{base} + (PT_{base} &gt;&gt; 10)<br>$$</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div><div class="tab-item-content" id="pdbase-2"><p>One page directory covers $4M$ virtual memory, and since virtual memory is aligned with $4M$, it is easy to get how many page directories are there before $PT_{base}$. The number of PD is just the number of $4K$ in $PD_{offset}$.<br>$$<br>PD_{count} &#x3D; PT_{base} &gt;&gt; 22<br>$$<br>$$<br>PD_{offset} &#x3D; PD_{count} &lt;&lt; 12<br>$$</p><p>$$<br>PD_{base} &#x3D; PT_{base} + PD_{offset} &#x3D; PT_{base} + (PT_{base} &gt;&gt; 10)<br>$$</p><button type="button" class="tab-to-top" aria-label="scroll to top"><i class="fas fa-arrow-up"></i></button></div></div></div><h3 id="Page-Directory-Self-Mapping-1"><a href="#Page-Directory-Self-Mapping-1" class="headerlink" title="Page Directory Self Mapping"></a>Page Directory Self Mapping</h3><p>Similar to $PD_{base}$ in page table, which is mapped to $PT_{base}$, there is an entry called $PDE_{self-mapping}$ in page directory which is mapped to $PD_{base}$.</p><p>So, with similar idea, we want to find the offset from $PD_{base}$ to $PDE_{self-mapping}$. Through carefully ovservation, we can find that the number of $PDE$ before $PDE_{self-mapping}$ is the number of $4K$ in page table before $PD_{base}$. Furthermore, the number of $4K$ in page table before $PD_{base}$ is exactly the number of $4M$ in virtual memory before $PT_{base}$! What an amazing coincidence! (I guess this is the benefit of $4MB$ alignment.)</p><p>So the solution is easy.<br>$$<br>PDE_{count} &#x3D; PT_{base} &gt;&gt; 22<br>$$</p><p>$$<br>PDE_{self-mapping} &#x3D; PD_{base} + (PDE_{count} &lt;&lt; 2) &#x3D; PD_{base} + (PT_{base} &gt;&gt; 20)<br>$$</p><p>We can substitude $PD_{base}$ here.<br>$$<br>PDE_{self-mapping} &#x3D; PT_{base} + (PT_{base} &gt;&gt; 10) + (PT_{base} &gt;&gt; 20)<br>$$</p><hr><p>So, this is it, not that difficult, huh?</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> OS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> BUAA </tag>
+            
+            <tag> OS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Uninstall JetBrains Products</title>
       <link href="/2023/03/18/Uninstall-JetBrains-Products/"/>
       <url>/2023/03/18/Uninstall-JetBrains-Products/</url>
       
-        <content type="html"><![CDATA[<h1 id="Uninstall-JetBrains-Products"><a href="#Uninstall-JetBrains-Products" class="headerlink" title="Uninstall JetBrains Products"></a>Uninstall JetBrains Products</h1><hr><p>JetBrains makes good IDEs, but… sometimes they could be a problem.</p><p>You may encounter this error during uninstalling after some major updates.</p><p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173515490.png" alt="image-20230318173515490"></p><p>This is so annoying!!! And in this article, we are going to solve this problem. Unfortunately, the solution is not complex.</p><hr><p>The root of the problem is that the corresponding JetBrains product got major updates, which makes the uninstall program not compatible any more.</p><p>To update the uninstaller, go to JetBrains official site and download the latest version of your IDE, and of course, the local IDE should be the latest, too. Then, go to bin folder and find the latest uninstallation program, then copy it, and override the old one.</p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173643864.png" alt="image-20230318173643864" style="zoom:50%;"><p>After you replace the uninstaller, you can then uninstall it properly.</p><hr><p>This is it, so unfriendly, huh? That’s why I use Visual Studio, the ultimate IDE in the universe!</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="Uninstall-JetBrains-Products"><a href="#Uninstall-JetBrains-Products" class="headerlink" title="Uninstall JetBrains Products"></a>Uninstall JetBrains Products</h1><hr><p>JetBrains makes good IDEs, but… sometimes they could be a problem.</p><p>You may encounter this error during uninstalling after some major updates.</p><p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173515490.png" alt="image-20230318173515490"></p><p>This is so annoying!!! And in this article, we are going to solve this problem. Fortunately, the solution is not complex.</p><hr><p>The root of the problem is that the corresponding JetBrains product got major updates, which makes the uninstall program not compatible any more.</p><p>To update the uninstaller, go to JetBrains official site, download and install the latest version of your IDE at somewhere else. Of course, the local IDE should be updated to the latest, too. Then, go to bin folder and find the latest uninstallation program, then copy it, and override the old one.</p><img src="/2023/03/18/Uninstall-JetBrains-Products/image-20230318173643864.png" alt="image-20230318173643864" style="zoom:50%;"><p>After you replace the uninstaller, you can then uninstall it properly.</p><hr><p>This is it, so unfriendly, huh? That’s why I use Visual Studio, the ultimate IDE in the universe!</p>]]></content>
       
       
       <categories>
@@ -47,9 +74,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Database </tag>
+            
+            <tag> Server </tag>
             
             <tag> MySQL </tag>
             
@@ -348,9 +375,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> BUAA </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
@@ -379,9 +406,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> BUAA </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
@@ -410,9 +437,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> BUAA </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
@@ -441,9 +468,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> BUAA </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
@@ -503,9 +530,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> BUAA </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
