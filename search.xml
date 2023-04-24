@@ -128,9 +128,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Database </tag>
+            
+            <tag> Server </tag>
             
             <tag> MySQL </tag>
             
@@ -317,11 +317,11 @@
       
         <tags>
             
+            <tag> Server </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Server </tag>
             
         </tags>
       
