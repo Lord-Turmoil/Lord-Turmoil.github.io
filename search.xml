@@ -128,9 +128,9 @@
       
         <tags>
             
-            <tag> Database </tag>
-            
             <tag> Server </tag>
+            
+            <tag> Database </tag>
             
             <tag> MySQL </tag>
             
@@ -290,9 +290,9 @@
       
         <tags>
             
-            <tag> SonarQube </tag>
-            
             <tag> Server </tag>
+            
+            <tag> SonarQube </tag>
             
         </tags>
       
@@ -317,11 +317,11 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Server </tag>
             
         </tags>
       
