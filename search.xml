@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Configure vs for Non-MSVC Projects</title>
+      <link href="/2023/04/27/Configure-VS-for-Non-MSVC-Projects/"/>
+      <url>/2023/04/27/Configure-VS-for-Non-MSVC-Projects/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h1><p>Well, there’s no doubt that <a href="https://visualstudio.microsoft.com/">Visual Studio</a> is the ultimate IDE in the universe. It is really awesome!</p><p><img src="/.top//04/27/Configure-VS-for-Non-MSVC-Projects/vs-icon.svg" alt="vs-icon"></p><h3 style="text-align:center;">Visual Studio 2022</h3><p>However, it mainly focus on MSVC solution, thus default configurations are all for these projects. Thus we may need some extra configuration if we want to do cross-platform development to tell him what flavor of compiler we want.</p><h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><p>For example, in OS labs, we need to write GNU-style C with MIPS on Linux! It’s literally impossible before, but now that we have <a href="https://learn.microsoft.com/en-us/windows/wsl/install">Windows Subsystem for Linux(WSL)</a>, everything becomes <strong>SO EASY</strong>! We can just use WSL as a terminal in Visual Studio and make the best of this incredible IDE.</p><p>Unfortunately, this project is a <a href="https://www.gnu.org/software/make/">GNU Make</a> project, which is not fully compatible with MSVC. As a result, the powerful IntelliSense may not function properly due to some syntax reasons like what is shown below.</p><img src="https://aka.ms/dc/image?name=B764f02c492c24950b000a40cc4ef7ed8638175869963872073_20230420-192940-image.png&tid=764f02c492c24950b000a40cc4ef7ed8638175869963872073" alt="image.png" style="zoom:80%;"><hr><h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p>Here, I’d like to show the complete procedure to configure BUAA OS Lab on Windows with Visual Studio and WSL.</p><p>Before you start, you have to, of course, download and install Visual Studio and WSL on your computer. For WSL, just refer to this article below, or browse the internet for more information.</p><blockquote><ul><li><a href="https://learn.microsoft.com/en-us/windows/wsl/install">Install Linux on Windows with WSL</a></li></ul></blockquote><p>And of course, you must have Git on your computer.</p><p>One more thing, you should have MinGW for GCC support. You can download it here.</p><blockquote><ul><li><a href="https://sourceforge.net/projects/mingw/">MinGW</a></li></ul></blockquote><h2 id="Create-Project"><a href="#Create-Project" class="headerlink" title="Create Project"></a>Create Project</h2><p>As stated before, OS Lab is a Make project, so we can not manage it with MSVC project. Which means, it is merely a folder, an ordinary folder.</p><p>I guess you must have some experience with Git, right? Since the source code is on GitLab, and to code on our local machine, we have to clone a repository locally, so that we can make push and pulls.</p><blockquote><p>To achieve this, you may need to generate a token in GitLab. This is not difficult. Just generate a token, and use <code>http</code> protocol. The only thing you need is to remember the token and use it as password.</p><p>Notice that, you have to use profile the same as GitLab. That is to say, the Username is your real name, and Email is your BUAA mail.</p></blockquote><p>After done with token, just clone it to your own computer. One important thing is that, make sure your directory structure is like this.</p><p><img src="/.top//04/27/Configure-VS-for-Non-MSVC-Projects/image-20230427101742810.png" alt="image-20230427101742810"></p><p><code>\OS</code> is your project root folder, and <code>$&#123;student_id&#125;</code> is the actual git folder (<code>.git\</code> is under <code>$&#123;student_id&#125;</code>). <strong>Seriously!</strong></p><p>When you open the project, you actually open project folder, instead of the git folder.</p><blockquote><p>Did you know? Visual Studio has integrated Git! It is extraordinarily convenient! VS can identify Git repository automatically, and graphical management is far easier than command line. Try it out!</p></blockquote><p>Now, you have created the project.</p><h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p>You might be able to start coding after you finished the last step. However, you may encounter the problem I mentioned at the beginning of this article.</p><blockquote><p> The reason behind this is that default IntelliSense is for MSVC project, while our project uses GNU-C, which has some extended syntax. Of course, MSVC IntelliSense will not be able to recognize these alien syntax, which cause it to behave improperly.</p></blockquote><p>You can find official documentation for this here.</p><blockquote><ul><li><a href="https://learn.microsoft.com/en-us/cpp/build/open-folder-projects-cpp?view=msvc-170">Open Folder support for C++ build systems in Visual Studio</a></li></ul></blockquote><p>You must have MinGW installed. Perhaps system environment configured if not.</p><h2 id="Add-Configuration"><a href="#Add-Configuration" class="headerlink" title="Add Configuration"></a>Add Configuration</h2><h3 id="Step-1-Add-Configuration-File"><a href="#Step-1-Add-Configuration-File" class="headerlink" title="Step 1. Add Configuration File"></a>Step 1. Add Configuration File</h3><p>You should see ‘No Configurations’ in your toolbar. Click it and select Manage Configurations.</p><img src="/.top//image-20230427104457354.png" alt="image-20230427104457354" style="zoom:80%;"><p>Then, in the pop-up window, choose ‘Mingw64’ and then click ‘Select’ to confirm.</p><img src="/.top//image-20230427104700813.png" alt="image-20230427104700813" style="zoom:80%;"><p>After this, Visual Studio will automatically generate a template configuration file - <code>CppProperties.json</code> - under the root folder. And you should see things like this.</p><p><img src="/.top//04/27/Configure-VS-for-Non-MSVC-Projects/image-20230427104930822.png" alt="image-20230427104930822"></p><blockquote><p>Now you should understand why we put our git folder under a root folder. Because we do not want this <code>CppProperties.json</code> to be included in our real project.</p></blockquote><p>You may see warnings in the Output window, but don’t worry, we’ll neglect it.</p><h3 id="Step-2-Customize-Configuration"><a href="#Step-2-Customize-Configuration" class="headerlink" title="Step 2. Customize Configuration"></a>Step 2. Customize Configuration</h3><p>If you open any source file now, you are sure to see lots of errors caused by undefined identifiers. That’s because we didn’t tell Visual Studio where to find header files.</p><p>I guess you must have noticed that, in this configuration file, we tell Visual Studio the <code>intelliSenseMode</code> we want is <code>linux-gcc-x64</code>. However, our project is a 32-bits kernel, so we should change it to <code>linux-gcc-x86</code>. </p><blockquote><p>Well, VS has completion for this file, so you can actually choose within a range of available choices.</p></blockquote><p>Here is a complete configuration file. Just replace <code>MINGW_HOME</code> with your own installation location. (No <code>\</code> needed at the end of the directory.)</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;environments&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;MINGW_HOME&quot;</span><span class="punctuation">:</span> <span class="string">&quot;E:\\IDE\\MinGW&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;inheritEnvironments&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;mingw_64&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Mingw64&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;includePath&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;$&#123;workspaceRoot&#125;\\**&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;$&#123;env.MINGW_HOME&#125;\\lib\\gcc\\mingw32\\9.2.0\\include&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;$&#123;env.MINGW_HOME&#125;\\include&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;intelliSenseMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;linux-gcc-x86&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><p>One more thing, the MinGW version may change. So you should better check out the installation folder of it, and see which version you’re using. Here, my version is <code>9.2.0</code>, as you can see in the file. Just replace it depending on your case.</p><p>Now, open your source files to see if they are correctly analyzed. 😉</p><hr><p>Well, some of my friends use Jump Server in <a href="https://code.visualstudio.com/">Visual Studio Code</a>. That’s convenient, too, I guess. After all, Visual Studio Code is more light-weight.</p><p>Any way, I think Visual Studio + WSL is a wonderful combination.</p><hr><p>I think, this is it. Have fun!</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Visual Studio </tag>
+            
+            <tag> C/C++ </tag>
+            
+            <tag> OS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Lab 4 Reflection</title>
       <link href="/2023/04/20/Lab-4-Reflection/"/>
       <url>/2023/04/20/Lab-4-Reflection/</url>
@@ -20,9 +49,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> OS </tag>
+            
+            <tag> BUAA </tag>
             
         </tags>
       
@@ -47,9 +76,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> OS </tag>
+            
+            <tag> BUAA </tag>
             
         </tags>
       
@@ -74,9 +103,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> OS </tag>
+            
+            <tag> BUAA </tag>
             
         </tags>
       
@@ -373,13 +402,13 @@
       
         <tags>
             
+            <tag> C/C++ </tag>
+            
             <tag> Game </tag>
             
             <tag> EasyX </tag>
             
             <tag> FMOD </tag>
-            
-            <tag> C/C++ </tag>
             
         </tags>
       
@@ -404,9 +433,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> Linux </tag>
             
@@ -435,9 +464,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> Linux </tag>
             
@@ -466,9 +495,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> Linux </tag>
             
@@ -497,9 +526,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> Linux </tag>
             
@@ -559,9 +588,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> Linux </tag>
             
