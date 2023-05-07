@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Extract CnC3 Unit Voices</title>
+      <link href="/2023/05/07/Extract-CnC3-Unit-Voices/"/>
+      <url>/2023/05/07/Extract-CnC3-Unit-Voices/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>Command &amp; Conquer!!! 🥰 Truly classic RTS game. All units have distinctive voice with them. <del>There voices are so charming 😍.</del> </p><p>In this article, I’ll show you how to extract these awesome voices from Command &amp; Conquer 3: Kane’s Wrath. This can also be applied to C&amp;C3, Read Alert 3.</p><p>Check out Command &amp; Conquer official site!</p><blockquote><ul><li><a href="https://www.ea.com/games/command-and-conquer">Command &amp; Conquer - Official EA Site</a></li></ul></blockquote><hr><h1 id="Procedures"><a href="#Procedures" class="headerlink" title="Procedures"></a>Procedures</h1><h2 id="Step-1-Prepare-Tools"><a href="#Step-1-Prepare-Tools" class="headerlink" title="Step 1. Prepare Tools"></a>Step 1. Prepare Tools</h2><p>We need specific tools to deal with the game data. For some reason, they may be blocked by anti-virus program. But actually they are fine.</p><blockquote><ul><li><a href="https://www.moddb.com/groups/tiberium-essence-fans/downloads/cc-big-extractor">C&amp;C Big Extractor</a></li><li><a href="https://www.moddb.com/groups/tiberium-essence-fans/downloads/command-conquer-3-asset-extractor">C&amp;C Asset Extractor</a></li></ul></blockquote><p>They are portable, so you don’t need to install them. Just place them in a suitable place. You should have these files.</p><img src="/2023/05/07/Extract-CnC3-Unit-Voices/image-20230507154629301.png" alt="image-20230507154650429" style="zoom: 67%;"><h2 id="Step-2-Extract-Big-File"><a href="#Step-2-Extract-Big-File" class="headerlink" title="Step 2. Extract Big File"></a>Step 2. Extract Big File</h2><p>For C&amp;C 3, the audio files are located here, both <code>Tiberium Wars</code> or <code>Kane&#39;s Wrath</code>.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;Installation Path&#x27;\Command and Conquer 3 TW and KW\Command Conquer 3 Kanes Wrath\EnglishAudio\1.0</span><br><span class="line">&#x27;Installation Path&#x27;\Command and Conquer 3 TW and KW\Command Conquer 3 Tiberium Wars\EnglishAudio\1.0</span><br></pre></td></tr></table></figure><img src="/2023/05/07/Extract-CnC3-Unit-Voices/image-20230507154848269.png" alt="image-20230507154848269" style="zoom: 67%;"><p>So, then, open <code>C&amp;C Big Extractor</code>, and open <code>EnglishAudio.big</code> file. Then you’ll see plenty of sub-files.</p><img src="/2023/05/07/Extract-CnC3-Unit-Voices/image-20230507155248627.png" alt="image-20230507155248627" style="zoom:50%;"><p>Select all of them, and click “Extract Files”, and select your favorite directory to place the extracted files. <strong>Don’t</strong> place them in the game directory to avoid unwanted messy.</p><blockquote><p>You can select the first file, then hold Shift key, then select the last file to select all files. 😉</p></blockquote><p>After extraction, you should see these files in your target directory. See this <code>.manifest</code> file? It works as a dictionary, and will use it later.</p><img src="/2023/05/07/Extract-CnC3-Unit-Voices/image-20230507155658409.png" alt="image-20230507155658409" style="zoom:67%;"><h2 id="Step-3-Extract-Asset-Files"><a href="#Step-3-Extract-Asset-Files" class="headerlink" title="Step 3. Extract Asset Files"></a>Step 3. Extract Asset Files</h2><p>All audio files are in <code>.big</code> file, and we have extracted it. And now, we are going to extract audio files from it.</p><p>Open <code>C&amp;C Asset Extractor</code>, click “Open stream” button on the bottom left, and select <code>global_english.manifest</code> you saw in the last step.</p><img src="/2023/05/07/Extract-CnC3-Unit-Voices/image-20230507160237439.png" alt="image-20230507160237439" style="zoom:50%;"><p>Ta-da! 🎉 You can see all audio files now, and even preview them in the right panel! So now, select all files, and click “Extract sources” button to extract them to any directory you like. 😁</p><blockquote><p>If you don’t want all of them, you can use the filter above to only extract audios that contains specific letters. Remember to click “Set” button after you change the filter condition.</p></blockquote><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>See, not that difficult, huh? 🥳</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Game </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Game </tag>
+            
+            <tag> C&amp;C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Deploy Hexo on Remote Server</title>
       <link href="/2023/05/06/Deploy-Hexo-on-Remote-Server/"/>
       <url>/2023/05/06/Deploy-Hexo-on-Remote-Server/</url>
