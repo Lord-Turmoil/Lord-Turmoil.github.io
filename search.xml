@@ -520,9 +520,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> SonarQube </tag>
+            
+            <tag> Server </tag>
             
         </tags>
       
