@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Moving WSL to Another Drive</title>
+      <link href="/2023/05/12/Moving-WSL-to-Another-Drive/"/>
+      <url>/2023/05/12/Moving-WSL-to-Another-Drive/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h1><p>WSL is a great stuff! 😍 But sometimes, it may take up too much space in C drive, especially its <code>ext4</code> file system. So in this article, I’d like to show how to move it to another drive so as to release drive storage pressure.</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512194401252.png" alt="image-20230512194401252" style="zoom: 67%;"><blockquote><p>Reference: <a href="https://woshub.com/move-wsl-another-drive-windows/">https://woshub.com/move-wsl-another-drive-windows/</a></p></blockquote><hr><h1 id="Procedures"><a href="#Procedures" class="headerlink" title="Procedures"></a>Procedures</h1><h2 id="Step-1-Preparation"><a href="#Step-1-Preparation" class="headerlink" title="Step 1. Preparation"></a>Step 1. Preparation</h2><p>First, you should make sure you know your username and password of WSL. If not, just open it, and use <code>whoami</code> command to find it out. Then, your WSL should be <strong>shutdown</strong>. In PowerShell, run the following command to make sure your WSL is down.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--list</span> <span class="literal">--verbose</span></span><br><span class="line">wsl <span class="literal">--shutdown</span></span><br></pre></td></tr></table></figure><p>If the output is like , it means your WSL is down. If not, run <code>wsl --shutdown</code> to … shut it down. 😌</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512194650823.png" alt="image-20230512194650823" style="zoom: 67%;"><blockquote><p><strong>Notice:</strong> Here, remember the name of your distribution. :)</p></blockquote><p>Then, create some directories. For example, here, I created <code>Backup\</code> for intermediate file backup, and <code>Storage\</code> for the final location.</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512200221001.png" alt="image-20230512200221001" style="zoom:67%;"><h2 id="Step-2-Export-WSL-File-System"><a href="#Step-2-Export-WSL-File-System" class="headerlink" title="Step 2. Export WSL File System"></a>Step 2. Export WSL File System</h2><p>Now, it’s time to export WSL to another place. So, open your PowerShell, and execute the following command. Remember to replace the directory with your own.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--export</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span> E:\IDE\WSL\Backup\ubuntu.tar</span><br></pre></td></tr></table></figure><p>If everything goes well, you will see this.</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512201119392.png" alt="image-20230512201119392" style="zoom: 67%;"><h2 id="Step-3-Import-WSL-File-System"><a href="#Step-3-Import-WSL-File-System" class="headerlink" title="Step 3. Import WSL File System"></a>Step 3. Import WSL File System</h2><p>Before your import stuffs, there are few steps to go. First, you got to unregister your WSL temporarily.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl <span class="literal">--unregister</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span></span><br></pre></td></tr></table></figure><p>And you will see the following output.</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512201229395.png" alt="image-20230512201229395" style="zoom:67%;"><p>Then, you can start import. Remember the directory we created before? Will place our file system there.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wsl --import distro destination source</span></span><br><span class="line">wsl <span class="literal">--import</span> Ubuntu<span class="literal">-20</span>.<span class="number">04</span> E:\IDE\WSL\Storage E:\IDE\WSL\Backup\ubuntu.tar</span><br></pre></td></tr></table></figure><p>And you will se this.</p><img src="/2023/05/12/Moving-WSL-to-Another-Drive/image-20230512201755671.png" alt="image-20230512201755671" style="zoom: 67%;"><h2 id="Step-4-Finishing-up"><a href="#Step-4-Finishing-up" class="headerlink" title="Step 4. Finishing up"></a>Step 4. Finishing up</h2><p>Now, finally, we got to set up our WSL again. There won’t be any output on success.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$env:USERPROFILE</span>\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">.\ubuntu2004.exe config <span class="literal">--default-user</span> your_username</span><br></pre></td></tr></table></figure><blockquote><p><strong>Notice:</strong> If you’re using Ubuntu 20.04, the executable file should be <code>ubuntu2004.exe</code>. Otherwise, please use <code>ls</code> command to check it by yourself.</p></blockquote><p>Ta-da!🎉 Now you can run WSL again!</p><hr><p>Easy, huh? :)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> WSL </tag>
+            
+            <tag> Windows </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Extract CnC3 Unit Voices</title>
       <link href="/2023/05/07/Extract-CnC3-Unit-Voices/"/>
       <url>/2023/05/07/Extract-CnC3-Unit-Voices/</url>
