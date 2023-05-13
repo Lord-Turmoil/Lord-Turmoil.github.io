@@ -1,0 +1,32 @@
+@font-face {
+    font-family: Selima;
+    src: url("https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/font/Selima.ttf");
+}
+
+#page-header #site-title {
+    font-family: Selima;
+    font-size: 3.85em;
+    letter-spacing: 0.1em;
+}
+
+.author-info__description {
+    font-family: Selima;
+    font-size: 1.3em;
+}
+
+.article-title {
+    font-family: Selima;
+    font-size: 1.8em;
+    letter-spacing: 0.1em;
+}
+
+.post-title {
+    font-family: Selima;
+    font-size: 3em;
+    letter-spacing: 0.1em;
+}
+
+.footer_custom_text {
+    font-family: Selima;
+    font-size: 1.5em;
+}
