@@ -1,32 +1,45 @@
 @font-face {
-    font-family: Selima;
-    src: url("https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/font/Selima.ttf");
+    font-family: 'Selima';
+    src: url('/fonts/Selima.eot');
+    src: url('/fonts/Selima.eot?#iefix') format('embedded-opentype'),
+        url('/fonts/Selima.woff2') format('woff2'),
+        url('/fonts/Selima.woff') format('woff'),
+        url('/fonts/Selima.svg#Selima') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 #page-header #site-title {
-    font-family: Selima;
-    font-size: 3.85em;
+    font-family: 'Selima';
+    font-size: 3.5em;
+    font-weight: lighter;
     letter-spacing: 0.1em;
 }
 
 .author-info__description {
-    font-family: Selima;
+    font-family: 'Selima';
     font-size: 1.3em;
 }
 
 .article-title {
-    font-family: Selima;
+    font-family: 'Selima';
     font-size: 1.8em;
     letter-spacing: 0.1em;
 }
 
 .post-title {
-    font-family: Selima;
+    font-family: 'Selima';
     font-size: 3em;
     letter-spacing: 0.1em;
 }
 
 .footer_custom_text {
-    font-family: Selima;
+    font-family: 'Selima';
+    font-size: 1.5em;
+}
+
+.copyright .author {
+    font-family: 'Selima';
     font-size: 1.5em;
 }
