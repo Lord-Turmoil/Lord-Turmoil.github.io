@@ -41,19 +41,23 @@
     letter-spacing: 0.1em;
 }
 
+.site-name {
+    font-family: 'Lucida Handwriting';
+}
+
 .author-info__description {
     font-family: 'Selima';
     font-size: 1.3em;
 }
 
 .article-title {
-    font-family: 'Selima';
+    font-family: 'Lucida Handwriting';
     font-size: 1.8em;
     letter-spacing: 0.1em;
 }
 
 .post-title {
-    font-family: 'Selima';
+    font-family: 'Lucida Handwriting';
     font-size: 3em;
     letter-spacing: 0.1em;
 }
