@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Troubleshoot High CPU Usage by the &quot;System&quot; Process</title>
+      <link href="/2023/07/06/Troubleshoot-High-CPU-Usage-by-the-System-Process/"/>
+      <url>/2023/07/06/Troubleshoot-High-CPU-Usage-by-the-System-Process/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>If you pay more attention when using your computer or laptop, you might notice that, the fan keeps working fast even though you open no application. If you have ever encountered this, then congratulations 🎊, and you can then skip this boring post. However, if you do notice such abnormal behavior of your lovely computer, then this article might be of help.</p><blockquote><p><strong>Notice:</strong> This problem may result from various possible reasons, and this post does not guarantee to solve all of them.</p></blockquote><p>Another abnormal behavior that comes with it is the green loading bar of File Explorer, which may take too long to complete. But I’m not sure is it really related to this.</p><hr><h1 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h1><p>First, the direct reason that the fan keeps working hard is the CPU or GPU temperature. And the direct cause of high temperature of them is heavy work. e.g. Playing 3A game. But in this case, we didn’t do anything! 😕 So, who is it?</p><p>Let’s open Task Manager, and have a look of all tasks. Locate these two and monitor them for a while, check if they take much CPU resources. For me, the regular occupation of CPU of these two is below 10%, or even 1%. If this value is too high, consider there’s some thing wrong. If not, then this article may not be useful to you.</p><p><img src="/2023/07/06/Troubleshoot-High-CPU-Usage-by-the-System-Process/image-20230706142603254.png" alt="image-20230706142603254"></p><blockquote><p>Here, I already solved the problem, so the value is normal in the screenshot.</p></blockquote><p>Then how? Why these two takes up so much CPU resources? If you are more careful to your computer, you may also notice the indicator light for disk access flashes frequently, meaning there is constant accessing for hard disk. Then, we can assume that something went wrong with file system, or related drivers.</p><blockquote><p>Well, since loading data from disk requires system call, which, involves both system interrupts and that, indicator light, it is the first we can come up with.</p></blockquote><hr><h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>Then how? You can use <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/chkdsk?tabs=event-viewer"><code>chkdsk</code></a> command to check your volumes, but in most cases, I think, the result will be OK.</p><p>Well, it reminds me of a configuration I’ve done before - folder optimization. And, at least for me, it is the root of the trouble. I guess, different option of subfolders will result in too much operations when loading the disk, especially in case that I install almost all applications and documents in this volume. So, you just select “General items”, and remember to apply this to all subfolders.</p><img src="/2023/07/06/Troubleshoot-High-CPU-Usage-by-the-System-Process/image-20230706144357295.png" alt="image-20230706144357295" style="zoom: 67%;"><p>After this, the CPU usage of “System interrupts” and “System” drops almost immediately. And the fan could finally have a break. 😀</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Miscellany </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> Troubleshoot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Lab 6 Challenge</title>
       <link href="/2023/06/18/Lab-6-Challenge/"/>
       <url>/2023/06/18/Lab-6-Challenge/</url>
@@ -470,9 +497,9 @@
       
         <tags>
             
-            <tag> JetBrains </tag>
-            
             <tag> Troubleshoot </tag>
+            
+            <tag> JetBrains </tag>
             
         </tags>
       
