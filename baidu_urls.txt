@@ -1,3 +1,6 @@
+http://www.tonys-studio.top/2023/07/07/Thoughts-on-Basic-Structure-of-ASP-NET/
+http://www.tonys-studio.top/2023/07/07/Dependency-Injection-in-ASP-NET/
+http://www.tonys-studio.top/2023/07/06/Data-Annotation-of-EF-Core/
 http://www.tonys-studio.top/2023/07/06/Troubleshoot-High-CPU-Usage-by-the-System-Process/
 http://www.tonys-studio.top/2023/06/18/Lab-6-Challenge/
 http://www.tonys-studio.top/2023/06/18/Lab-6-Reflection/
