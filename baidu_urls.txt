@@ -1,3 +1,5 @@
+http://www.tonys-studio.top/2023/07/18/ASP-NET-CORS-Walkthrough/
+http://www.tonys-studio.top/2023/07/18/Redirect-HTTP-to-HTTPS-via-IIS/
 http://www.tonys-studio.top/2023/07/16/Configure-Path-Aliases-in-React-Vue-with-Vite/
 http://www.tonys-studio.top/2023/07/07/Thoughts-on-Basic-Structure-of-ASP-NET/
 http://www.tonys-studio.top/2023/07/07/Dependency-Injection-in-ASP-NET/
