@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Configure Swap Space for Linux Server</title>
+      <link href="/2023/08/29/Configure-Swap-Space-for-Linux-Server/"/>
+      <url>/2023/08/29/Configure-Swap-Space-for-Linux-Server/</url>
+      
+        <content type="html"><![CDATA[<div class="note primary flat"><p>Most of the content comes from this article.</p><ul><li><a href="https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04">How To Add Swap Space on Ubuntu 20.04</a></li></ul></div><h1 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h1><p>Have you ever experienced out of memory error on a Linux server? Or, have you been bothered by the freeze that <code>conda install</code> caused? Well, the problem probably due to insufficient memory. But, how? Linux should have a good memory management. 😫 So, let’s have a look at our memory.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br><span class="line">           total   used    free    shared  buff/cache   available</span><br><span class="line">Mem:       3.3Gi   632Mi   2.1Gi   2.0Mi       665Mi       2.5Gi</span><br><span class="line">Swap:      0B      0B      0B</span><br></pre></td></tr></table></figure><p>Why there is no swap?😵‍💫 I don’t know the reason, but maybe it is not configured by default. So in this post, I’m going to introduce how to configure swap file for a Linux server.</p><hr><h1 id="1-Configure-Swap-Space"><a href="#1-Configure-Swap-Space" class="headerlink" title="1. Configure Swap Space"></a>1. Configure Swap Space</h1><h2 id="1-1-Checking-Configuration"><a href="#1-1-Checking-Configuration" class="headerlink" title="1.1 Checking Configuration"></a>1.1 Checking Configuration</h2><p>Before we start, we can have a brief look at our existing configurations. For example, we can see if the system has any configured swap by typing this.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo swapon --show</span><br></pre></td></tr></table></figure><p>No output means that you don’t yet have any swap space. And you can use <code>free</code> command to confirm that, like we used just now.</p><p>Then, to add a swap file, we may need to check our disk usage to make sure we have enough space.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">tmpfs           341M 1012K  340M   1% /run</span><br><span class="line">/dev/vda2        59G   36G   21G  64% /</span><br><span class="line">tmpfs           1.7G   24K  1.7G   1% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           340M     0  340M   0% /run/user/1000</span><br></pre></td></tr></table></figure><p>The device with <code>/</code> in the <code>Mounted on</code> column is our disk in this case, and we still have plenty of space (21G) available.</p><h2 id="1-2-Creating-a-Swap-File"><a href="#1-2-Creating-a-Swap-File" class="headerlink" title="1.2 Creating a Swap File"></a>1.2 Creating a Swap File</h2><p>Now that we know the absence of our swap file, and how much disk space we have, we can start to create one now.</p><p>The best way of creating a swap file is with the <code>fallocate</code> program. This command instantly creates a file of the specified size.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fallocate -l 6G /swapfile</span><br></pre></td></tr></table></figure><div class="note info flat"><p>How much should be the swap size? For more information, you can refer to this article.</p><ul><li><a href="https://itsfoss.com/swap-size/">How Much Swap Should You Use in Linux?</a></li></ul></div><p>To ensure that we have created the swap file, we can verify it simply by <code>ls</code> command.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lh /swapfile</span><br><span class="line">-rw-r--r-- 1 root root 6.0G Aug 29 09:36 /swapfile</span><br></pre></td></tr></table></figure><p>If you care about accessibility, you can make it only accessible by root.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> 600 /swapfile</span><br><span class="line"><span class="built_in">ls</span> -lh /swapfile</span><br><span class="line">-rw------- 1 root root 6.0G Aug 29 09:36 /swapfile</span><br></pre></td></tr></table></figure><div class="note info flat"><p>A little tip here, you can use <code>-h</code> parameter to show space size in automatic units rather than huge numbers in Byte.</p></div><p>After that, we have to mark it as swap by <code>mkswap</code> command.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkswap /swapfile</span><br><span class="line">Setting up swapspace version 1, size = 6 GiB (6442446848 bytes)</span><br><span class="line">no label, UUID=6175c84f-76b6-4252-a318-b50ae039e2a2</span><br></pre></td></tr></table></figure><p>Now, we can enable the swap file. And we can see the properties by <code>--show</code> parameter, instead of nothing at the very beginning.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo swapon /swapfile</span><br><span class="line">sudo swapon --show</span><br><span class="line">NAME      TYPE SIZE USED PRIO</span><br><span class="line">/swapfile file   6G   0B   -2</span><br></pre></td></tr></table></figure><h2 id="1-3-Marking-the-Swap-File-Permanent"><a href="#1-3-Marking-the-Swap-File-Permanent" class="headerlink" title="1.3 Marking the Swap File Permanent"></a>1.3 Marking the Swap File Permanent</h2><p>Although we enabled swap file, the changes are only for the current session, and will be lost if we reboot. So we can make it permanent by add it to <code>/etc/fstab</code> file.</p><p>It is recommended to back up <code>/etc/fstab</code> in case anything goes wrong.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> /etc/fstab /etc/fstab.bak</span><br></pre></td></tr></table></figure><p>We can add our new swap file information at the end of <code>/etc/fstab</code> file simply by this.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;/swapfile none swap sw 0 0&#x27;</span> | sudo <span class="built_in">tee</span> -a /etc/fstab</span><br></pre></td></tr></table></figure><h2 id="1-4-Tuning-Swap-Settings"><a href="#1-4-Tuning-Swap-Settings" class="headerlink" title="1.4 Tuning Swap Settings"></a>1.4 Tuning Swap Settings</h2><p>There are a few options that you can configure that will have an impact on your system’s performance when dealing with swap.</p><h3 id="1-4-1-Swappiness"><a href="#1-4-1-Swappiness" class="headerlink" title="1.4.1 Swappiness"></a>1.4.1 Swappiness</h3><p>The <code>swappiness</code> parameter configures how often your system swaps data out of RAM to the swap space. This is a value between 0 and 100 that represents a percentage. With values close to zero, the kernel will not swap data to the disk unless absolutely necessary. On the contrary, values that are closer to 100 will try to put more data into swap in an effort to keep more RAM space free.</p><p>We can see our current swappiness value by this command. You may see “60” as a default value.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/sys/vm/swappiness</span><br><span class="line">60</span><br></pre></td></tr></table></figure><p>For server, this value might better be close to zero. We can change this value by this command.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.swappiness=10</span><br><span class="line">vm.swappiness = 10</span><br></pre></td></tr></table></figure><p>Still, this will persist only during the current session. You can add it to <code>/etc/sysctl.conf</code> to make it persistent.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure><p>Then, add this line at the bottom, or change the value is entry already exists.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.swappiness=10</span><br></pre></td></tr></table></figure><h3 id="1-4-2-Cache-Pressure"><a href="#1-4-2-Cache-Pressure" class="headerlink" title="1.4.2 Cache Pressure"></a>1.4.2 Cache Pressure</h3><p>Another related value that you might want to modify is the <code>vfs_cache_pressure</code>. This setting configures how much the system will choose to cache <code>inode</code> and <code>dentry</code> information over other data. And by default it is 100, which removes cache too quickly.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/sys/vm/vfs_cache_pressure</span><br><span class="line">100</span><br></pre></td></tr></table></figure><p>We can set this to a more conservative setting like 50, and the method is similar to how we configure swapiness.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl vm.vfs_cache_pressure=50</span><br><span class="line">vm.vfs_cache_pressure=50</span><br></pre></td></tr></table></figure><p>Also, we can make it permanent by adding an extra entry in <code>/etc/sysctl.conf</code>.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.vfs_cache_pressure=50</span><br></pre></td></tr></table></figure><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Now that we have configured swap space for our Linux server, we won’t worry about memory problem any more. 😁</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web </category>
+          
+          <category> Server </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Server </tag>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Introduction to C++ Game Development</title>
       <link href="/2023/08/12/Introduction-to-C-Game-Development/"/>
       <url>/2023/08/12/Introduction-to-C-Game-Development/</url>
@@ -39,7 +68,7 @@
       <link href="/2023/08/02/Cookies-in-ASP-NET-Core/"/>
       <url>/2023/08/02/Cookies-in-ASP-NET-Core/</url>
       
-        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>In the previous post, we introduced a practical way to enable CORS in ASP.NET Cor, in which configuration for cookies is mentioned. If you haven’t see that one, I recommend you spend some time now.</p><ul><li><a href="https://www.tonys-studio.top/2023/07/18/ASP-NET-CORS-Walkthrough/">ASP.NET CORS Walkthrough</a></li></ul><p>Not only requests will be affected by CORS policy, Cookies will, too. Or, you can take that Cookies are part of the requests. So in this post, I will breakdown more detail on how to properly handle Cookies in ASP.NET Core Web API.</p><hr><h1 id="1-Configure-CORS"><a href="#1-Configure-CORS" class="headerlink" title="1. Configure CORS"></a>1. Configure CORS</h1><p>Before we use Cookies, we have to configure CORS policy for it, since it is different from regular requests. For details, please refer to the post I mentioned above.</p><ul><li><a href="https://www.tonys-studio.top/2023/07/18/ASP-NET-CORS-Walkthrough/">ASP.NET CORS Walkthrough</a></li></ul><p>The only additional configuration that Cookies require is <code>AllowCredentials()</code>.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        services.AddCors(options =&gt; &#123;</span><br><span class="line">            options.AddPolicy(</span><br><span class="line">                name: <span class="comment">/* policy name */</span>,</span><br><span class="line">                policy =&gt; &#123;</span><br><span class="line">                    policy.AllowCredentials(); <span class="comment">// for cookies</span></span><br><span class="line">                &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h1 id="2-“Make”-Cookies"><a href="#2-“Make”-Cookies" class="headerlink" title="2. “Make” Cookies"></a>2. “Make” Cookies</h1><div class="note info flat"><p>All Cookies operations should be done in Controllers, since it uses <code>Request</code> and <code>Response</code>, or you can pass it to somewhere else.</p></div><h2 id="2-1-Add-Cookies"><a href="#2-1-Add-Cookies" class="headerlink" title="2.1 Add Cookies"></a>2.1 Add Cookies</h2><p>You can declare a utility function to add Cookies into response. It will add a <code>Set-Cookie</code> header in response, resulting in a creation or update of the given Cookie on client side.</p><blockquote><p>Please ignore bad syntax highlight for <code>value</code>. 🥴</p></blockquote><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCookie</span>(<span class="params"><span class="built_in">string</span> key, <span class="built_in">string</span> <span class="keyword">value</span>, <span class="built_in">double</span> expires</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Append(key, <span class="keyword">value</span>, <span class="keyword">new</span> CookieOptions &#123;</span><br><span class="line">            HttpOnly = <span class="literal">true</span>,</span><br><span class="line">            Expires = DateTime.Now.AddDays(expires)</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>You may notice the <code>CookieOptions</code> parameter. Well, this is somehow necessary, and important. Usually, the expire time is assigned here.</p><p>For sensitive information, which we do not want to be easily modified by client side, we can set its <code>HttpOnly</code> to true, so that this Cookie entry can only be modified by the Server with response. In this way, client side could not modify (update, delete or else) it. Although the DevTools of the browser can still do anything it likes. 🤪</p><div class="note warning flat"><p>Once you set <code>HttpOnly</code> to true, you can not modify it on client side. Use it only when necessary.</p></div><h2 id="2-2-Delete-Cookies"><a href="#2-2-Delete-Cookies" class="headerlink" title="2.2 Delete Cookies"></a>2.2 Delete Cookies</h2><p>Similar to add Cookies, you can set the expire date to a previous time in the history to make it invalid. Set <code>HttpOnly</code> correspondingly.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DeleteCookie</span>(<span class="params"><span class="built_in">string</span> key</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Append(key, <span class="string">&quot;&quot;</span>, <span class="keyword">new</span> CookieOptions &#123;</span><br><span class="line">            HttpOnly = <span class="literal">true</span>,</span><br><span class="line">            Expires = DateTime.Now.AddDays(<span class="number">-1</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Or, you can simply call <code>Delete()</code> on <code>Cookies</code>. In this case, we don’t need <code>HttpOnly</code>, and it can apply to both types of Cookies.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DeleteCookie</span>(<span class="params"><span class="built_in">string</span> key</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Delete(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="2-3-Get-Cookies"><a href="#2-3-Get-Cookies" class="headerlink" title="2.3 Get Cookies"></a>2.3 Get Cookies</h2><p>Oh, wait a minute! We haven’t say how to get Cookies in requests! 😳 But quite simple, it is.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookie = Request.Cookies[key];</span><br></pre></td></tr></table></figure><p>If Cookie with <code>key</code> doesn’t exist, <code>null</code> is returned.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, this is it. Yummy Cookies ~ 😉</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>In the previous post, we introduced a practical way to enable CORS in ASP.NET Core, in which configuration for cookies is mentioned. If you haven’t see that one, I recommend you spend some time now.</p><ul><li><a href="https://www.tonys-studio.top/2023/07/18/ASP-NET-CORS-Walkthrough/">ASP.NET CORS Walkthrough</a></li></ul><p>Not only requests will be affected by CORS policy, Cookies will, too. Or, you can take that Cookies are part of the requests. So in this post, I will breakdown more detail on how to properly handle Cookies in ASP.NET Core Web API.</p><hr><h1 id="1-Configure-CORS"><a href="#1-Configure-CORS" class="headerlink" title="1. Configure CORS"></a>1. Configure CORS</h1><p>Before we use Cookies, we have to configure CORS policy for it, since it is different from regular requests. For details, please refer to the post I mentioned above.</p><ul><li><a href="https://www.tonys-studio.top/2023/07/18/ASP-NET-CORS-Walkthrough/">ASP.NET CORS Walkthrough</a></li></ul><p>The only additional configuration that Cookies require is <code>AllowCredentials()</code>.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Startup</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ConfigureServices</span>(<span class="params">IServiceCollection services</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        services.AddCors(options =&gt; &#123;</span><br><span class="line">            options.AddPolicy(</span><br><span class="line">                name: <span class="comment">/* policy name */</span>,</span><br><span class="line">                policy =&gt; &#123;</span><br><span class="line">                    policy.AllowCredentials(); <span class="comment">// for cookies</span></span><br><span class="line">                &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h1 id="2-“Make”-Cookies"><a href="#2-“Make”-Cookies" class="headerlink" title="2. “Make” Cookies"></a>2. “Make” Cookies</h1><div class="note info flat"><p>All Cookies operations should be done in Controllers, since it uses <code>Request</code> and <code>Response</code>, or you can pass it to somewhere else.</p></div><h2 id="2-1-Add-Cookies"><a href="#2-1-Add-Cookies" class="headerlink" title="2.1 Add Cookies"></a>2.1 Add Cookies</h2><p>You can declare a utility function to add Cookies into response. It will add a <code>Set-Cookie</code> header in response, resulting in a creation or update of the given Cookie on client side.</p><blockquote><p>Please ignore bad syntax highlight for <code>value</code>. 🥴</p></blockquote><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCookie</span>(<span class="params"><span class="built_in">string</span> key, <span class="built_in">string</span> <span class="keyword">value</span>, <span class="built_in">double</span> expires</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Append(key, <span class="keyword">value</span>, <span class="keyword">new</span> CookieOptions &#123;</span><br><span class="line">            HttpOnly = <span class="literal">true</span>,</span><br><span class="line">            Expires = DateTime.Now.AddDays(expires)</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>You may notice the <code>CookieOptions</code> parameter. Well, this is somehow necessary, and important. Usually, the expire time is assigned here.</p><p>For sensitive information, which we do not want to be easily modified by client side, we can set its <code>HttpOnly</code> to true, so that this Cookie entry can only be modified by the Server with response. In this way, client side could not modify (update, delete or else) it. Although the DevTools of the browser can still do anything it likes. 🤪</p><div class="note warning flat"><p>Once you set <code>HttpOnly</code> to true, you can not modify it on client side. Use it only when necessary.</p></div><h2 id="2-2-Delete-Cookies"><a href="#2-2-Delete-Cookies" class="headerlink" title="2.2 Delete Cookies"></a>2.2 Delete Cookies</h2><p>Similar to add Cookies, you can set the expire date to a previous time in the history to make it invalid. Set <code>HttpOnly</code> correspondingly.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DeleteCookie</span>(<span class="params"><span class="built_in">string</span> key</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Append(key, <span class="string">&quot;&quot;</span>, <span class="keyword">new</span> CookieOptions &#123;</span><br><span class="line">            HttpOnly = <span class="literal">true</span>,</span><br><span class="line">            Expires = DateTime.Now.AddDays(<span class="number">-1</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Or, you can simply call <code>Delete()</code> on <code>Cookies</code>. In this case, we don’t need <code>HttpOnly</code>, and it can apply to both types of Cookies.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DeleteCookie</span>(<span class="params"><span class="built_in">string</span> key</span>)</span></span><br><span class="line">&#123;   </span><br><span class="line">    Response.Cookies.Delete(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="2-3-Get-Cookies"><a href="#2-3-Get-Cookies" class="headerlink" title="2.3 Get Cookies"></a>2.3 Get Cookies</h2><p>Oh, wait a minute! We haven’t say how to get Cookies in requests! 😳 But quite simple, it is.</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cookie = Request.Cookies[key];</span><br></pre></td></tr></table></figure><p>If Cookie with <code>key</code> doesn’t exist, <code>null</code> is returned.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, this is it. Yummy Cookies ~ 😉</p>]]></content>
       
       
       <categories>
@@ -104,7 +133,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Web </category>
           
       </categories>
       
@@ -367,7 +396,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Miscellany </category>
           
       </categories>
       
@@ -396,7 +425,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Miscellany </category>
           
       </categories>
       
@@ -608,11 +637,11 @@
             
             <tag> Server </tag>
             
+            <tag> Linux </tag>
+            
             <tag> Database </tag>
             
             <tag> MySQL </tag>
-            
-            <tag> Linux </tag>
             
         </tags>
       
@@ -1062,11 +1091,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
-            
-            <tag> Linux </tag>
             
             <tag> System Programming </tag>
             
@@ -1095,11 +1124,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
-            
-            <tag> Linux </tag>
             
             <tag> System Programming </tag>
             
@@ -1128,11 +1157,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
-            
-            <tag> Linux </tag>
             
             <tag> System Programming </tag>
             
@@ -1161,11 +1190,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
-            
-            <tag> Linux </tag>
             
             <tag> System Programming </tag>
             
@@ -1194,9 +1223,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> System Programming </tag>
             
@@ -1227,11 +1256,11 @@
       
         <tags>
             
+            <tag> Linux </tag>
+            
             <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
-            
-            <tag> Linux </tag>
             
             <tag> System Programming </tag>
             
@@ -1260,9 +1289,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> System Programming </tag>
             
@@ -1293,9 +1322,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> System Programming </tag>
             
@@ -1324,9 +1353,9 @@
       
         <tags>
             
-            <tag> BUAA </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> BUAA </tag>
             
             <tag> System Programming </tag>
             
