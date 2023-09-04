@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Basic Serving and Proxying in Nginx</title>
+      <link href="/2023/09/04/Basic-Serving-and-Proxying-in-Nginx/"/>
+      <url>/2023/09/04/Basic-Serving-and-Proxying-in-Nginx/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>“nginx [engine x] is an HTTP and reverse proxy server, a mail proxy server, and a generic TCP&#x2F;UDP proxy server, originally written by <a href="http://sysoev.ru/en/">Igor Sysoev</a>.”</p><p style="text-align: right">- <a href="https://nginx.org/en/" target="_blank">Nginx</a></p><p>So in this article, I’m going to talk about the basic use of Nginx proxying, including:</p><ul><li><a href="#Setup-Nginx">Setup Nginx</a></li><li><a href="#Serving-Static-Files">Serving Static Files</a></li><li><a href="#Basic-Proxying">Basic Proxying</a></li></ul><div class="note info flat"><p>All these are done on a Ubuntu server. 😉</p></div><hr><h1 id="Setup-Nginx"><a href="#Setup-Nginx" class="headerlink" title="Setup Nginx"></a>Setup Nginx</h1><p>Before we actually use it, let’s have a brief look of Nginx.</p><p>First, we can get Nginx by a simple <code>apt</code> command.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure><p>Then, we’ll write some basic configurations in <code>/etc/nginx/conf.d/default.conf</code>. It tells Nginx to listen to requests on port 80, and the server name it works on.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> xx.xx.xx.xx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><div class="note info flat"><p>If you have multiple profiles, you can then write different <code>.conf</code> under <code>/etc/nginx/conf.d/</code>, and Nginx will load them all.</p></div><p>To launch Nginx, you simply need these two commands, once and for all, unless you stop it permenantly.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx</span><br><span class="line">systemctl start nginx.service</span><br></pre></td></tr></table></figure><p>Every time you make any change to <code>.conf</code> files, you may want to reload Nginx, here is how to to it.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure><p>And at last, if you want to stop Nginx, you can force terminate it immediately, or let it stop itself after all current works finished.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s quit <span class="comment"># stop after current process finishes its work</span></span><br><span class="line">sudo nginx -s stop <span class="comment"># stop immediately</span></span><br></pre></td></tr></table></figure><h1 id="Serving-Static-Files"><a href="#Serving-Static-Files" class="headerlink" title="Serving Static Files"></a>Serving Static Files</h1><div class="note info flat"><p>Reference: <a href="https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/">Serving Static Content</a></p></div><p>Now, let’s begin with the easiest part - serving static files.</p><p>In our Web service, we may want our resources accessible via URL. For example, in Django project, the <code>static/</code> and <code>media/</code> folder will be exposed directly to URL when <code>DEBUG</code> set to <code>True</code>. However, Django won’t serve static files in production, when Nginx is needed.</p><p>In order to map URL to server directory, we can add <code>location</code> sections in <code>server</code>. For example, if we want to map <code>/media</code> route, we can add a <code>location</code> section called <code>/media/</code>. This tells Nginx to handle all URL routes begin with <code>/media/</code> using schema defined in this section.</p><p> And in <code>location</code> section, we need to assign a root directory to tell Nginx to look for <code>/media/</code> folder under this root. This way, Nginx will look for local file <code>home/wwwroot/media/avatar/1.png</code> when receives URL <code>/media/avatar/1.png</code>.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> xx.xx.xx.xx;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /media/ &#123;</span><br><span class="line">        <span class="attribute">root</span> /home/wwwroot/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>If we have several static file routes, we can write <code>root</code> outside <code>location</code> to make it visible for all <code>location</code> sections, if it is not explicitly declared within.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> xx.xx.xx.xx;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">root</span> /home/wwwroot/;</span><br><span class="line"> </span><br><span class="line">    <span class="section">location</span> /media/ &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> /static/ &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>If you want to serve static html files, but don’t want to add <code>index.html</code> at the end of the route, you can use <code>autoindex</code> to have Nginx handle this for you.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    server_name: xx.xx.xx.xx;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">root</span> /home/wwwroot/;</span><br><span class="line">    </span><br><span class="line">    <span class="section">location</span> /pages/ &#123;</span><br><span class="line">        <span class="attribute">autoindex</span> <span class="literal">on</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Now, you will get <code>/pages/tags/index.html</code> with URL <code>/pages/tags/</code>.</p><div class="note warning flat"><p>Be warned, <code>autoindex</code> only works for URLs that ends with <code>/</code>.</p></div><hr><h1 id="Basic-Proxying"><a href="#Basic-Proxying" class="headerlink" title="Basic Proxying"></a>Basic Proxying</h1><p>It is really convenient to use Nginx for backend API proxying, as it could hide annoying port suffix.</p><h2 id="Proxying-HTTP-Requests"><a href="#Proxying-HTTP-Requests" class="headerlink" title="Proxying HTTP Requests"></a>Proxying HTTP Requests</h2><p>Basically, if we want to proxy our API for port 5000, we can simply write this. The only thing to notice is that, in order not to confuse API routes with others, such as static files, we can add a simple <code>/api/</code> prefix to all our APIs.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> xx.xx.xx.xx;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /api/ &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:5000/api/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>In this way, we can use <code>xx.xx.xx.xx/api/your_api_route</code> instead of <code>xx.xx.xx.xx:5000/api/your_api_route</code>.</p><h2 id="Proxying-WebSocket-Requests"><a href="#Proxying-WebSocket-Requests" class="headerlink" title="Proxying WebSocket Requests"></a>Proxying WebSocket Requests</h2><div class="note info flat"><p>Reference: <a href="https://nginx.org/en/docs/http/websocket.html">WebSocket Proxying</a></p></div><p>WebSocket is a way you can use to exchange data between client side and server side, regardless of whether there is a new request or not. In fact, it is a <code>GET</code> request, but then get a protocol upgrade when connection established. Then how to proxy for it? </p><p>Almost the same as HTTP requests, but with some more information. Also, you may add a <code>/ws/</code> prefix, or whatever you like to avoid confusion.</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> xx.xx.xx.xx;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> /ws/ &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://localhost:5000/ws/;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">360s</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Here, we set http version and headers to upgrade GET requests to WebSocket connection. According to Nginx official site, the default timeout for WebSocket connection is 60 seconds, which might be a little too short for your project. You can manually set it to any value you like. 😋</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, this is merely the basic use of Nginx proxying. Explore more on your own. 🙂</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Nginx </tag>
+            
+            <tag> Server </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Configure Swap Space for Linux Server</title>
       <link href="/2023/08/29/Configure-Swap-Space-for-Linux-Server/"/>
       <url>/2023/08/29/Configure-Swap-Space-for-Linux-Server/</url>
@@ -486,11 +513,11 @@
       
         <tags>
             
+            <tag> Server </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Server </tag>
             
         </tags>
       
@@ -602,13 +629,13 @@
       
         <tags>
             
+            <tag> Nginx </tag>
+            
             <tag> Server </tag>
             
             <tag> Linux </tag>
             
             <tag> Django </tag>
-            
-            <tag> Nginx </tag>
             
             <tag> uWSGI </tag>
             
@@ -1002,11 +1029,11 @@
       
         <tags>
             
+            <tag> Server </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Server </tag>
             
         </tags>
       
