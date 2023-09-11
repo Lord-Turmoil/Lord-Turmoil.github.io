@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Configure Clang in CLion</title>
+      <link href="/2023/09/11/Configure-Clang-in-CLion/"/>
+      <url>/2023/09/11/Configure-Clang-in-CLion/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>Alas, here it comes. CLion, enemy of Visual Studio… But, I had to admit, it is not that bad at all. ☹️</p><p>For some reason, I have to use Clang instead of commonly seen GCC. So, how to configure this in CLion. I used to believe that install Clang is as easy as install MinGW, but I was wrong. 😞 It takes some efforts. So… This is why you see this post.</p><hr><h1 id="1-Install-Clang"><a href="#1-Install-Clang" class="headerlink" title="1. Install Clang"></a>1. Install Clang</h1><blockquote><p>Though you can install Clang tool chain in Visual Studio, but it can only work in Visual Studio, not in CLion. (Perhaps there is a way that I failed to discover?)</p></blockquote><p>There is a relatively simpler way of downloading Clang without Visual Studio, that is via MSYS2.</p><h2 id="1-1-Install-MSYS2"><a href="#1-1-Install-MSYS2" class="headerlink" title="1.1 Install MSYS2"></a>1.1 Install MSYS2</h2><p>Just go to MSYS2 official site to download the installer. One-click install, really easy.</p><ul><li><a href="https://www.msys2.org/#installation">MSYS2</a></li></ul><div class="note info flat"><p>During the installation, you can change where MSYS2 will be installed.</p></div><p>After installation, you will get a bunch of stuffs in the directory. But notice that, directories like <code>mingw64\</code>, <code>clang64\</code> are still empty, because we haven’t install any tools yet.</p><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911224546702.png" alt="image-20230911224546702" style="zoom:50%;"><p>To make it clear, you’ve installed these 6 MSYS2s. 😧</p><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911225152197.png" alt="image-20230911225152197" style="zoom: 67%;"><h2 id="1-2-Install-Clang"><a href="#1-2-Install-Clang" class="headerlink" title="1.2 Install Clang"></a>1.2 Install Clang</h2><p>For Windows users, we need MinGW Clang, and you can find its information on MSYS2 official package site. You can find the install command in this page.</p><ul><li>Package: <a href="https://packages.msys2.org/package/mingw-w64-x86_64-clang?repo=mingw64">mingw-w64-x86_64-clang</a></li></ul><p>To save your time, the installation command is this. Paste it in any of the MSYS2 you’ve installed and execute.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S mingw-w64-x86_64-clang</span><br></pre></td></tr></table></figure><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911225124458.png" alt="image-20230911225124458" style="zoom:50%;"><p>You’ll then find the toolchain installed in <code>mingw64\</code> directory.</p><hr><h1 id="2-Configure-CLion"><a href="#2-Configure-CLion" class="headerlink" title="2. Configure CLion"></a>2. Configure CLion</h1><h2 id="2-1-Add-New-Toolchain"><a href="#2-1-Add-New-Toolchain" class="headerlink" title="2.1 Add New Toolchain"></a>2.1 Add New Toolchain</h2><p>Open CLion, go to Settings&#x2F;Preferences | Build, Execution, Deployment | Toolchains, click add and select MinGW.</p><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911225703354.png" alt="image-20230911225703354" style="zoom: 67%;"><p>Then, Set paths to your MSYS2 installation directory. You only need to set Toolset and Compilers.</p><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911230200949.png" alt="image-20230911230200949" style="zoom:67%;"><p>After all these, click Apply.</p><h2 id="2-2-Set-Toolchains-of-Project"><a href="#2-2-Set-Toolchains-of-Project" class="headerlink" title="2.2 Set Toolchains of Project"></a>2.2 Set Toolchains of Project</h2><p>One step away, you now can select the suitable toolchains for your project. Open Settings&#x2F;Preferences | Build, Execution, Deployment | CMake, select a profile, and change the Toolchain it uses. Here, is MinGW-Clang.</p><img src="/2023/09/11/Configure-Clang-in-CLion/image-20230911230547354.png" alt="image-20230911230547354" style="zoom:50%;"><p>Finally, click Apply and you are all set.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, I hate it to change my IDE to CLion, but… not bad, since I already use ReSharper in Visual Studio. Hmm… This is it, I guess. 😐</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Development </category>
+          
+          <category> Configuration </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CLion </tag>
+            
+            <tag> Clang </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Basic Serving and Proxying in Nginx</title>
       <link href="/2023/09/04/Basic-Serving-and-Proxying-in-Nginx/"/>
       <url>/2023/09/04/Basic-Serving-and-Proxying-in-Nginx/</url>
@@ -69,7 +98,7 @@
       
       <categories>
           
-          <category> Programming </category>
+          <category> Development </category>
           
           <category> Tutorial </category>
           
@@ -199,8 +228,6 @@
             <tag> React </tag>
             
             <tag> Vite </tag>
-            
-            <tag> Configuration </tag>
             
         </tags>
       
@@ -394,9 +421,9 @@
       
       <categories>
           
-          <category> Programming </category>
+          <category> Development </category>
           
-          <category> Python </category>
+          <category> Utility </category>
           
       </categories>
       
@@ -506,7 +533,9 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Misc </category>
+          
+          <category> Blog </category>
           
       </categories>
       
@@ -593,7 +622,9 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Development </category>
+          
+          <category> Tools </category>
           
       </categories>
       
@@ -686,7 +717,9 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Development </category>
+          
+          <category> Configuration </category>
           
       </categories>
       
@@ -943,7 +976,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Analysis </category>
           
       </categories>
       
@@ -968,7 +1001,9 @@
       
       <categories>
           
-          <category> Programming </category>
+          <category> Development </category>
+          
+          <category> Project </category>
           
       </categories>
       
@@ -995,7 +1030,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Analysis </category>
           
       </categories>
       
@@ -1022,7 +1057,9 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Misc </category>
+          
+          <category> Blog </category>
           
       </categories>
       
@@ -1051,7 +1088,7 @@
       
       <categories>
           
-          <category> Tech </category>
+          <category> Analysis </category>
           
       </categories>
       
@@ -1078,7 +1115,9 @@
       
       <categories>
           
-          <category> Programming </category>
+          <category> Development </category>
+          
+          <category> Project </category>
           
       </categories>
       
