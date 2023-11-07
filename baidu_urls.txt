@@ -1,3 +1,4 @@
+http://www.tonys-studio.top/2023/11/07/Django-Decorator-Best-Practice/
 http://www.tonys-studio.top/2023/10/29/Setup-QEMU-on-Linux/
 http://www.tonys-studio.top/2023/10/06/RAID-10-VS-RAID-01/
 http://www.tonys-studio.top/2023/10/06/MinIoC-A-Miniature-IoC-Container-in-C/

@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Django Decorator Best Practice</title>
+      <link href="/2023/11/07/Django-Decorator-Best-Practice/"/>
+      <url>/2023/11/07/Django-Decorator-Best-Practice/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>As a Web backend framework, Django is easy to use. However, simplicity is at the same time one of its drawbacks, which means it may not be that graceful for more complex requests. So in this post, I’m going to introduce a more elegant way to handle request parameters.</p><hr><h1 id="Write-Your-Own-Decorator"><a href="#Write-Your-Own-Decorator" class="headerlink" title="Write Your Own Decorator"></a>Write Your Own Decorator</h1><h2 id="1-Basic-Decorator"><a href="#1-Basic-Decorator" class="headerlink" title="1. Basic Decorator"></a>1. Basic Decorator</h2><p>Decorators in Django may seem to be mysterious when you first use it, just a simple <code>@decorator</code> and some magic happens. So how can we implement ours?</p><p>A basic decorator can be as simple as this.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_decorator</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">view_func</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request, *args, **kwargs</span>):</span><br><span class="line">            <span class="comment"># Some logics here...</span></span><br><span class="line">            <span class="keyword">return</span> view_func(request, *args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> wraps(view_func)(wrapper)</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure><p>A little wired? Well, you can just focus on the logic, and take others as a template. If you want IDE to recognize the type of <code>request</code>, you can add <code>WSGIRequest</code> type hint.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.core.handlers.wsgi <span class="keyword">import</span> WSGIRequest</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request: WSGIRequest, *args, **kwargs</span>):</span><br><span class="line">            <span class="comment"># ...</span></span><br></pre></td></tr></table></figure><p>For this decorator, you can use it like this.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@my_decorator()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_view_func</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="comment"># logics here...</span></span><br></pre></td></tr></table></figure><p>Not that bad, huh? 😃 It is essentially a function, that’s it.</p><h2 id="2-Response-Before-View"><a href="#2-Response-Before-View" class="headerlink" title="2. Response Before View"></a>2. Response Before View</h2><p>You may not want some illegal requests go into your view function, thus return Bad Request response in decorator can be a good choice. To achieve this, simply return such response instead of <code>view_func</code>.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> http <span class="keyword">import</span> HTTPStatus</span><br><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> HttpResponse</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">varification_decorator</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">view_func</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request: WSGIRequest, *args, **kwargs</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> verify(request):</span><br><span class="line">                <span class="keyword">return</span> HttpResponse(<span class="string">&quot;Bad Response&quot;</span>, status=HTTPStatus.BAD_REQUEST)</span><br><span class="line">            <span class="keyword">return</span> view_func(request, user=user, *args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> wraps(view_func)(wrapper)</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="3-Decorator-with-Parameters"><a href="#3-Decorator-with-Parameters" class="headerlink" title="3. Decorator with Parameters"></a>3. Decorator with Parameters</h2><p><del>To add parameters to our decorator, we simply add parameters to our decorator.</del> 😳</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">message_decorator</span>(<span class="params">message</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">view_func</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request, *args, **kwargs</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Message in decorator: &quot;</span> + message)</span><br><span class="line">            <span class="keyword">return</span> view_func(request, *args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> wraps(view_func)(wrapper)</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure><p>See, that’s it, no difference from other ordinary functions.</p><h2 id="4-Inject-Parameters-to-View-Function"><a href="#4-Inject-Parameters-to-View-Function" class="headerlink" title="4. Inject Parameters to View Function"></a>4. Inject Parameters to View Function</h2><p>You may want to get some data from the request in decorator, so that you won’t bother get it again and again in view function. To achieve this, you need <code>*args</code> and <code>*kwargs</code> in Python.</p><p>Previously, when we call <code>view_func</code>, we pass only <code>request</code>, <code>*args</code>, <code>**kwargs</code>. These are inherited from parent wrapper.</p><div class="note primary flat"><p>Notice that, decorators are like middlewares, they will process the request one by one. The parameters you set in one decorator will continue exists in the following decorators. Only make sure the first parameter is <code>request</code>, and remember to inherit <code>*args</code> and <code>**kwargs</code>.</p></div><p>So, to inject a parameter, you can simply write this.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">inject_msg</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">view_func</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request: WSGIRequest, *args, **kwargs</span>):</span><br><span class="line">            <span class="keyword">return</span> view_func(request, msg=<span class="string">&quot;hello&quot;</span>, *args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> wraps(view_func)(wrapper)</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure><p>Then, in the view function, you can get this <code>msg</code> by adding a parameter.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@inject_msg()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_view</span>(<span class="params">request, msg</span>):</span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line">    <span class="comment"># More logics...</span></span><br></pre></td></tr></table></figure><p>Or you can inject multiple parameters using a <code>dict</code> object.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">inject_multiple</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decorator</span>(<span class="params">view_func</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">request: WSGIRequest, *args, **kwargs</span>):</span><br><span class="line">            params = &#123;</span><br><span class="line">                <span class="string">&quot;a&quot;</span>: <span class="string">&quot;A&quot;</span>,</span><br><span class="line">                <span class="string">&quot;b&quot;</span>: <span class="string">&quot;B&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> view_func(request, **params, *args, **kwargs)</span><br><span class="line">        <span class="keyword">return</span> wraps(view_func)(wrapper)</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br></pre></td></tr></table></figure><p>Then, the same, you can get these parameters.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@inject_multiple()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_view</span>(<span class="params">request, a, b</span>):</span><br><span class="line">    <span class="built_in">print</span>(a, b)</span><br><span class="line">    <span class="comment"># More logics...</span></span><br></pre></td></tr></table></figure><p>That’s it. Now you can gracefully handle parameters in requests! 😁</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Although we use decorator to achieve a better request processing, Django itself is not that elegant. It’s time to use a more powerful and promising framework - ASP.NET Core! 💫</p><p>See: <a href="https://www.tonys-studio.top/2023/07/07/Thoughts-on-Basic-Structure-of-ASP-NET/">Thoughts on Basic Structure of ASP.NET Core</a> 😉</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Development </category>
+          
+          <category> Web </category>
+          
+          <category> Django </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Setup QEMU on Linux</title>
       <link href="/2023/10/29/Setup-QEMU-on-Linux/"/>
       <url>/2023/10/29/Setup-QEMU-on-Linux/</url>
@@ -133,6 +164,8 @@
       
       <categories>
           
+          <category> Development </category>
+          
           <category> Web </category>
           
       </categories>
@@ -159,6 +192,8 @@
       
       
       <categories>
+          
+          <category> Development </category>
           
           <category> Web </category>
           
@@ -220,6 +255,8 @@
       
       <categories>
           
+          <category> Development </category>
+          
           <category> Web </category>
           
           <category> ASP.NET </category>
@@ -248,6 +285,8 @@
       
       
       <categories>
+          
+          <category> Development </category>
           
           <category> Web </category>
           
@@ -280,6 +319,8 @@
       
       <categories>
           
+          <category> Development </category>
+          
           <category> Web </category>
           
       </categories>
@@ -306,6 +347,8 @@
       
       
       <categories>
+          
+          <category> Development </category>
           
           <category> Web </category>
           
@@ -336,6 +379,8 @@
       
       <categories>
           
+          <category> Development </category>
+          
           <category> Web </category>
           
           <category> ASP.NET </category>
@@ -365,6 +410,8 @@
       
       <categories>
           
+          <category> Development </category>
+          
           <category> Web </category>
           
           <category> ASP.NET </category>
@@ -393,6 +440,8 @@
       
       
       <categories>
+          
+          <category> Development </category>
           
           <category> Web </category>
           
@@ -741,6 +790,8 @@
       
       
       <categories>
+          
+          <category> Development </category>
           
           <category> Web </category>
           
