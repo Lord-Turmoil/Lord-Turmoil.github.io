@@ -53,13 +53,13 @@
 .article-title {
     font-family: 'Lucida Handwriting';
     font-size: 1.8em;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
 }
 
-.post header .post-info .post-title {
+.post header .post-title {
     font-family: 'Lucida Handwriting';
     font-size: 3em;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
 }
 
 #article-container p {
