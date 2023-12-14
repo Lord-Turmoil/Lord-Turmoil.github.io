@@ -1,3 +1,4 @@
+http://www.tonys-studio.top/2023/12/14/Cross-platform-Development-with-NET-Core/
 http://www.tonys-studio.top/2023/12/11/Ingest-Data-from-MySQL-to-Elasticsearch/
 http://www.tonys-studio.top/2023/12/10/Setup-Elasticsearch-with-Kibana/
 http://www.tonys-studio.top/2023/12/06/Setup-FTP-on-Ubuntu/
