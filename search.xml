@@ -82,13 +82,13 @@
       
         <tags>
             
+            <tag> Elasticsearch </tag>
+            
             <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
             <tag> MySQL </tag>
-            
-            <tag> Elasticsearch </tag>
             
             <tag> Logstash </tag>
             
@@ -117,13 +117,13 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
-            <tag> Linux </tag>
-            
             <tag> Elasticsearch </tag>
             
             <tag> Kibana </tag>
+            
+            <tag> Tutorial </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -150,9 +150,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -363,9 +363,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -835,13 +835,13 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Tutorial </tag>
             
         </tags>
       
@@ -955,11 +955,11 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Nginx </tag>
             
             <tag> Server </tag>
-            
-            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -992,9 +992,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -1178,9 +1178,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Database </tag>
             
@@ -1377,13 +1377,13 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Tutorial </tag>
             
         </tags>
       
