@@ -80,3 +80,7 @@
 .flink h2 {
     font-family: 'Lucida Handwriting';
 }
+
+.skill td {
+    vertical-align: top !important;
+}
