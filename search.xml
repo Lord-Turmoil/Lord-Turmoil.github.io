@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Windows File Explorer Performance Issue With PDF</title>
+      <link href="/posts/Windows-File-Explorer-Performance-Issue-with-PDF/"/>
+      <url>/posts/Windows-File-Explorer-Performance-Issue-with-PDF/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h1><p>Whether you are a Windows 10 or Windows 11 user, you will notice the loading bar of File Explorer. It should complete real soon when you open a folder. However, sometimes it may take really long to finish loading, which is quite annoying.</p><p>After some observation on the behavior of File Explorer, it seems that this issue is common for folders that contains PDF files. More precisely, it got huge performance latency when renaming or deleting a PDF file.</p><h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>At first I thought it was a bug of Windows File  Explorer, but it cannot explain why only PDF files are affected. So, the lemon goes directly to Adobe Acrobat, my PDF viewer and editor.</p><p>Adobe Acrobat is a good software, but… it always inject unnecessary functions into other programs, such as PDF utilities for Microsoft Word, and here, thumbnail preview in Windows File Explorer. Just uncheck it, and this problem will possibly be solved.</p><img src="/posts/Windows-File-Explorer-Performance-Issue-with-PDF/image-20240115213536703.png" alt="image-20240115213536703" style="zoom:50%;">]]></content>
+      
+      
+      <categories>
+          
+          <category> Troubleshoot </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> Troubleshoot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Empower ASP.NET Core With Elasticsearch</title>
       <link href="/posts/Empower-ASP-NET-Core-with-Elasticsearch/"/>
       <url>/posts/Empower-ASP-NET-Core-with-Elasticsearch/</url>
@@ -22,15 +49,15 @@
       
         <tags>
             
+            <tag> ASP.NET Core </tag>
+            
+            <tag> Tutorial </tag>
+            
             <tag> Elasticsearch </tag>
             
             <tag> Kibana </tag>
             
-            <tag> ASP.NET Core </tag>
-            
             <tag> NEST </tag>
-            
-            <tag> Tutorial </tag>
             
         </tags>
       
@@ -117,13 +144,13 @@
       
         <tags>
             
-            <tag> Elasticsearch </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
             <tag> MySQL </tag>
+            
+            <tag> Elasticsearch </tag>
             
             <tag> Logstash </tag>
             
@@ -152,13 +179,13 @@
       
         <tags>
             
-            <tag> Elasticsearch </tag>
-            
-            <tag> Kibana </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Elasticsearch </tag>
+            
+            <tag> Kibana </tag>
             
         </tags>
       
@@ -185,9 +212,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -398,9 +425,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -870,13 +897,13 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Tutorial </tag>
             
         </tags>
       
@@ -990,11 +1017,11 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Nginx </tag>
             
             <tag> Server </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -1027,9 +1054,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -1213,9 +1240,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Database </tag>
             
@@ -1412,13 +1439,13 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Tutorial </tag>
             
         </tags>
       
