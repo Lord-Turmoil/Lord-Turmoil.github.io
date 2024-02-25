@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Attach Visual Studio Code to a Running Container</title>
+      <link href="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/"/>
+      <url>/posts/Attach-Visual-Studio-Code-to-a-Running-Container/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Scenario"><a href="#Scenario" class="headerlink" title="Scenario"></a>Scenario</h1><p>Visual Studio Code provides developers with unprecedent ability of remote development. In this I’m going to talk about how to attach VSCode to remote server, and remote docker container. For the latter, there might be an extra problem that, by default, VSCode will connect to the container as root, while we may want another profile used. So I’ll cover this also.</p><hr><h1 id="Connecting-To-Remote-Server"><a href="#Connecting-To-Remote-Server" class="headerlink" title="Connecting To Remote Server"></a>Connecting To Remote Server</h1><p>It is most easy to connect to a remote server. Simply click the terminal icon on the bottom left cornet, and choose “Connect to Host”.</p><img src="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/image-20240225163215722.png" alt="image-20240225163215722" style="zoom:50%;"><p>Then, you can choose to add a new SSH host like <code>user@host</code>, or select “Configure SSH Hosts…”, and choose the config under the current user. (Here is the first one with highlight.)</p><p><img src="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/image-20240225163442686.png" alt="image-20240225163442686"></p><p>If you choose to modify the configuration, you should add a new section like this in the <code>config</code>.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host &#123;Display name&#125;</span><br><span class="line">  HostName &#123;Host IP&#125;</span><br><span class="line">  User &#123;Login user&#125;</span><br></pre></td></tr></table></figure><p>Of course, you can use password or SSH key as your favor.</p><hr><h1 id="Attaching-to-a-Running-Container"><a href="#Attaching-to-a-Running-Container" class="headerlink" title="Attaching to a Running Container"></a>Attaching to a Running Container</h1><h2 id="Attaching-by-default"><a href="#Attaching-by-default" class="headerlink" title="Attaching by default"></a>Attaching by default</h2><p>As container will be running on a host machine, we have to connect to the host first. If the container runs on remote machine, just connect to it first, and then do as what you do on local machine.</p><p>First, you need the Docker extension to help you manage all containers.</p><p><img src="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/image-20240225164055129.png" alt="image-20240225164055129"></p><p>After installation, you will see a Docker icon on the activity bar, and you can see all your docker containers and their status in this tab.</p><p><img src="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/image-20240225164357230.png" alt="image-20240225164357230"></p><p>Then, you can just right click on any running container, and select “Attach Visual Studio Code”, and there you go.</p><p><img src="/posts/Attach-Visual-Studio-Code-to-a-Running-Container/image-20240225164536500.png" alt="image-20240225164536500"></p><p>By this, you will log in to the docker with default root user.</p><h2 id="Customized-Attaching"><a href="#Customized-Attaching" class="headerlink" title="Customized Attaching"></a>Customized Attaching</h2><p>However, if you want to attach to a specific container with users other than root, you need one more step. After attaching to the container, press “F1”, then enter “Dev Containers: Open Named Container Configuration File”.</p><div class="note info flat"><p>This command can only be found in VSCode opened in a container.</p></div><div class="note success flat"><p>Don’t know how to create a new user? See <a href="/posts/Create-sudo-enabled-User-on-Linux/">Create Sudo-Enabled User on Linux</a>. 😉</p></div><p>In the opened configuration file, you can add these minimal options. You can choose where to start up by changing <code>workspaceFolder</code>, and login as <code>remoteUser</code>.</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// Default path to open when attaching to a new container.</span></span><br><span class="line">    <span class="attr">&quot;workspaceFolder&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/path/to/workspace&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="comment">// Set *default* container specific settings.json values on container create.</span></span><br><span class="line">    <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;terminal.integrated.defaultProfile.linux&quot;</span><span class="punctuation">:</span> <span class="string">&quot;bash&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> </span><br><span class="line">    <span class="comment">// Container user VS Code should use when connecting</span></span><br><span class="line">    <span class="attr">&quot;remoteUser&quot;</span><span class="punctuation">:</span> <span class="string">&quot;username&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><div class="note info flat"><p>For more information on this configuration file, see <a href="https://code.visualstudio.com/docs/devcontainers/attach-container#_attached-container-configuration-reference">Attach to a running container</a>.</p></div><div class="note warning flat"><p>For running container, you should add named configuration file for the container, not <code>devcontainer.json</code> in the host. And you should change <code>remoteUser</code> instead of <code>containerUser</code>.</p></div><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, I guess this is it. Good luck! 🫡</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Development </category>
+          
+          <category> Tool </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Tutorial </tag>
+            
+            <tag> VSCode </tag>
+            
+            <tag> Docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Create Sudo-Enabled User on Linux</title>
       <link href="/posts/Create-sudo-enabled-User-on-Linux/"/>
       <url>/posts/Create-sudo-enabled-User-on-Linux/</url>
@@ -241,9 +272,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -454,9 +485,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -926,13 +957,13 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Tutorial </tag>
             
         </tags>
       
@@ -1017,9 +1048,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -1046,11 +1077,11 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Nginx </tag>
             
             <tag> Server </tag>
-            
-            <tag> Tutorial </tag>
             
             <tag> Linux </tag>
             
@@ -1083,9 +1114,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Linux </tag>
             
@@ -1269,9 +1300,9 @@
       
         <tags>
             
-            <tag> Server </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Server </tag>
             
             <tag> Database </tag>
             
@@ -1468,13 +1499,13 @@
       
         <tags>
             
+            <tag> Tutorial </tag>
+            
             <tag> Server </tag>
             
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Tutorial </tag>
             
         </tags>
       
