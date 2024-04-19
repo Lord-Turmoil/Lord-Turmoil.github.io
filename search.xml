@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Linux Cheat Sheet</title>
+      <link href="/posts/Linux-Cheat-Sheet/"/>
+      <url>/posts/Linux-Cheat-Sheet/</url>
+      
+        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;I like to do all the talking myself. It saves time, and prevents arguments.&rdquo;</i></p><p style="text-align: right"><i>&mdash; Oscar Wilde</i></p># Prologue<p>This is a collection of useful Linux commands that, you don’t need them often, but will go search for every time. So, just as a memo to save the time. 😏</p><div class="note info flat"><p>This article will be updated from time to time as I use and explore Linux.</p></div><hr><h1 id="User-Related"><a href="#User-Related" class="headerlink" title="User Related"></a>User Related</h1><p><strong>Change password</strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure><p><strong>Create <code>sudo</code>-enabled user</strong></p><p>See <a href="/posts/Create-sudo-enabled-User-on-Linux/">Create sudo-Enabled User on Linux</a>.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>To be continued…</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Development </category>
+          
+          <category> Tool </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Network Settings for WSL</title>
       <link href="/posts/Network-Settings-for-WSL/"/>
       <url>/posts/Network-Settings-for-WSL/</url>
@@ -80,11 +107,11 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> VSCode </tag>
+            
+            <tag> Linux </tag>
             
             <tag> OS </tag>
             
@@ -144,9 +171,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -295,9 +322,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Linux </tag>
             
             <tag> MySQL </tag>
             
@@ -330,9 +357,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Linux </tag>
             
             <tag> Elasticsearch </tag>
             
@@ -363,11 +390,11 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Server </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -423,9 +450,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> Linux </tag>
             
             <tag> OS </tag>
             
@@ -576,11 +603,11 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Server </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -1139,9 +1166,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -1168,13 +1195,13 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Nginx </tag>
             
             <tag> Server </tag>
+            
+            <tag> Linux </tag>
             
             <tag> Django </tag>
             
@@ -1205,11 +1232,11 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Tutorial </tag>
             
             <tag> Server </tag>
+            
+            <tag> Linux </tag>
             
             <tag> Database </tag>
             
@@ -1685,9 +1712,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> C/C++ </tag>
             
@@ -1718,9 +1745,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> C/C++ </tag>
             
@@ -1751,9 +1778,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> C/C++ </tag>
             
@@ -1784,9 +1811,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> C/C++ </tag>
             
@@ -1817,9 +1844,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -1850,9 +1877,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> C/C++ </tag>
             
@@ -1883,9 +1910,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -1916,9 +1943,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -1947,9 +1974,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> System Programming </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
