@@ -84,3 +84,13 @@
 .skill td {
     vertical-align: top !important;
 }
+
+/* Site Icon */
+#blog-info img.site-icon {
+    transform: rotate(0deg);
+    transition: transform 20s;
+}
+
+#blog-info:hover img.site-icon {
+    transform: rotate(72000deg) scale(1.1);
+}
