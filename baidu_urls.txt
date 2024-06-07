@@ -1,4 +1,4 @@
-http://www.tonys-studio.top/posts/Getting-Started-with-CUDA-on-Windows/
+http://www.tonys-studio.top/posts/Getting-Started-with-CUDA/
 http://www.tonys-studio.top/posts/Using-WebSocket-in-Spring-Boot/
 http://www.tonys-studio.top/posts/Linux-Cheat-Sheet/
 http://www.tonys-studio.top/posts/Network-Settings-for-WSL/
