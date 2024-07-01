@@ -1,3 +1,4 @@
+http://www.tonys-studio.top/posts/Using-RabbitMQ-in-Spring-Boot-Application/
 http://www.tonys-studio.top/posts/Setting-up-RabbitMQ/
 http://www.tonys-studio.top/posts/Getting-Started-with-CUDA/
 http://www.tonys-studio.top/posts/Using-WebSocket-in-Spring-Boot/
