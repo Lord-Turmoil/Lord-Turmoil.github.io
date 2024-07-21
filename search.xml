@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Create Click-to-Run JAR Executable</title>
+      <link href="/posts/Create-Click-to-Run-JAR-Executable/"/>
+      <url>/posts/Create-Click-to-Run-JAR-Executable/</url>
+      
+        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;When your intuition is strong, follow it.&rdquo;</i></p><p style="text-align: right"><i>&mdash; Lolly Daskal</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>When you have a JAR file, you can run it with <code>java -jar JarFile.jar</code>. However, you may notice that some JAR files are able to run with double-click!😲How is this be done?</p><p>In this article, I’m going to talk about how to make your JAR archive that can run with double-click. And perhaps a solution to the most common problem.</p><hr><h1 id="Run-JAR-with-Double-click"><a href="#Run-JAR-with-Double-click" class="headerlink" title="Run JAR with Double-click"></a>Run JAR with Double-click</h1><h2 id="Creating-Executable-JAR"><a href="#Creating-Executable-JAR" class="headerlink" title="Creating Executable JAR"></a>Creating Executable JAR</h2><p>To run a JAR, we need to create a JAR first. <del>Duh.</del> Usually, only GUI application may have the need to run with double-click. So here, we write a simplest Swing frame.</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.swing.JFrame;</span><br><span class="line"><span class="keyword">import</span> javax.swing.JLabel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> <span class="keyword">extends</span> <span class="title class_">JFrame</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Main</span><span class="params">(String title)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(title);</span><br><span class="line">        <span class="type">JLabel</span> <span class="variable">label</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JLabel</span>(<span class="string">&quot;Greetings from inside JAR!&quot;</span>, JLabel.CENTER);</span><br><span class="line">        add(label);</span><br><span class="line">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Main</span> <span class="variable">frame</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>(<span class="string">&quot;Run JAR with Double-click&quot;</span>);</span><br><span class="line">        frame.setSize(<span class="number">300</span>, <span class="number">200</span>);</span><br><span class="line">        frame.setVisible(<span class="literal">true</span>);</span><br><span class="line">        frame.setLocationRelativeTo(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Now this is it. You can use <code>java Main.java</code> to test it. Then, let’s make a JAR from it.</p><p>First, let’s create a manifest file. Name it anything you like, but <code>manifest.txt</code> may be a practical choice. It is essential for click-to-run JAR because it tells JVM which class to run.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Main-Class: Main</span><br><span class="line">Class-Path: .</span><br></pre></td></tr></table></figure><p>Then, use <code>jar</code> command to create a JAR with manifest. You can add <code>--verbose</code> or <code>-v</code> to see the creation process.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar <span class="literal">--create</span> <span class="literal">--file</span>=Main.jar <span class="literal">--manifest</span>=manifest.txt Main.class</span><br></pre></td></tr></table></figure><p>To make it short, you can use the combo <code>cfm</code>. Notice that the precedence of <code>f</code> and <code>m</code> indicates the order of <code>.jar</code> target and manifest file. If you switch them by using <code>cmf</code>, you should also swap the following <code>.jar</code> and manifest file.</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar cfm Main.jar manifest.txt Main.class</span><br></pre></td></tr></table></figure><p>To add all classes in a folder, you can just use the folder name, or <code>*.class</code> for top level <code>.class</code> files.</p><p>Now, you’ve created a click-to-run JAR file!🍾</p><h2 id="Default-Open-Action"><a href="#Default-Open-Action" class="headerlink" title="Default Open Action"></a>Default Open Action</h2><p>If it runs as expected, then congratulations!🎊However, things may not go in the right direction.🥲</p><p>For the first time, Windows may prompt you to choose the default program to open it. Choose the <code>javaw.exe</code> of your current environment. Make sure it is of the same version as your <code>javac</code>. This should work just fine.</p><div class="note success flat"><p><code>javaw</code> is the same as <code>java</code>, but will run application without console. So it is usually used to run GUI programs. It is OK to have <code>javaw</code> from a higher version, but not vice versa.</p></div><p>If it is not the first time, and you’ve configured it some point in the past, things may get a little tricky. Perhaps because of outdated <code>javaw</code> version, nothing will happen when you double-click a JAR file. Actually, some thing did happen, which is an exception. In this case, you may need to reach out for the registry.</p><p>Use <code>Win + R</code> to open Run dialog, and type <code>regedit</code> to open Registry Editor. Then, find the following key.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Computer\HKEY_CLASSES_ROOT\jarfile\shell\open\command</span><br></pre></td></tr></table></figure><p>It should look like this. Ensure that the data points to the right <code>javaw</code>.</p><img src="/posts/Create-Click-to-Run-JAR-Executable/image-20240721215218708.png" alt="image-20240721215218708" style="zoom:50%;"><p>Tada!🎉Now double-click on your JAR file and enjoy!</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Well, I guess it is a little trick? It puzzles me for long, and now it’s clear. See you around. ᓚᘏᗢ</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Development </category>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AOP in Spring Boot</title>
       <link href="/posts/AOP-in-Spring-Boot/"/>
       <url>/posts/AOP-in-Spring-Boot/</url>
@@ -1318,12 +1345,12 @@
           
           <category> Tool </category>
           
-          <category> Tutorial </category>
-          
       </categories>
       
       
         <tags>
+            
+            <tag> Tutorial </tag>
             
             <tag> Docker </tag>
             
