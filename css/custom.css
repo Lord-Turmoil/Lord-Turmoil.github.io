@@ -36,7 +36,7 @@
 
 #page-header #site-title {
     font-family: 'Selima';
-    font-size: 3.5em;
+    font-size: 4em;
     font-weight: lighter;
     letter-spacing: 0.1em;
 }
@@ -93,4 +93,9 @@
 
 #blog-info:hover img.site-icon {
     transform: rotate(72000deg) scale(1.1);
+}
+
+/* Announcement card */
+.announcement_content {
+    text-align: justify;
 }

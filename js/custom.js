@@ -1,7 +1,25 @@
+
 // custom title name
+const TITLE_MAP = {
+    "/archives": "Archives",
+    "/categories": "Categories",
+    "/tags": "Tags",
+    "/link": "Links & Projects",
+    "/about": "About Me",
+    "/support": "Support Me",
+    "/404": "404 Not Found",
+    "/": "Tony's Studio"
+};
+
 var t = document.getElementById('site-title');
 if (t != null) {
-    t.innerHTML = "Tony's Studio";
+    var router = window.location.pathname;
+    for (var key in TITLE_MAP) {
+        if (router.startsWith(key)) {
+            t.innerHTML = TITLE_MAP[key];
+            break;
+        }
+    }
 }
 
 // custom style for author
