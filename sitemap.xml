@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Windows-File-Explorer-Performance-Issue-with-PDF/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/about/index.html</loc>
     
     <lastmod>2024-07-28</lastmod>
@@ -48,6 +39,15 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Vim/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Windows-File-Explorer-Performance-Issue-with-PDF/</loc>
     
     <lastmod>2024-07-28</lastmod>
     
@@ -272,6 +272,15 @@
   </url>
   
   <url>
+    <loc>http://www.tonys-studio.top/posts/Lab-5-Reflection/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.tonys-studio.top/posts/Lab-6-Challenge/</loc>
     
     <lastmod>2024-07-28</lastmod>
@@ -318,15 +327,6 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Lab-4-Reflection/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/posts/Lab-5-Reflection/</loc>
     
     <lastmod>2024-07-28</lastmod>
     
@@ -488,15 +488,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Deploy-Hexo-on-Remote-Server/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/Dependency-Injection-in-ASP-NET/</loc>
     
     <lastmod>2024-07-28</lastmod>
@@ -507,6 +498,33 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Deploy-And-Connect-MySQL-Server/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Deploy-Hexo-on-Remote-Server/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Cookies-in-ASP-NET-Core/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Create-Click-to-Run-JAR-Executable/</loc>
     
     <lastmod>2024-07-28</lastmod>
     
@@ -560,24 +578,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Cookies-in-ASP-NET-Core/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/posts/Create-Click-to-Run-JAR-Executable/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/Connecting-to-JumpServer-with-VSCode/</loc>
     
     <lastmod>2024-07-28</lastmod>
@@ -623,24 +623,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Basic-Serving-and-Proxying-in-Nginx/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/posts/Build-a-Blog-with-Hexo/</loc>
-    
-    <lastmod>2024-07-28</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/Bulk-Task-Optimization-in-C/</loc>
     
     <lastmod>2024-07-28</lastmod>
@@ -660,6 +642,24 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Attach-Visual-Studio-Code-to-a-Running-Container/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Basic-Serving-and-Proxying-in-Nginx/</loc>
+    
+    <lastmod>2024-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Build-a-Blog-with-Hexo/</loc>
     
     <lastmod>2024-07-28</lastmod>
     
