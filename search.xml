@@ -8,7 +8,7 @@
       <link href="/posts/Git-Cheat-Sheet/"/>
       <url>/posts/Git-Cheat-Sheet/</url>
       
-        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;It's what you do in the present that will redeem the past and thereby change the future.&rdquo;</i></p><p style="text-align: right"><i>&mdash; Paulo Coelho</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>This is a collection of useful Git commands that is helpful but in rare cases.</p><div class="note info flat"><p>This article will be updated from time to time.</p></div><blockquote><p>You may also like: <a href="/posts/Linux-Cheat-Sheet/">Linux Cheat Sheet</a><br>You may also like: <a href="/posts/Git-Cheat-Sheet/">Git Cheat Sheet</a></p></blockquote><hr><h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><p><strong>Remove committed files after updating <code>.gitignore</code></strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> -r --cached . <span class="comment"># Remove the files from the index</span></span><br><span class="line">git add .            <span class="comment"># Commit again</span></span><br><span class="line">git commit -m <span class="string">&quot;update: re-ignore files&quot;</span></span><br></pre></td></tr></table></figure><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>To be continued…</p>]]></content>
+        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;It's what you do in the present that will redeem the past and thereby change the future.&rdquo;</i></p><p style="text-align: right"><i>&mdash; Paulo Coelho</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>This is a collection of useful Git commands that is helpful but in rare cases.</p><div class="note info flat"><p>This article will be updated from time to time.</p></div><blockquote><p>You may also like: <a href="/posts/Linux-Cheat-Sheet/">Linux Cheat Sheet</a><br>You may also like: <a href="/posts/Docker-Cheat-Sheet/">Docker Cheat Sheet</a></p></blockquote><hr><h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><p><strong>Remove committed files after updating <code>.gitignore</code></strong></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">rm</span> -r --cached . <span class="comment"># Remove the files from the index</span></span><br><span class="line">git add .            <span class="comment"># Commit again</span></span><br><span class="line">git commit -m <span class="string">&quot;update: re-ignore files&quot;</span></span><br></pre></td></tr></table></figure><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>To be continued…</p>]]></content>
       
       
       <categories>
@@ -438,9 +438,9 @@
             
             <tag> VSCode </tag>
             
-            <tag> Linux </tag>
-            
             <tag> OS </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -779,9 +779,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Linux </tag>
-            
             <tag> OS </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -2043,9 +2043,9 @@
             
             <tag> System Programming </tag>
             
-            <tag> Linux </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -2076,9 +2076,9 @@
             
             <tag> System Programming </tag>
             
-            <tag> Linux </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -2109,9 +2109,9 @@
             
             <tag> System Programming </tag>
             
-            <tag> Linux </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -2142,9 +2142,9 @@
             
             <tag> System Programming </tag>
             
-            <tag> Linux </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
@@ -2208,9 +2208,9 @@
             
             <tag> System Programming </tag>
             
-            <tag> Linux </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Linux </tag>
             
             <tag> BUAA </tag>
             
