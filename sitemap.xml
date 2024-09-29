@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Windows-File-Explorer-Performance-Issue-with-PDF/</loc>
+    <loc>http://www.tonys-studio.top/posts/Vim/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Vim/</loc>
+    <loc>http://www.tonys-studio.top/posts/Windows-File-Explorer-Performance-Issue-with-PDF/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/SonarQube-Web-API/</loc>
+    <loc>http://www.tonys-studio.top/posts/Thoughts-on-Basic-Structure-of-ASP-NET/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Thoughts-on-Basic-Structure-of-ASP-NET/</loc>
+    <loc>http://www.tonys-studio.top/posts/SonarQube-Web-API/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Setup-QEMU-on-Linux/</loc>
+    <loc>http://www.tonys-studio.top/posts/Setup-Voice-Chat-Using-TeamSpeak/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -146,7 +146,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Setup-Voice-Chat-Using-TeamSpeak/</loc>
+    <loc>http://www.tonys-studio.top/posts/Setup-QEMU-on-Linux/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -182,15 +182,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Redirect-HTTP-to-HTTPS-via-IIS/</loc>
-    
-    <lastmod>2024-09-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/RAID-10-VS-RAID-01/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -200,7 +191,25 @@
   </url>
   
   <url>
+    <loc>http://www.tonys-studio.top/posts/Redirect-HTTP-to-HTTPS-via-IIS/</loc>
+    
+    <lastmod>2024-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.tonys-studio.top/posts/Process/</loc>
+    
+    <lastmod>2024-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Page-Directory-Self-Mapping/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -219,15 +228,6 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Network-Settings-for-WSL/</loc>
-    
-    <lastmod>2024-09-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/posts/Page-Directory-Self-Mapping/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -281,15 +281,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Lab-6-Reflection/</loc>
-    
-    <lastmod>2024-09-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/Linux-Cheat-Sheet/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -317,6 +308,15 @@
   </url>
   
   <url>
+    <loc>http://www.tonys-studio.top/posts/Lab-6-Reflection/</loc>
+    
+    <lastmod>2024-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://www.tonys-studio.top/posts/Lab-6-Challenge/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -326,7 +326,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Lab-5-Reflection/</loc>
+    <loc>http://www.tonys-studio.top/posts/Lab-4-Reflection/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -335,7 +335,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Lab-4-Reflection/</loc>
+    <loc>http://www.tonys-studio.top/posts/Lab-5-Reflection/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -425,7 +425,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/File-System-IPC/</loc>
+    <loc>http://www.tonys-studio.top/posts/Getting-Started-with-CUDA/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -434,7 +434,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Getting-Started-with-CUDA/</loc>
+    <loc>http://www.tonys-studio.top/posts/File-System-IPC/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -551,15 +551,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/posts/Cross-platform-Development-with-NET-Core/</loc>
-    
-    <lastmod>2024-09-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/posts/Data-Annotation-of-EF-Core/</loc>
     
     <lastmod>2024-09-29</lastmod>
@@ -597,6 +588,15 @@
   
   <url>
     <loc>http://www.tonys-studio.top/posts/Create-sudo-enabled-User-on-Linux/</loc>
+    
+    <lastmod>2024-09-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/posts/Cross-platform-Development-with-NET-Core/</loc>
     
     <lastmod>2024-09-29</lastmod>
     
@@ -731,27 +731,6 @@
 
   
   <url>
-    <loc>http://www.tonys-studio.top/tags/ASP-NET-Core/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/tags/C/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://www.tonys-studio.top/tags/Axios/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/tags/AOP/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -774,6 +753,27 @@
   
   <url>
     <loc>http://www.tonys-studio.top/tags/Tutorial/</loc>
+    <lastmod>2024-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/tags/ASP-NET-Core/</loc>
+    <lastmod>2024-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/tags/C/</loc>
+    <lastmod>2024-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/tags/Axios/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1067,13 +1067,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/tags/Network/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/tags/Windows/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -1082,6 +1075,13 @@
   
   <url>
     <loc>http://www.tonys-studio.top/tags/Project/</loc>
+    <lastmod>2024-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/tags/Network/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1116,14 +1116,14 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/tags/QEMU/</loc>
+    <loc>http://www.tonys-studio.top/tags/Server/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/tags/Server/</loc>
+    <loc>http://www.tonys-studio.top/tags/QEMU/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1158,13 +1158,6 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/tags/Vim/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://www.tonys-studio.top/tags/WebSocket/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -1173,6 +1166,13 @@
   
   <url>
     <loc>http://www.tonys-studio.top/tags/Spring-Boot/</loc>
+    <lastmod>2024-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.tonys-studio.top/tags/Vim/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1202,7 +1202,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/categories/Development/NET/</loc>
+    <loc>http://www.tonys-studio.top/categories/Development/Spring/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1223,7 +1223,7 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/categories/Development/Spring/</loc>
+    <loc>http://www.tonys-studio.top/categories/Development/NET/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1286,14 +1286,14 @@
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/categories/BUAA/Database/</loc>
+    <loc>http://www.tonys-studio.top/categories/BUAA/System-Programming/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://www.tonys-studio.top/categories/BUAA/System-Programming/</loc>
+    <loc>http://www.tonys-studio.top/categories/BUAA/Database/</loc>
     <lastmod>2024-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
