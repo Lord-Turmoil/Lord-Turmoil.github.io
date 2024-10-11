@@ -4,16 +4,47 @@
   
     
     <entry>
-      <title>C++ Object Lifecycle</title>
-      <link href="/posts/C-Object-Lifecycle/"/>
-      <url>/posts/C-Object-Lifecycle/</url>
+      <title>Document Scan Effect in Photoshop</title>
+      <link href="/posts/Document-Scan-Effect-in-Photoshop/"/>
+      <url>/posts/Document-Scan-Effect-in-Photoshop/</url>
       
-        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;I need to see,</i><br>    <i>the truth other men cannot see,</i><br>    <i>to be things that others can't be!</i><br>    <i>Give me courage to go where no angel will go!</i><br>    <i>And I will go!</i><br>    <i>I need to know! &rdquo;</i></p><p style="text-align: right"><i>&mdash; Jekyll &amp; Hyde</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>As a C++ developer, or have some experience in C++, did you ever stop coding, staring at the monitor, deciding which parameter to use. To be specific, is pass by value, const reference or r-value.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(Object obj)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(<span class="type">const</span> Object&amp; obj)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(Object&amp;&amp; obj)</span></span>;</span><br></pre></td></tr></table></figure><p>I know why you stop at this, because you worries about the constructor overhead. That’s good, but don’t waste time on this every time. </p><p>So in this article, I’ll break down the constructor&#x2F;destructor call for each of these types of parameters, thus you can confidently choose the best combination for your code.</p><hr><h1 id="Instrument-Utilities"><a href="#Instrument-Utilities" class="headerlink" title="Instrument Utilities"></a>Instrument Utilities</h1><h2 id="Subject-class"><a href="#Subject-class" class="headerlink" title="Subject class"></a>Subject class</h2><p>Before we start, we have to think of a way to visualize the object’s lifecycle. This is simple, just put an output statement in each of these functions. So here is our <code>Object</code> class.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Object</span>() : _data(<span class="number">0</span>) &#123; cout &lt;&lt; <span class="string">&quot;Default constructor       (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(<span class="type">int</span> data) : _data(data)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Parameterized constructor (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(<span class="type">const</span> Object&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Copy constructor          (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        _data = other._data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(Object&amp;&amp; other) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Move constructor          (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        _data = other._data;</span><br><span class="line">        other._data = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Object&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Copy assignment operator  (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            _data = other._data;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object&amp; <span class="keyword">operator</span>=(Object&amp;&amp; other) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Move assignment operator  (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            _data = other._data;</span><br><span class="line">            other._data = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">Object</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_data != <span class="number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Destructor                (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Destructor (moved)        (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span> <span class="type">const</span> </span>&#123; cout &lt;&lt; <span class="string">&quot;Data: &quot;</span> &lt;&lt; _data &lt;&lt; endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> _data;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>We also add a <code>_data</code> field for parameterized constructor. And to mimic real move constructor and operator, we use <code>-1</code> to represent a “moved” object, which shouldn’t be used anymore.</p><h2 id="Scope-indicator"><a href="#Scope-indicator" class="headerlink" title="Scope indicator"></a>Scope indicator</h2><p>The basic knowledge you should know is that in C++, object lives in the current scope, and is guaranteed to be destroyed reaches the end of the scope. So we can use this as a trick to display the span of a scope.</p><div class="note info flat"><p>I first learnt this trick from Scott Mayer’s <em>Effective C++</em>, where he mentioned a way to measure the execution time of a scope.</p></div><p>So here it is, I call it <code>Fence</code>. To tell scope and function call apart, I used a <code>scope</code> flag, thus it may look a little bit verbose.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fence</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Fence</span>(<span class="type">bool</span> scope, <span class="type">const</span> <span class="type">char</span>* message) : _scope(scope)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_scope)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;========== &quot;</span> &lt;&lt; message &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;&gt;&gt;&gt;&gt;&gt; &quot;</span> &lt;&lt; message &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">Fence</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_scope)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;----------&quot;</span> &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;&lt;&lt;&lt;&lt;&lt;&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> _scope;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>Then, to simplify the use of this class, we can use macro to wrap this. To indicate scope, we can use the following macro.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BEGIN_SCOPE(message) do &#123; Fence __scope_fence(true, message)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> END_SCOPE()          &#125; while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">    <span class="built_in">END_SCOPE</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">    <span class="comment">// some other code</span></span><br><span class="line">    <span class="built_in">END_SCOPE</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// other code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To indicate function, we could also use a compiler macro to avoid writing function name twice. And since we record the complete function, so we don’t need to introduce a nested scope.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _BEGIN_CALL(func)    Fence __call_fence(false, func)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BEGIN_CALL()         _BEGIN_CALL(__func__)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(<span class="comment">/* some parameters */</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Beside, here is another macro to add blank line to the output.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BR()                 std::cout &lt;&lt; std::endl</span></span><br></pre></td></tr></table></figure><hr><h1 id="Lifecycle-Breakdown"><a href="#Lifecycle-Breakdown" class="headerlink" title="Lifecycle Breakdown"></a>Lifecycle Breakdown</h1><div class="note info flat"><p>I write no comment in code, so that you can think about the result first. 🤔 And all experiments are done with MSVC in Visual Studio 2022. Both Debug and Release profiles output the same.</p></div><h2 id="Object-creation"><a href="#Object-creation" class="headerlink" title="Object creation"></a>Object creation</h2><p>First, let’s see how C++ handle object creation. We create these objects to see all possible constructor and operators.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Create&quot;</span>);</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    Object obj2 = <span class="built_in">Object</span>(<span class="number">15</span>);</span><br><span class="line">    <span class="function">Object <span class="title">obj3</span><span class="params">(obj2)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj4</span><span class="params">(std::move(obj3))</span></span>;</span><br><span class="line">    obj = obj2;</span><br><span class="line">    obj = <span class="built_in">Object</span>(<span class="number">25</span>);</span><br><span class="line">    obj = std::<span class="built_in">move</span>(obj2);</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>Running this, we’ll have the following output.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">========== Create</span><br><span class="line">Parameterized constructor (0000009D83FDF004)</span><br><span class="line">Parameterized constructor (0000009D83FDF024)</span><br><span class="line">Copy constructor          (0000009D83FDF044)</span><br><span class="line">Move constructor          (0000009D83FDF064)</span><br><span class="line">Copy assignment operator  (0000009D83FDF004)</span><br><span class="line">Parameterized constructor (0000009D83FDF4E4)</span><br><span class="line">Move assignment operator  (0000009D83FDF004)</span><br><span class="line">Destructor (moved)        (0000009D83FDF4E4)</span><br><span class="line">Move assignment operator  (0000009D83FDF004)</span><br><span class="line">Destructor                (0000009D83FDF064)</span><br><span class="line">Destructor (moved)        (0000009D83FDF044)</span><br><span class="line">Destructor (moved)        (0000009D83FDF024)</span><br><span class="line">Destructor                (0000009D83FDF004)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>It’s a bit long, so I’ll break it down one by one.</p><p>First, no doubt that <code>Object obj(10);</code> calls the parameterized constructor. Then, for <code>Object obj2 = Object(15);</code>,  <code>=</code> will also invoke the constructor instead of the operator because it is considered to be variable definition. Following <code>Object obj3(obj2);</code> and <code>Object obj4(std::move(obj3));</code> obviously calls copy and move constructor.</p><div class="note warning success flat"><p>Constructor can be taken as a special function call, and soon I’ll talk about parameter passing in functions.</p></div><p>Then, for regular assignment statement, we’ll call the corresponding operator. And here comes the overhead. If you assign a temporary value to a variable, e.g. <code>obj = Object(25)</code>, an extra object will be created with move operator invoked. At last, variable or moved one to variable only invokes copy and move operator as we expected.</p><p>So for this part, we can conclude that, only a temporary value assignment will cause a little overhead. Although temporary value in initialization can be optimized, compiler doesn’t seem to care about that in assignment. I think that’s what temporary value meant to be. However, it invokes the move assignment, so it has little impact if you have a good “move”.</p><h2 id="Return-Value-Optimization"><a href="#Return-Value-Optimization" class="headerlink" title="Return Value Optimization"></a>Return Value Optimization</h2><p>There is a special case in object creation, which is called return value optimization (RVO). It eliminates the redundant copy for named or temporary objects when it plays as the return value. And that means, it will create the object directly at the caller’s scope. For example, we have the following function that returns an object.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">CreateA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();      <span class="comment">// equivalent to </span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>(<span class="number">10</span>); <span class="comment">// return &#123; 10 &#125;;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Object <span class="title">CreateB</span><span class="params">(<span class="type">int</span> option)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj2</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (option == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> obj2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>And we can write the test.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Return Value Optimization&quot;</span>);</span><br><span class="line">    Object obj = <span class="built_in">CreateA</span>();</span><br><span class="line">    obj = <span class="built_in">CreateA</span>();</span><br><span class="line">    Object obj2 = <span class="built_in">CreateB</span>(<span class="number">1</span>);</span><br><span class="line">    obj = <span class="built_in">CreateB</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">CreateA</span>();</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output is as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">========== Return Value Optimization</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F284)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F704)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Move assignment operator  (000000781551F284)</span><br><span class="line">Destructor (moved)        (000000781551F704)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (000000781551F064)</span><br><span class="line">Parameterized constructor (000000781551F084)</span><br><span class="line">Move constructor          (000000781551F2A4)</span><br><span class="line">Destructor (moved)        (000000781551F084)</span><br><span class="line">Destructor                (000000781551F064)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (000000781551F064)</span><br><span class="line">Parameterized constructor (000000781551F084)</span><br><span class="line">Move constructor          (000000781551F724)</span><br><span class="line">Destructor                (000000781551F084)</span><br><span class="line">Destructor (moved)        (000000781551F064)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Move assignment operator  (000000781551F284)</span><br><span class="line">Destructor (moved)        (000000781551F724)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F744)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (000000781551F744)</span><br><span class="line">Destructor                (000000781551F2A4)</span><br><span class="line">Destructor                (000000781551F284)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>The best situation for RVO is when the returned object is unique, which is our <code>CreateA</code> here. We can see that there is literally no extra constructor invoked for <code>Object obj = CreateA();</code>, and <code>obj = CreateA();</code> only calls the move operator. This is what we wish for.</p><p>However, our program may get more complex. For <code>CreateB</code>, there are two choices for return, so we cannot perfectly apply RVO, but we can still optimize it to use a move constructor only to initialize it in the caller. However, we can make it better by placing <code>obj</code> and <code>obj2</code> in their corresponding <code>if</code>-<code>else</code> scope, so that perfect RVO can be applied.</p><p>One thing to notice is that, when RVO applied, the object is constructed in callee, and destructed in caller.</p><div class="note info flat"><p>The condition for perfect RVO is that (I guess), the declaration of each return value does not <strong>dominate</strong> return statements that return other value. So that there will be no conflict in deciding their location in caller’s scope.</p><p>What is <strong>dominate</strong> then? To put it simple, if A dominates B, then every execution path to B must pass A first.</p></div><p>If a meticulous reader, you are, then you may ask, why use this verbose <code>if</code>-<code>else</code> instead of a ternary operator? Good question. We can test that.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">CreateB</span><span class="params">(<span class="type">int</span> option)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj2</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> option ? obj : obj2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Surprisingly (or not if you just know that), it results in a copy constructor instead of move!</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (00000036E174F364)</span><br><span class="line">Parameterized constructor (00000036E174F384)</span><br><span class="line">Copy constructor          (00000036E174F5C4)</span><br><span class="line">Destructor                (00000036E174F384)</span><br><span class="line">Destructor                (00000036E174F364)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br></pre></td></tr></table></figure><p>Why? Because compiler is not that aggressive. RVO only applies for one return value, but ternary operator makes it an expression (to be more specific, a l-value). So even if they are semantically equivalent, compiler will take the conservative choice to use copy instead of move.</p><h2 id="Parameter-passing"><a href="#Parameter-passing" class="headerlink" title="Parameter passing"></a>Parameter passing</h2><p>Then, let’s see how C++ prepare the function parameters. To better understand this, you may need a quick look at the stack frame in C&#x2F;C++.</p><p><img src="/posts/C-Object-Lifecycle/Stackframe.svg" alt="Stackframe"></p><p>The arguments are placed on top of caller’s stack, so that callee can find it without knowing caller’s stack layout. And all that that implies, when passing arguments, we are initializing them in the <em>out going args</em> segment. So the arguments are actually in caller’s scope.</p><h3 id="Pass-by-value"><a href="#Pass-by-value" class="headerlink" title="Pass by value"></a>Pass by value</h3><p>To see it in action, let’s define a simple function with a value parameter and test it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Pass</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass by value&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">Pass</span>(obj);</span><br><span class="line">    <span class="built_in">Pass</span>(std::<span class="built_in">move</span>(obj));</span><br><span class="line">    <span class="built_in">Pass</span>(<span class="built_in">Object</span>(<span class="number">20</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output will be as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">========== Pass by value</span><br><span class="line">Default constructor       (0000006B984FF868)</span><br><span class="line">Copy constructor          (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Move constructor          (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Parameterized constructor (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 20</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Destructor (moved)        (0000006B984FF868)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>First <code>Object obj;</code> will call default constructor to initialize the object in <em>local variable</em> segment. When calling <code>Pass(obj)</code>, it will first copy the object to the <em>out going args</em> segment which invokes copy constructor. Similarly, we can use <code>std::move</code> to invoke move constructor instead. And finally, we can pass a temporary object, which will construct the argument on site, with no extra copy or move.</p><div class="note success flat"><p>Are we getting it? It is the same as what we talked about the object initialization in <a href="#Object-creation">Object creation</a>.</p></div><p>So we can conclude that, pass by value may not be a good choice if we pass large objects often, and that’s why modern IDE suggests you use const reference instead.</p><h3 id="Pass-by-const-reference"><a href="#Pass-by-const-reference" class="headerlink" title="Pass by (const) reference"></a>Pass by (const) reference</h3><p>As we know, reference is a grammar sugar for pointers. Passing a reference is actually passing a pointer, so there is literally no overhead. Which is why we like it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PassCopy</span><span class="params">(<span class="type">const</span> Object&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass Copy&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">PassCopy</span>(obj);</span><br><span class="line">    <span class="built_in">PassCopy</span>(<span class="built_in">Object</span>(<span class="number">20</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output is as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">========== Pass Copy</span><br><span class="line">Default constructor       (0000009D4A8FF878)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassCopy</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Parameterized constructor (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassCopy</span><br><span class="line">Data: 20</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF874)</span><br><span class="line">Destructor                (0000009D4A8FF878)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>We can see that, when using reference, no extra copy or move is needed, only the reference is passed. Which is why we prefer to use reference for large objects. In order not to accidentally modify the argument, we can add <code>const</code> to it.</p><div class="note warning flat"><p>Not that, simply using reference cannot accept constant parameter or temporary value. But const reference can bind everything.</p></div><h3 id="Pass-by-R-value-reference"><a href="#Pass-by-R-value-reference" class="headerlink" title="Pass by R-value reference"></a>Pass by R-value reference</h3><p>It is rare, but let’s not omit it. Passing by R-value requires that the argument is a R-value. <del>Duh</del></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PassMove</span><span class="params">(Object&amp;&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass Move&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">PassMove</span>(<span class="built_in">Object</span>(<span class="number">30</span>));</span><br><span class="line">    <span class="comment">// ConsumeMove(obj);    // compile error</span></span><br><span class="line">    <span class="built_in">PassMove</span>(std::<span class="built_in">move</span>(obj));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>Notice that, R-value parameter does not accept L-value, so we must explicitly move our L-value to match the type.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">========== Pass Move</span><br><span class="line">Default constructor       (0000009D4A8FF878)</span><br><span class="line">Parameterized constructor (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassMove</span><br><span class="line">Data: 30</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassMove</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF878)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>Since <code>std::move</code> works as a type cast, and not actual assignment happens, our <code>obj</code> is not really moved.</p><h2 id="Parameter-consuming"><a href="#Parameter-consuming" class="headerlink" title="Parameter consuming"></a>Parameter consuming</h2><p>Sometimes, especially in constructor, we need to copy the argument to initialize the certain members. In this case, which type of argument has lower overhead? Instead of calling <code>Print</code> only, we may have an initialization or assignment.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Consume</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>The argument part is clear as we’ve talked about just now, the only thing different is that we now have a new copy or move constructor. Of course passing by value is a terrible choice, so which one should we use? L-value reference or R-value reference?</p><p>But we cannot use R-value reference as it cannot bind L-value, so does it mean that L-value reference is our only choice? The answer is no. If you use <a href="https://www.jetbrains.com/resharper/">ReSharper</a>, you might have seen such a suggestion.</p><p><img src="/posts/C-Object-Lifecycle/image-20241001160546356.png" alt="image-20241001160546356"></p><p>This problem can be demonstrated by the following function. Pass by reference, by value then move it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ConsumeCopy</span><span class="params">(<span class="type">const</span> Object&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = object;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ConsumeValueMove</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = std::<span class="built_in">move</span>(object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To tell which one is better, we can have a little test. There are but two types of arguments, L-value and R-value. So we call each once to see the overhead.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass by Reference&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">ConsumeCopy</span>(obj);</span><br><span class="line">    <span class="built_in">ConsumeCopy</span>(<span class="built_in">Object</span>(<span class="number">66</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Modernize Pass by Value&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">ConsumeValueMove</span>(obj);</span><br><span class="line">    <span class="built_in">ConsumeValueMove</span>(<span class="built_in">Object</span>(<span class="number">99</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The result is not that surprising, pass by reference has fewer output, thus seems to be a better choice.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">========== Reference</span><br><span class="line">Default constructor       (000000E46D4FF788)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeCopy</span><br><span class="line">Copy constructor          (000000E46D4FF790)</span><br><span class="line">Destructor                (000000E46D4FF790)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Parameterized constructor (000000E46D4FF784)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeCopy</span><br><span class="line">Copy constructor          (000000E46D4FF744)</span><br><span class="line">Destructor                (000000E46D4FF744)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (000000E46D4FF784)</span><br><span class="line">Destructor                (000000E46D4FF788)</span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line">========== Modernize Pass by Value</span><br><span class="line">Default constructor       (000000E46D4FF784)</span><br><span class="line">Copy constructor          (000000E46D4FF790)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeValueMove</span><br><span class="line">Move constructor          (000000E46D4FF738)</span><br><span class="line">Destructor                (000000E46D4FF738)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor (moved)        (000000E46D4FF790)</span><br><span class="line">Parameterized constructor (000000E46D4FF790)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeValueMove</span><br><span class="line">Move constructor          (000000E46D4FF738)</span><br><span class="line">Destructor                (000000E46D4FF738)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor (moved)        (000000E46D4FF790)</span><br><span class="line">Destructor                (000000E46D4FF784)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>It may be a little long, so let’s summarize it, except <code>Object obj;</code>, we have the following statistics. Since a moved object’s destructor will also do fewer recycling, I count it individually.</p><table><thead><tr><th align="center"></th><th align="center">Pass by reference</th><th align="center">Pass by value then move</th><th align="center">Difference</th></tr></thead><tbody><tr><td align="center">(Parameterized) Constructor</td><td align="center">1</td><td align="center">1</td><td align="center">0</td></tr><tr><td align="center">Copy Constructor</td><td align="center">2</td><td align="center">1</td><td align="center">-1</td></tr><tr><td align="center">Move Constructor</td><td align="center">0</td><td align="center">2</td><td align="center">+2</td></tr><tr><td align="center">Destructor</td><td align="center">3</td><td align="center">2</td><td align="center">-1</td></tr><tr><td align="center">Destructor (moved)</td><td align="center">0</td><td align="center">2</td><td align="center">+2</td></tr></tbody></table><p>If both types of the arguments are passed with a roughly equal possibility, the overhead is related to the efficiency of copy and move. If the cost of copy and move are the same, then apparently pass by reference is better. You may choose the other only if move is much more efficient than copy.</p><p>However, if the argument is always (or most of the time) a temporary value, you may need to reconsider your choice. For example, if you use a string as the name of an object, then this string will most likely come from a temporary value. </p><table><thead><tr><th align="center"></th><th align="center">Pass by reference</th><th align="center">Pass by value then move</th><th align="center">Difference</th></tr></thead><tbody><tr><td align="center">(Parameterized) Constructor</td><td align="center">1</td><td align="center">1</td><td align="center">0</td></tr><tr><td align="center">Copy Constructor</td><td align="center">1</td><td align="center">0</td><td align="center">-1</td></tr><tr><td align="center">Move Constructor</td><td align="center">0</td><td align="center">1</td><td align="center">+1</td></tr><tr><td align="center">Destructor</td><td align="center">2</td><td align="center">1</td><td align="center">-1</td></tr><tr><td align="center">Destructor (moved)</td><td align="center">0</td><td align="center">1</td><td align="center">+1</td></tr></tbody></table><p>In this case, pass by value then move it can be a better choice.</p><h2 id="Objects-in-Array"><a href="#Objects-in-Array" class="headerlink" title="Objects in Array"></a>Objects in Array</h2><p>There is one thing we missed, that is array. What about the objects in array? For this, we can also write a simple test.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Array&quot;</span>);</span><br><span class="line">    Object obj[<span class="number">2</span>] &#123; <span class="number">1</span> &#125;;</span><br><span class="line">    Object* pObj = <span class="keyword">new</span> Object[<span class="number">2</span>] &#123; <span class="number">1</span> &#125;;</span><br><span class="line">    obj[<span class="number">1</span>] = <span class="built_in">Object</span>(<span class="number">33</span>);</span><br><span class="line">    <span class="keyword">delete</span>[] pObj;  <span class="comment">// remember this</span></span><br><span class="line">    pObj = <span class="built_in">static_cast</span>&lt;Object*&gt;(<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(Object) * <span class="number">2</span>));</span><br><span class="line">    pObj[<span class="number">0</span>].<span class="built_in">Print</span>();</span><br><span class="line">    <span class="built_in">free</span>(pObj);     <span class="comment">// don&#x27;t forget this also</span></span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>By running it, we’ll have the following output.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">========== Array</span><br><span class="line">Parameterized constructor (000000C30472FEB8)</span><br><span class="line">Default constructor       (000000C30472FEBC)</span><br><span class="line">Parameterized constructor (00000299414B7028)</span><br><span class="line">Default constructor       (00000299414B702C)</span><br><span class="line">Parameterized constructor (000000C30472FEA0)</span><br><span class="line">Move assignment operator  (000000C30472FEBC)</span><br><span class="line">Destructor (moved)        (000000C30472FEA0)</span><br><span class="line">Destructor                (00000299414B702C)</span><br><span class="line">Destructor                (00000299414B7028)</span><br><span class="line">Data: 997392451</span><br><span class="line">Destructor                (000000C30472FEBC)</span><br><span class="line">Destructor                (000000C30472FEB8)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>We can see that, array will call the default constructor on each element, so will the <code>new</code> operator. Correspondingly, their destructor will also be called. So it introduces a problem that you have to provide a default constructor or explicitly initialize every element on creation. Of course there is a work around, that is using <code>malloc</code> and <code>free</code>. But in this case you will also lose the destructor.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>I have wished to take a deep look at how C++ handle objects for long, and now this is the day, <del>when I send all my doubts and daemons on their way, …</del></p><p>Anyway, it helps me to understand the object lifecycle in C++, and hope this post can also help you. ᓚᘏᗢ</p>]]></content>
+        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;It isn't that they can't see the solution.</i><br><i>It is that they can't see the problem.&rdquo;</i></p><p style="text-align: right"><i>&mdash; Gilbert Chesterton</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>When a copy of your document is required, but there is no printer available, what to do? Well, there are plenty of software you can use to apply a document filter so that it looks exactly like what comes out of a printer.</p><p>While there are mobile apps that is capable of doing this, I still prefer a solution on PC partly due to my personal affection. Currently, I’m doing this with Adobe Photoshop. And in the last part, I’ll talk about how to automate this process for batch editing.</p><div class="note info flat"><p>By the time of this post, I’m using Adobe Photoshop 2023.</p></div><hr><h1 id="“Scan”-the-Photo"><a href="#“Scan”-the-Photo" class="headerlink" title="“Scan” the Photo"></a>“Scan” the Photo</h1><h2 id="1-The-original-image"><a href="#1-The-original-image" class="headerlink" title="1. The original image"></a>1. The original image</h2><p>Now, let’s see how to create scan effect in Photoshop. First, prepare our “victim”. 🤯 Here I choose a draft when I was designing my game <a href="https://github.com/Lord-Turmoil/Dungeon">Dungeon</a>. Open it in Photoshop, and you should get this.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008215423564.png" alt="image-20241008215423564" style="zoom:50%;"><h2 id="2-Basic-scan-effect"><a href="#2-Basic-scan-effect" class="headerlink" title="2. Basic scan effect"></a>2. Basic scan effect</h2><p>In “Layers” dialog, duplicate “Layer 1”, so we could have a mask layer (I’ll call this layer mask later). You can select the layer and press “Ctrl + J” to duplicate it. Or right click on it, and choose “Duplicate layer” in the pop up menu. Then, choose “Divide” for the mask.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008215526852.png" alt="image-20241008215526852" style="zoom:50%;"><p>Now, it’s time to make it look like a scan copy. Select the mask, and apply Gaussian Blur filter to it.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008215811233.png" alt="image-20241008215811233" style="zoom:50%;"><p>In the “Gaussian Blur” dialog, adjust blur radius until you’re satisfied with the result. It may not be perfect, but we can fine-tuning it later.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008220131830.png" alt="image-20241008220131830" style="zoom:50%;"><h2 id="3-Fine-tuning-the-effect"><a href="#3-Fine-tuning-the-effect" class="headerlink" title="3. Fine-tuning the effect"></a>3. Fine-tuning the effect</h2><p>We’ve got a not-bad effect in the last step, and now we’re going to make it better. First, select the mask and add “Curves” to it.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008220416429.png" alt="image-20241008220416429" style="zoom:50%;"><p>You’ll see the curve dialog in the “Properties” tab above layers. Adjust the curves to fine-tune the color and contrast.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008220905529.png" alt="image-20241008220905529" style="zoom:50%;"><p>Finally, save and export. Tada!🎉You get a scan copy of your image!</p><hr><h1 id="Automated-Scanner"><a href="#Automated-Scanner" class="headerlink" title="Automated Scanner"></a>Automated Scanner</h1><div class="note warning flat"><p>The action I created here only works for <code>.jpg</code> files. You can record your own action to support <code>.png</code>.🤔</p></div><p>Now we have another problem. In apps, we can do this with one-click, but here in PS, we have so many steps, and tedious adjustments. So in this chapter, I’ll show you how to automate editing in Photoshop with batch action.</p><h2 id="1-Create-new-action"><a href="#1-Create-new-action" class="headerlink" title="1. Create new action"></a>1. Create new action</h2><p>In the menu, select “Window &gt; Actions” or simply press “Alt + F9”. You’ll see there is already a “Default Actions” set. For clarity, we create a new set called “Scan”.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008222003161.png" alt="image-20241008222003161" style="zoom:50%;"><p>Then, we can add our automated actions in the new set.</p><h2 id="2-Prepare-workspace"><a href="#2-Prepare-workspace" class="headerlink" title="2. Prepare workspace"></a>2. Prepare workspace</h2><p>Before we start recording, some preparation is needed. The purpose of this is to simulate the input for the action. The input is simple, just open any image to edit.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008224155602.png" alt="image-20241008224155602" style="zoom:50%;"><div class="note info flat"><p>This preparation is not necessary and you can record “Open” action later. I’ll talk about this difference later in the <a href="#Open-Image">next step</a>.</p></div><h2 id="3-Record-action"><a href="#3-Record-action" class="headerlink" title="3. Record action"></a>3. Record action</h2><h3 id="3-1-Start-recording"><a href="#3-1-Start-recording" class="headerlink" title="3.1 Start recording"></a>3.1 Start recording</h3><p>On the bottom of the panel, click “New Action”. I already have “Default Scan” action created, so here I’ll create another called “Style 2” since the parameters may differ slightly.</p><p>The following image is starting recording without preparation. Otherwise, start recording with that opened image window focused.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008222233506.png" alt="image-20241008222233506" style="zoom: 33%;"><p>After you click “Record”, the action panel will go online.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008222403677.png" alt="image-20241008222403677" style="zoom:50%;"><h3 id="3-2-Open-image"><a href="#3-2-Open-image" class="headerlink" title="3.2 Open image"></a>3.2 Open image</h3><p>If you’ve done the preparation, just switch to that opened image. If not, just open it. The difference is that, the latter will have an explicit open action.</p><p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008225308220.png" alt="image-20241008225308220"></p><h3 id="3-3-Record-actions"><a href="#3-3-Record-actions" class="headerlink" title="3.3 Record actions"></a>3.3 Record actions</h3><p>Now, do what you did in the <a href="#Scan-the-Photo">last chapter</a>. Don’t tell me you’ve already forgot it.🥹</p><div class="note info flat"><p>If you take wrong steps, you can stop recording and delete the bad steps. And of course, you need to undo till the last correct step.</p></div><h3 id="3-4-Save-image"><a href="#3-4-Save-image" class="headerlink" title="3.4 Save image"></a>3.4 Save image</h3><p>There is one thing I missed though. For batch processing, we may not want to save a <code>.psd</code> for each image. So we just “Save a copy” and export it as <code>.jpg</code>.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008223256999.png" alt="image-20241008223256999" style="zoom:50%;"><p>After saving, the action is done, and you can stop recording.</p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008224700804.png" alt="image-20241008224700804" style="zoom:50%;"><p>See, not that difficult, huh?😉</p><h2 id="4-Use-action"><a href="#4-Use-action" class="headerlink" title="4. Use action"></a>4. Use action</h2><p>Now that we have the action, how to use it?</p><p>Go to “File &gt; Automate &gt; Batch…”, and you’ll get the Batch dialog. Choose the action we recorded just now. Additionally, you can choose source and destination and many more.</p><p><img src="/posts/Document-Scan-Effect-in-Photoshop/image-20241008231627526.png" alt="image-20241008231627526"></p><p>If you included “Open” in your action, then you need to check “Override Action ‘Open’ Commands”. And similarly, “Save as” command is also overridden. Click OK, and see Photoshop working by itself!😁</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>It’s a small trick, but I want to save it in case I forget it sometime in the future. Anyway, enjoy! ᓚᘏᗢ</p>]]></content>
       
       
       <categories>
           
-          <category> Development </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Design &amp; Multimedia </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Photoshop </tag>
+            
+            <tag> Graphic Design </tag>
+            
+            <tag> Automation </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++ Object Lifecycle</title>
+      <link href="/posts/C-Object-Lifecycle/"/>
+      <url>/posts/C-Object-Lifecycle/</url>
+      
+        <content type="html"><![CDATA[<p style="text-align: center"><i>&ldquo;I need to see,</i><br>    <i>the truth other men cannot see,</i><br>    <i>to be things that others can't be!</i><br>    <i>Give me courage to go where no angel will go!</i><br>    <i>And I will go!</i><br>    <i>I need to know!&rdquo;</i></p><p style="text-align: right"><i>&mdash; Jekyll &amp; Hyde</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>As a C++ developer, or have some experience in C++, did you ever stop coding, staring at the monitor, deciding which parameter to use. To be specific, is pass by value, const reference or r-value.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(Object obj)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(<span class="type">const</span> Object&amp; obj)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(Object&amp;&amp; obj)</span></span>;</span><br></pre></td></tr></table></figure><p>I know why you stop at this, because you worries about the constructor overhead. That’s good, but don’t waste time on this every time. </p><p>So in this article, I’ll break down the constructor&#x2F;destructor call for each of these types of parameters, thus you can confidently choose the best combination for your code.</p><hr><h1 id="Instrument-Utilities"><a href="#Instrument-Utilities" class="headerlink" title="Instrument Utilities"></a>Instrument Utilities</h1><h2 id="Subject-class"><a href="#Subject-class" class="headerlink" title="Subject class"></a>Subject class</h2><p>Before we start, we have to think of a way to visualize the object’s lifecycle. This is simple, just put an output statement in each of these functions. So here is our <code>Object</code> class.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Object</span>() : _data(<span class="number">0</span>) &#123; cout &lt;&lt; <span class="string">&quot;Default constructor       (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(<span class="type">int</span> data) : _data(data)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Parameterized constructor (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(<span class="type">const</span> Object&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Copy constructor          (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        _data = other._data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">Object</span>(Object&amp;&amp; other) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Move constructor          (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        _data = other._data;</span><br><span class="line">        other._data = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Object&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Copy assignment operator  (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            _data = other._data;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object&amp; <span class="keyword">operator</span>=(Object&amp;&amp; other) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Move assignment operator  (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != &amp;other)</span><br><span class="line">        &#123;</span><br><span class="line">            _data = other._data;</span><br><span class="line">            other._data = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">Object</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_data != <span class="number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Destructor                (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Destructor (moved)        (&quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span> <span class="type">const</span> </span>&#123; cout &lt;&lt; <span class="string">&quot;Data: &quot;</span> &lt;&lt; _data &lt;&lt; endl; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> _data;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>We also add a <code>_data</code> field for parameterized constructor. And to mimic real move constructor and operator, we use <code>-1</code> to represent a “moved” object, which shouldn’t be used anymore.</p><h2 id="Scope-indicator"><a href="#Scope-indicator" class="headerlink" title="Scope indicator"></a>Scope indicator</h2><p>The basic knowledge you should know is that in C++, object lives in the current scope, and is guaranteed to be destroyed reaches the end of the scope. So we can use this as a trick to display the span of a scope.</p><div class="note info flat"><p>I first learnt this trick from Scott Mayer’s <em>Effective C++</em>, where he mentioned a way to measure the execution time of a scope.</p></div><p>So here it is, I call it <code>Fence</code>. To tell scope and function call apart, I used a <code>scope</code> flag, thus it may look a little bit verbose.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Fence</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Fence</span>(<span class="type">bool</span> scope, <span class="type">const</span> <span class="type">char</span>* message) : _scope(scope)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_scope)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;========== &quot;</span> &lt;&lt; message &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;&gt;&gt;&gt;&gt;&gt; &quot;</span> &lt;&lt; message &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">Fence</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (_scope)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;----------&quot;</span> &lt;&lt; endl &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;&lt;&lt;&lt;&lt;&lt;&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> _scope;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>Then, to simplify the use of this class, we can use macro to wrap this. To indicate scope, we can use the following macro.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BEGIN_SCOPE(message) do &#123; Fence __scope_fence(true, message)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> END_SCOPE()          &#125; while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">    <span class="built_in">END_SCOPE</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">    <span class="comment">// some other code</span></span><br><span class="line">    <span class="built_in">END_SCOPE</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// other code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To indicate function, we could also use a compiler macro to avoid writing function name twice. And since we record the complete function, so we don’t need to introduce a nested scope.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _BEGIN_CALL(func)    Fence __call_fence(false, func)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BEGIN_CALL()         _BEGIN_CALL(__func__)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Func</span><span class="params">(<span class="comment">/* some parameters */</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="comment">// some code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Beside, here is another macro to add blank line to the output.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> BR()                 std::cout &lt;&lt; std::endl</span></span><br></pre></td></tr></table></figure><hr><h1 id="Lifecycle-Breakdown"><a href="#Lifecycle-Breakdown" class="headerlink" title="Lifecycle Breakdown"></a>Lifecycle Breakdown</h1><div class="note info flat"><p>I write no comment in code, so that you can think about the result first. 🤔 And all experiments are done with MSVC in Visual Studio 2022. Both Debug and Release profiles output the same.</p></div><h2 id="Object-creation"><a href="#Object-creation" class="headerlink" title="Object creation"></a>Object creation</h2><p>First, let’s see how C++ handle object creation. We create these objects to see all possible constructor and operators.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Create&quot;</span>);</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    Object obj2 = <span class="built_in">Object</span>(<span class="number">15</span>);</span><br><span class="line">    <span class="function">Object <span class="title">obj3</span><span class="params">(obj2)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj4</span><span class="params">(std::move(obj3))</span></span>;</span><br><span class="line">    obj = obj2;</span><br><span class="line">    obj = <span class="built_in">Object</span>(<span class="number">25</span>);</span><br><span class="line">    obj = std::<span class="built_in">move</span>(obj2);</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>Running this, we’ll have the following output.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">========== Create</span><br><span class="line">Parameterized constructor (0000009D83FDF004)</span><br><span class="line">Parameterized constructor (0000009D83FDF024)</span><br><span class="line">Copy constructor          (0000009D83FDF044)</span><br><span class="line">Move constructor          (0000009D83FDF064)</span><br><span class="line">Copy assignment operator  (0000009D83FDF004)</span><br><span class="line">Parameterized constructor (0000009D83FDF4E4)</span><br><span class="line">Move assignment operator  (0000009D83FDF004)</span><br><span class="line">Destructor (moved)        (0000009D83FDF4E4)</span><br><span class="line">Move assignment operator  (0000009D83FDF004)</span><br><span class="line">Destructor                (0000009D83FDF064)</span><br><span class="line">Destructor (moved)        (0000009D83FDF044)</span><br><span class="line">Destructor (moved)        (0000009D83FDF024)</span><br><span class="line">Destructor                (0000009D83FDF004)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>It’s a bit long, so I’ll break it down one by one.</p><p>First, no doubt that <code>Object obj(10);</code> calls the parameterized constructor. Then, for <code>Object obj2 = Object(15);</code>,  <code>=</code> will also invoke the constructor instead of the operator because it is considered to be variable definition. Following <code>Object obj3(obj2);</code> and <code>Object obj4(std::move(obj3));</code> obviously calls copy and move constructor.</p><div class="note warning success flat"><p>Constructor can be taken as a special function call, and soon I’ll talk about parameter passing in functions.</p></div><p>Then, for regular assignment statement, we’ll call the corresponding operator. And here comes the overhead. If you assign a temporary value to a variable, e.g. <code>obj = Object(25)</code>, an extra object will be created with move operator invoked. At last, variable or moved one to variable only invokes copy and move operator as we expected.</p><p>So for this part, we can conclude that, only a temporary value assignment will cause a little overhead. Although temporary value in initialization can be optimized, compiler doesn’t seem to care about that in assignment. I think that’s what temporary value meant to be. However, it invokes the move assignment, so it has little impact if you have a good “move”.</p><h2 id="Return-Value-Optimization"><a href="#Return-Value-Optimization" class="headerlink" title="Return Value Optimization"></a>Return Value Optimization</h2><p>There is a special case in object creation, which is called return value optimization (RVO). It eliminates the redundant copy for named or temporary objects when it plays as the return value. And that means, it will create the object directly at the caller’s scope. For example, we have the following function that returns an object.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">CreateA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();      <span class="comment">// equivalent to </span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>(<span class="number">10</span>); <span class="comment">// return &#123; 10 &#125;;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Object <span class="title">CreateB</span><span class="params">(<span class="type">int</span> option)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj2</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (option == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> obj2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>And we can write the test.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Return Value Optimization&quot;</span>);</span><br><span class="line">    Object obj = <span class="built_in">CreateA</span>();</span><br><span class="line">    obj = <span class="built_in">CreateA</span>();</span><br><span class="line">    Object obj2 = <span class="built_in">CreateB</span>(<span class="number">1</span>);</span><br><span class="line">    obj = <span class="built_in">CreateB</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">CreateA</span>();</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output is as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">========== Return Value Optimization</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F284)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F704)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Move assignment operator  (000000781551F284)</span><br><span class="line">Destructor (moved)        (000000781551F704)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (000000781551F064)</span><br><span class="line">Parameterized constructor (000000781551F084)</span><br><span class="line">Move constructor          (000000781551F2A4)</span><br><span class="line">Destructor (moved)        (000000781551F084)</span><br><span class="line">Destructor                (000000781551F064)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (000000781551F064)</span><br><span class="line">Parameterized constructor (000000781551F084)</span><br><span class="line">Move constructor          (000000781551F724)</span><br><span class="line">Destructor                (000000781551F084)</span><br><span class="line">Destructor (moved)        (000000781551F064)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Move assignment operator  (000000781551F284)</span><br><span class="line">Destructor (moved)        (000000781551F724)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; CreateA</span><br><span class="line">Parameterized constructor (000000781551F744)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (000000781551F744)</span><br><span class="line">Destructor                (000000781551F2A4)</span><br><span class="line">Destructor                (000000781551F284)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>The best situation for RVO is when the returned object is unique, which is our <code>CreateA</code> here. We can see that there is literally no extra constructor invoked for <code>Object obj = CreateA();</code>, and <code>obj = CreateA();</code> only calls the move operator. This is what we wish for.</p><p>However, our program may get more complex. For <code>CreateB</code>, there are two choices for return, so we cannot perfectly apply RVO, but we can still optimize it to use a move constructor only to initialize it in the caller. However, we can make it better by placing <code>obj</code> and <code>obj2</code> in their corresponding <code>if</code>-<code>else</code> scope, so that perfect RVO can be applied.</p><p>One thing to notice is that, when RVO applied, the object is constructed in callee, and destructed in caller.</p><div class="note info flat"><p>The condition for perfect RVO is that (I guess), the declaration of each return value does not <strong>dominate</strong> return statements that return other value. So that there will be no conflict in deciding their location in caller’s scope.</p><p>What is <strong>dominate</strong> then? To put it simple, if A dominates B, then every execution path to B must pass A first.</p></div><p>If a meticulous reader, you are, then you may ask, why use this verbose <code>if</code>-<code>else</code> instead of a ternary operator? Good question. We can test that.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Object <span class="title">CreateB</span><span class="params">(<span class="type">int</span> option)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="function">Object <span class="title">obj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">obj2</span><span class="params">(<span class="number">20</span>)</span></span>;</span><br><span class="line">    <span class="keyword">return</span> option ? obj : obj2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Surprisingly (or not if you just know that), it results in a copy constructor instead of move!</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;&gt;&gt; CreateB</span><br><span class="line">Parameterized constructor (00000036E174F364)</span><br><span class="line">Parameterized constructor (00000036E174F384)</span><br><span class="line">Copy constructor          (00000036E174F5C4)</span><br><span class="line">Destructor                (00000036E174F384)</span><br><span class="line">Destructor                (00000036E174F364)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br></pre></td></tr></table></figure><p>Why? Because compiler is not that aggressive. RVO only applies for one return value, but ternary operator makes it an expression (to be more specific, a l-value). So even if they are semantically equivalent, compiler will take the conservative choice to use copy instead of move.</p><h2 id="Parameter-passing"><a href="#Parameter-passing" class="headerlink" title="Parameter passing"></a>Parameter passing</h2><p>Then, let’s see how C++ prepare the function parameters. To better understand this, you may need a quick look at the stack frame in C&#x2F;C++.</p><p><img src="/posts/C-Object-Lifecycle/Stackframe.svg" alt="Stackframe"></p><p>The arguments are placed on top of caller’s stack, so that callee can find it without knowing caller’s stack layout. And all that that implies, when passing arguments, we are initializing them in the <em>out going args</em> segment. So the arguments are actually in caller’s scope.</p><h3 id="Pass-by-value"><a href="#Pass-by-value" class="headerlink" title="Pass by value"></a>Pass by value</h3><p>To see it in action, let’s define a simple function with a value parameter and test it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Pass</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass by value&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">Pass</span>(obj);</span><br><span class="line">    <span class="built_in">Pass</span>(std::<span class="built_in">move</span>(obj));</span><br><span class="line">    <span class="built_in">Pass</span>(<span class="built_in">Object</span>(<span class="number">20</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output will be as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">========== Pass by value</span><br><span class="line">Default constructor       (0000006B984FF868)</span><br><span class="line">Copy constructor          (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Move constructor          (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Parameterized constructor (0000006B984FF870)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; Pass</span><br><span class="line">Data: 20</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000006B984FF870)</span><br><span class="line">Destructor (moved)        (0000006B984FF868)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>First <code>Object obj;</code> will call default constructor to initialize the object in <em>local variable</em> segment. When calling <code>Pass(obj)</code>, it will first copy the object to the <em>out going args</em> segment which invokes copy constructor. Similarly, we can use <code>std::move</code> to invoke move constructor instead. And finally, we can pass a temporary object, which will construct the argument on site, with no extra copy or move.</p><div class="note success flat"><p>Are we getting it? It is the same as what we talked about the object initialization in <a href="#Object-creation">Object creation</a>.</p></div><p>So we can conclude that, pass by value may not be a good choice if we pass large objects often, and that’s why modern IDE suggests you use const reference instead.</p><h3 id="Pass-by-const-reference"><a href="#Pass-by-const-reference" class="headerlink" title="Pass by (const) reference"></a>Pass by (const) reference</h3><p>As we know, reference is a grammar sugar for pointers. Passing a reference is actually passing a pointer, so there is literally no overhead. Which is why we like it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PassCopy</span><span class="params">(<span class="type">const</span> Object&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass Copy&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">PassCopy</span>(obj);</span><br><span class="line">    <span class="built_in">PassCopy</span>(<span class="built_in">Object</span>(<span class="number">20</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The output is as follows.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">========== Pass Copy</span><br><span class="line">Default constructor       (0000009D4A8FF878)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassCopy</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Parameterized constructor (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassCopy</span><br><span class="line">Data: 20</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF874)</span><br><span class="line">Destructor                (0000009D4A8FF878)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>We can see that, when using reference, no extra copy or move is needed, only the reference is passed. Which is why we prefer to use reference for large objects. In order not to accidentally modify the argument, we can add <code>const</code> to it.</p><div class="note warning flat"><p>Not that, simply using reference cannot accept constant parameter or temporary value. But const reference can bind everything.</p></div><h3 id="Pass-by-R-value-reference"><a href="#Pass-by-R-value-reference" class="headerlink" title="Pass by R-value reference"></a>Pass by R-value reference</h3><p>It is rare, but let’s not omit it. Passing by R-value requires that the argument is a R-value. <del>Duh</del></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PassMove</span><span class="params">(Object&amp;&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    object.<span class="built_in">Print</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass Move&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">PassMove</span>(<span class="built_in">Object</span>(<span class="number">30</span>));</span><br><span class="line">    <span class="comment">// ConsumeMove(obj);    // compile error</span></span><br><span class="line">    <span class="built_in">PassMove</span>(std::<span class="built_in">move</span>(obj));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>Notice that, R-value parameter does not accept L-value, so we must explicitly move our L-value to match the type.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">========== Pass Move</span><br><span class="line">Default constructor       (0000009D4A8FF878)</span><br><span class="line">Parameterized constructor (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassMove</span><br><span class="line">Data: 30</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF874)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; PassMove</span><br><span class="line">Data: 0</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (0000009D4A8FF878)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>Since <code>std::move</code> works as a type cast, and not actual assignment happens, our <code>obj</code> is not really moved.</p><h2 id="Parameter-consuming"><a href="#Parameter-consuming" class="headerlink" title="Parameter consuming"></a>Parameter consuming</h2><p>Sometimes, especially in constructor, we need to copy the argument to initialize the certain members. In this case, which type of argument has lower overhead? Instead of calling <code>Print</code> only, we may have an initialization or assignment.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Consume</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>The argument part is clear as we’ve talked about just now, the only thing different is that we now have a new copy or move constructor. Of course passing by value is a terrible choice, so which one should we use? L-value reference or R-value reference?</p><p>But we cannot use R-value reference as it cannot bind L-value, so does it mean that L-value reference is our only choice? The answer is no. If you use <a href="https://www.jetbrains.com/resharper/">ReSharper</a>, you might have seen such a suggestion.</p><p><img src="/posts/C-Object-Lifecycle/image-20241001160546356.png" alt="image-20241001160546356"></p><p>This problem can be demonstrated by the following function. Pass by reference, by value then move it.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ConsumeCopy</span><span class="params">(<span class="type">const</span> Object&amp; object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = object;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ConsumeValueMove</span><span class="params">(Object object)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">BEGIN_CALL</span>();</span><br><span class="line">    <span class="keyword">auto</span> o = std::<span class="built_in">move</span>(object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>To tell which one is better, we can have a little test. There are but two types of arguments, L-value and R-value. So we call each once to see the overhead.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Pass by Reference&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">ConsumeCopy</span>(obj);</span><br><span class="line">    <span class="built_in">ConsumeCopy</span>(<span class="built_in">Object</span>(<span class="number">66</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Modernize Pass by Value&quot;</span>);</span><br><span class="line">    Object obj;</span><br><span class="line">    <span class="built_in">ConsumeValueMove</span>(obj);</span><br><span class="line">    <span class="built_in">ConsumeValueMove</span>(<span class="built_in">Object</span>(<span class="number">99</span>));</span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>The result is not that surprising, pass by reference has fewer output, thus seems to be a better choice.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">========== Reference</span><br><span class="line">Default constructor       (000000E46D4FF788)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeCopy</span><br><span class="line">Copy constructor          (000000E46D4FF790)</span><br><span class="line">Destructor                (000000E46D4FF790)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Parameterized constructor (000000E46D4FF784)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeCopy</span><br><span class="line">Copy constructor          (000000E46D4FF744)</span><br><span class="line">Destructor                (000000E46D4FF744)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor                (000000E46D4FF784)</span><br><span class="line">Destructor                (000000E46D4FF788)</span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line">========== Modernize Pass by Value</span><br><span class="line">Default constructor       (000000E46D4FF784)</span><br><span class="line">Copy constructor          (000000E46D4FF790)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeValueMove</span><br><span class="line">Move constructor          (000000E46D4FF738)</span><br><span class="line">Destructor                (000000E46D4FF738)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor (moved)        (000000E46D4FF790)</span><br><span class="line">Parameterized constructor (000000E46D4FF790)</span><br><span class="line">&gt;&gt;&gt;&gt;&gt; ConsumeValueMove</span><br><span class="line">Move constructor          (000000E46D4FF738)</span><br><span class="line">Destructor                (000000E46D4FF738)</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;</span><br><span class="line">Destructor (moved)        (000000E46D4FF790)</span><br><span class="line">Destructor                (000000E46D4FF784)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>It may be a little long, so let’s summarize it, except <code>Object obj;</code>, we have the following statistics. Since a moved object’s destructor will also do fewer recycling, I count it individually.</p><table><thead><tr><th align="center"></th><th align="center">Pass by reference</th><th align="center">Pass by value then move</th><th align="center">Difference</th></tr></thead><tbody><tr><td align="center">(Parameterized) Constructor</td><td align="center">1</td><td align="center">1</td><td align="center">0</td></tr><tr><td align="center">Copy Constructor</td><td align="center">2</td><td align="center">1</td><td align="center">-1</td></tr><tr><td align="center">Move Constructor</td><td align="center">0</td><td align="center">2</td><td align="center">+2</td></tr><tr><td align="center">Destructor</td><td align="center">3</td><td align="center">2</td><td align="center">-1</td></tr><tr><td align="center">Destructor (moved)</td><td align="center">0</td><td align="center">2</td><td align="center">+2</td></tr></tbody></table><p>If both types of the arguments are passed with a roughly equal possibility, the overhead is related to the efficiency of copy and move. If the cost of copy and move are the same, then apparently pass by reference is better. You may choose the other only if move is much more efficient than copy.</p><p>However, if the argument is always (or most of the time) a temporary value, you may need to reconsider your choice. For example, if you use a string as the name of an object, then this string will most likely come from a temporary value. </p><table><thead><tr><th align="center"></th><th align="center">Pass by reference</th><th align="center">Pass by value then move</th><th align="center">Difference</th></tr></thead><tbody><tr><td align="center">(Parameterized) Constructor</td><td align="center">1</td><td align="center">1</td><td align="center">0</td></tr><tr><td align="center">Copy Constructor</td><td align="center">1</td><td align="center">0</td><td align="center">-1</td></tr><tr><td align="center">Move Constructor</td><td align="center">0</td><td align="center">1</td><td align="center">+1</td></tr><tr><td align="center">Destructor</td><td align="center">2</td><td align="center">1</td><td align="center">-1</td></tr><tr><td align="center">Destructor (moved)</td><td align="center">0</td><td align="center">1</td><td align="center">+1</td></tr></tbody></table><p>In this case, pass by value then move it can be a better choice.</p><h2 id="Objects-in-Array"><a href="#Objects-in-Array" class="headerlink" title="Objects in Array"></a>Objects in Array</h2><p>There is one thing we missed, that is array. What about the objects in array? For this, we can also write a simple test.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">BEGIN_SCOPE</span>(<span class="string">&quot;Array&quot;</span>);</span><br><span class="line">    Object obj[<span class="number">2</span>] &#123; <span class="number">1</span> &#125;;</span><br><span class="line">    Object* pObj = <span class="keyword">new</span> Object[<span class="number">2</span>] &#123; <span class="number">1</span> &#125;;</span><br><span class="line">    obj[<span class="number">1</span>] = <span class="built_in">Object</span>(<span class="number">33</span>);</span><br><span class="line">    <span class="keyword">delete</span>[] pObj;  <span class="comment">// remember this</span></span><br><span class="line">    pObj = <span class="built_in">static_cast</span>&lt;Object*&gt;(<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(Object) * <span class="number">2</span>));</span><br><span class="line">    pObj[<span class="number">0</span>].<span class="built_in">Print</span>();</span><br><span class="line">    <span class="built_in">free</span>(pObj);     <span class="comment">// don&#x27;t forget this also</span></span><br><span class="line"><span class="built_in">END_SCOPE</span>();</span><br></pre></td></tr></table></figure><p>By running it, we’ll have the following output.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">========== Array</span><br><span class="line">Parameterized constructor (000000C30472FEB8)</span><br><span class="line">Default constructor       (000000C30472FEBC)</span><br><span class="line">Parameterized constructor (00000299414B7028)</span><br><span class="line">Default constructor       (00000299414B702C)</span><br><span class="line">Parameterized constructor (000000C30472FEA0)</span><br><span class="line">Move assignment operator  (000000C30472FEBC)</span><br><span class="line">Destructor (moved)        (000000C30472FEA0)</span><br><span class="line">Destructor                (00000299414B702C)</span><br><span class="line">Destructor                (00000299414B7028)</span><br><span class="line">Data: 997392451</span><br><span class="line">Destructor                (000000C30472FEBC)</span><br><span class="line">Destructor                (000000C30472FEB8)</span><br><span class="line">----------</span><br></pre></td></tr></table></figure><p>We can see that, array will call the default constructor on each element, so will the <code>new</code> operator. Correspondingly, their destructor will also be called. So it introduces a problem that you have to provide a default constructor or explicitly initialize every element on creation. Of course there is a work around, that is using <code>malloc</code> and <code>free</code>. But in this case you will also lose the destructor.</p><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>I have wished to take a deep look at how C++ handle objects for long, and now this is the day, <del>when I send all my doubts and daemons on their way, …</del></p><p>Anyway, it helps me to understand the object lifecycle in C++, and hope this post can also help you. ᓚᘏᗢ</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Programming Languages </category>
           
           <category> C/C++ </category>
           
@@ -40,9 +71,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Tools &amp; Utilities </category>
           
-          <category> Cheat Sheet </category>
+          <category> Development Tools </category>
           
       </categories>
       
@@ -67,9 +98,7 @@
       
       <categories>
           
-          <category> Game </category>
-          
-          <category> Utility </category>
+          <category> Game &amp; Hobby </category>
           
       </categories>
       
@@ -77,6 +106,8 @@
         <tags>
             
             <tag> Game </tag>
+            
+            <tag> Voice Chat </tag>
             
         </tags>
       
@@ -94,9 +125,7 @@
       
       <categories>
           
-          <category> Game </category>
-          
-          <category> CnC </category>
+          <category> Game &amp; Hobby </category>
           
       </categories>
       
@@ -104,6 +133,8 @@
         <tags>
             
             <tag> Game </tag>
+            
+            <tag> Command &amp; Conquer </tag>
             
         </tags>
       
@@ -121,9 +152,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Deployment </category>
+          <category> Kubernetes </category>
           
       </categories>
       
@@ -154,9 +185,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Cheat Sheet </category>
+          <category> Docker </category>
           
       </categories>
       
@@ -183,7 +214,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Programming Languages </category>
           
           <category> Java </category>
           
@@ -210,20 +241,20 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Spring </category>
+          <category> Spring Boot </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> AOP </tag>
-            
-            <tag> Spring </tag>
+            <tag> Spring Boot </tag>
             
             <tag> Java </tag>
+            
+            <tag> AOP </tag>
             
             <tag> Tutorial </tag>
             
@@ -243,16 +274,16 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Spring </category>
+          <category> Spring Boot </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Spring </tag>
+            <tag> Spring Boot </tag>
             
             <tag> Tutorial </tag>
             
@@ -274,9 +305,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Tool </category>
+          <category> Web Servers &amp; Deployment </category>
           
       </categories>
       
@@ -301,7 +332,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Programming Languages </category>
           
           <category> C/C++ </category>
           
@@ -334,22 +365,22 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Spring </category>
+          <category> Spring Boot </category>
           
       </categories>
       
       
         <tags>
             
+            <tag> Spring Boot </tag>
+            
             <tag> Java </tag>
             
             <tag> Tutorial </tag>
             
             <tag> WebSocket </tag>
-            
-            <tag> Spring Boot </tag>
             
         </tags>
       
@@ -367,9 +398,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Cheat Sheet </category>
+          <category> Linux </category>
           
       </categories>
       
@@ -394,9 +425,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> WSL </category>
           
       </categories>
       
@@ -423,7 +454,9 @@
       
       <categories>
           
-          <category> Tutorial </category>
+          <category> Software Engineering &amp; Architecture </category>
+          
+          <category> Design Patterns </category>
           
       </categories>
       
@@ -461,8 +494,6 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> VSCode </tag>
             
             <tag> Linux </tag>
@@ -485,20 +516,20 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Tool </category>
+          <category> Docker </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> VSCode </tag>
             
             <tag> Docker </tag>
+            
+            <tag> Tools </tag>
             
         </tags>
       
@@ -516,9 +547,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> Linux </category>
           
       </categories>
       
@@ -545,7 +576,9 @@
       
       <categories>
           
-          <category> Troubleshoot </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Troubleshooting </category>
           
       </categories>
       
@@ -572,9 +605,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
           
       </categories>
       
@@ -607,9 +640,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Software Engineering &amp; Architecture </category>
           
-          <category> .NET </category>
+          <category> Best Practices </category>
           
       </categories>
       
@@ -617,8 +650,6 @@
         <tags>
             
             <tag> C# </tag>
-            
-            <tag> System Programming </tag>
             
         </tags>
       
@@ -636,7 +667,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Programming Languages </category>
           
           <category> .NET </category>
           
@@ -645,9 +676,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
             <tag> .NET Core </tag>
             
@@ -667,7 +698,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
           <category> Database </category>
           
@@ -702,9 +733,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Database </category>
+          <category> Web Servers &amp; Deployment </category>
           
       </categories>
       
@@ -712,6 +743,8 @@
         <tags>
             
             <tag> Tutorial </tag>
+            
+            <tag> Deployment </tag>
             
             <tag> Linux </tag>
             
@@ -735,9 +768,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Tool </category>
+          <category> Server Management </category>
           
       </categories>
       
@@ -766,9 +799,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Python </category>
+          <category> Django </category>
           
       </categories>
       
@@ -795,9 +828,13 @@
       
       <categories>
           
+          <category> Operating Systems &amp; Tools </category>
+          
           <category> BUAA </category>
           
           <category> OS </category>
+          
+          <category> Linux </category>
           
       </categories>
       
@@ -857,11 +894,7 @@
       
       <categories>
           
-          <category> Development </category>
-          
-          <category> C/C++ </category>
-          
-          <category> Project </category>
+          <category> Personal Projects </category>
           
       </categories>
       
@@ -888,20 +921,20 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> IDE </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> CLion </tag>
             
             <tag> Clang </tag>
+            
+            <tag> Configuration </tag>
             
         </tags>
       
@@ -919,9 +952,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Deployment </category>
+          <category> Web Servers &amp; Deployment </category>
           
       </categories>
       
@@ -948,20 +981,20 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Deployment </category>
+          <category> Server Management </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Server </tag>
             
         </tags>
       
@@ -979,7 +1012,11 @@
       
       <categories>
           
+          <category> Software Engineering &amp; Architecture </category>
+          
           <category> BUAA </category>
+          
+          <category> Game Development </category>
           
       </categories>
       
@@ -1008,9 +1045,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
           
       </categories>
       
@@ -1037,9 +1074,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
           
       </categories>
       
@@ -1068,9 +1105,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Deployment </category>
+          <category> Web Servers &amp; Deployment </category>
           
       </categories>
       
@@ -1097,16 +1134,16 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Tool </category>
+          <category> Frontend </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
+            <tag> Configuration </tag>
             
             <tag> React </tag>
             
@@ -1128,9 +1165,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
           
       </categories>
       
@@ -1157,9 +1194,13 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
+          
+          <category> Software Engineering &amp; Architecture </category>
+          
+          <category> Design Patterns </category>
           
       </categories>
       
@@ -1169,8 +1210,6 @@
             <tag> ASP.NET Core </tag>
             
             <tag> C# </tag>
-            
-            <tag> DI </tag>
             
         </tags>
       
@@ -1188,9 +1227,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> .NET </category>
+          <category> ASP.NET </category>
           
       </categories>
       
@@ -1219,7 +1258,9 @@
       
       <categories>
           
-          <category> Troubleshoot </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Troubleshooting </category>
           
       </categories>
       
@@ -1306,7 +1347,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Programming Languages </category>
           
           <category> Python </category>
           
@@ -1333,16 +1374,16 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Programming Languages </category>
           
-          <category> Tool </category>
+          <category> Python </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
+            <tag> Configuration </tag>
             
             <tag> Python </tag>
             
@@ -1366,9 +1407,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> WSL </category>
           
       </categories>
       
@@ -1395,16 +1436,16 @@
       
       <categories>
           
-          <category> Game </category>
+          <category> Game &amp; Hobby </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Game </tag>
+            <tag> Game &amp; Hobby </tag>
             
-            <tag> CnC </tag>
+            <tag> Command &amp; Conquer </tag>
             
         </tags>
       
@@ -1428,8 +1469,6 @@
       
       
         <tags>
-            
-            <tag> Tutorial </tag>
             
             <tag> Deployment </tag>
             
@@ -1511,9 +1550,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
-          <category> Tool </category>
+          <category> Docker </category>
           
       </categories>
       
@@ -1542,9 +1581,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Web Development </category>
           
-          <category> Python </category>
+          <category> Web Servers &amp; Deployment </category>
           
       </categories>
       
@@ -1579,7 +1618,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
           <category> Database </category>
           
@@ -1614,22 +1653,20 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> IDE </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> C/C++ </tag>
             
-            <tag> OS </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> OS </tag>
             
         </tags>
       
@@ -1734,9 +1771,9 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Operating Systems &amp; Tools </category>
           
-          <category> Tool </category>
+          <category> IDE </category>
           
       </categories>
       
@@ -1765,7 +1802,7 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> DevOps &amp; Deployment </category>
           
           <category> Database </category>
           
@@ -1773,8 +1810,6 @@
       
       
         <tags>
-            
-            <tag> Tutorial </tag>
             
             <tag> Deployment </tag>
             
@@ -1856,7 +1891,7 @@
       
       <categories>
           
-          <category> Game </category>
+          <category> Game &amp; Hobby </category>
           
       </categories>
       
@@ -1883,7 +1918,9 @@
       
       <categories>
           
-          <category> Program Analysis </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Analysis Tools </category>
           
       </categories>
       
@@ -1908,11 +1945,7 @@
       
       <categories>
           
-          <category> Development </category>
-          
-          <category> C/C++ </category>
-          
-          <category> Project </category>
+          <category> Personal Projects </category>
           
       </categories>
       
@@ -1921,7 +1954,7 @@
             
             <tag> C/C++ </tag>
             
-            <tag> Project </tag>
+            <tag> Security </tag>
             
         </tags>
       
@@ -1939,7 +1972,9 @@
       
       <categories>
           
-          <category> Program Analysis </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Analysis Tools </category>
           
       </categories>
       
@@ -1973,8 +2008,6 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> Deployment </tag>
             
             <tag> Hexo </tag>
@@ -1997,7 +2030,9 @@
       
       <categories>
           
-          <category> Program Analysis </category>
+          <category> Tools &amp; Utilities </category>
+          
+          <category> Analysis Tools </category>
           
       </categories>
       
@@ -2024,11 +2059,11 @@
       
       <categories>
           
-          <category> Development </category>
+          <category> Software Engineering &amp; Architecture </category>
           
-          <category> C/C++ </category>
+          <category> Game Development </category>
           
-          <category> Project </category>
+          <category> Personal Projects </category>
           
       </categories>
       
@@ -2068,13 +2103,13 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2101,13 +2136,13 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2134,13 +2169,13 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2167,13 +2202,13 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2200,11 +2235,11 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
             <tag> Shell </tag>
             
@@ -2233,13 +2268,13 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> C/C++ </tag>
             
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2266,11 +2301,11 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
             <tag> Vim </tag>
             
@@ -2299,11 +2334,11 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
@@ -2330,11 +2365,11 @@
       
         <tags>
             
-            <tag> System Programming </tag>
-            
             <tag> Linux </tag>
             
             <tag> BUAA </tag>
+            
+            <tag> System Programming </tag>
             
         </tags>
       
