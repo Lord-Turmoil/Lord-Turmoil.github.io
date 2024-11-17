@@ -4,9 +4,10 @@ const TITLE_MAP = {
     "/archives": "Archives",
     "/categories": "Categories",
     "/tags": "Tags",
+    "/gallery": "Gallery",
     "/link": "Links & Projects",
-    "/about": "About Me",
     "/support": "Support Me",
+    "/about": "About Me",
     "/404": "404 Not Found",
     "/": "Tony's Studio"
 };
