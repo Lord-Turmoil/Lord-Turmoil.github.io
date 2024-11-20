@@ -1358,7 +1358,7 @@ canvas:not(#ribbon-canvas),
   --card-meta: #858585;
   --sidebar-bg: #f6f8fa;
   --sidebar-menu-bg: #fff;
-  --btn-hover-color: #ffd90d;
+  --btn-hover-color: #c81025;
   --btn-color: #fff;
   --btn-bg: #871798;
   --text-bg-hover: rgba(135,23,152,0.7);
@@ -1372,7 +1372,7 @@ canvas:not(#ribbon-canvas),
   --toc-link-color: #666261;
   --card-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05);
   --card-hover-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.09);
-  --pseudo-hover: #ffd90d;
+  --pseudo-hover: #c81025;
   --headline-presudo: #a0a0a0;
   --scrollbar-color: #c81025;
   --default-bg-color: #871798;
@@ -4024,7 +4024,7 @@ figure.highlight pre .javascript .function {
   text-align: center;
 }
 #pagination .page-number.current {
-  background: #c81025;
+  background: #871798;
   color: var(--white);
 }
 #pagination .full-width {
@@ -4131,9 +4131,10 @@ figure.highlight pre .javascript .function {
 .container {
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: justify;
 }
 .container a {
-  color: #49b1f5;
+  color: #ad1dc3;
 }
 .container a:hover {
   text-decoration: underline;
@@ -4776,7 +4777,7 @@ figure.highlight pre .javascript .function {
 #waline-wrap {
   --waline-font-size: 1.1em;
   --waline-theme-color: #871798;
-  --waline-active-color: #ffd90d;
+  --waline-active-color: #c81025;
 }
 #waline-wrap .wl-comment-actions > button:not(last-child) {
   padding-right: 4px;
