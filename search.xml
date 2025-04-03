@@ -165,9 +165,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Concurrency </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Sanitizer </tag>
             
@@ -428,9 +428,9 @@
             
             <tag> Repo Available </tag>
             
-            <tag> Deployment </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Deployment </tag>
             
             <tag> Linux </tag>
             
@@ -1016,9 +1016,9 @@
           
           <category> Web Development </category>
           
-          <category> Web Servers &amp; Deployment </category>
-          
           <category> DevOps &amp; Deployment </category>
+          
+          <category> Web Servers &amp; Deployment </category>
           
           <category> Database </category>
           
