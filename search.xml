@@ -32,6 +32,8 @@
             
             <tag> P2P </tag>
             
+            <tag> Command &amp; Conquer </tag>
+            
         </tags>
       
     </entry>
@@ -55,9 +57,9 @@
       
         <tags>
             
-            <tag> Game </tag>
-            
             <tag> Command &amp; Conquer </tag>
+            
+            <tag> Game </tag>
             
         </tags>
       
@@ -200,9 +202,9 @@
       
         <tags>
             
-            <tag> Concurrency </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Concurrency </tag>
             
             <tag> Sanitizer </tag>
             
@@ -432,9 +434,9 @@
       
         <tags>
             
-            <tag> Game </tag>
-            
             <tag> Command &amp; Conquer </tag>
+            
+            <tag> Game </tag>
             
         </tags>
       
@@ -1779,9 +1781,9 @@
       
         <tags>
             
-            <tag> Game &amp; Hobby </tag>
-            
             <tag> Command &amp; Conquer </tag>
+            
+            <tag> Game &amp; Hobby </tag>
             
         </tags>
       
