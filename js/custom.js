@@ -24,7 +24,7 @@ if (t != null) {
 }
 
 // custom style for author
-var c = document.getElementById("footer-wrap").getElementsByClassName("copyright")[0];
+var c = document.getElementById("footer").getElementsByClassName("copyright")[0];
 if (c != null) {
     c.innerHTML = c.innerHTML.replace('Tony Lewis', '<span class="author">Tony Lewis</span>');
 }
