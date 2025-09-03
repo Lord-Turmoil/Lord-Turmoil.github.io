@@ -608,9 +608,9 @@
             
             <tag> Repo Available </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Linux </tag>
             
@@ -1196,9 +1196,9 @@
           
           <category> Web Development </category>
           
-          <category> DevOps &amp; Deployment </category>
-          
           <category> Web Servers &amp; Deployment </category>
+          
+          <category> DevOps &amp; Deployment </category>
           
           <category> Database </category>
           
