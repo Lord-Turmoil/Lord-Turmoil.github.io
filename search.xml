@@ -608,9 +608,9 @@
             
             <tag> Repo Available </tag>
             
-            <tag> Deployment </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Deployment </tag>
             
             <tag> Linux </tag>
             
@@ -1196,9 +1196,9 @@
           
           <category> Web Development </category>
           
-          <category> Web Servers &amp; Deployment </category>
-          
           <category> DevOps &amp; Deployment </category>
+          
+          <category> Web Servers &amp; Deployment </category>
           
           <category> Database </category>
           
@@ -1644,9 +1644,9 @@
           
           <category> Web Development </category>
           
-          <category> ASP.NET </category>
-          
           <category> Software Engineering </category>
+          
+          <category> ASP.NET </category>
           
           <category> Best Practices </category>
           
@@ -1677,9 +1677,9 @@
           
           <category> Web Development </category>
           
-          <category> ASP.NET </category>
-          
           <category> Software Engineering </category>
+          
+          <category> ASP.NET </category>
           
           <category> Design Patterns </category>
           
