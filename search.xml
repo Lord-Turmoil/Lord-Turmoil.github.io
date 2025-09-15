@@ -8,7 +8,7 @@
       <link href="/posts/Music-Notation-with-Avid-Sibelius/"/>
       <url>/posts/Music-Notation-with-Avid-Sibelius/</url>
       
-        <content type="html"><![CDATA[<p style="text-align: center">    <i>&ldquo;But his voice, filled my spirit with a strange, sweet sound...</i><br>    <i>In that night there was music in my mind...</i><br>    <i>And through music my soul began to soar!</i><br>    <i>And I heard as I'd never heard before...&rdquo;</i></p><p style="text-align: right"><i>&mdash; The Phantom of the Opera</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>It seems I can only manage to post one article a month. Writing really takes much time especially when you aim for quality.</p><p>Anyway, as I finally had the chance to access the full score of the Phantom of the Opera, I wonder how I can keep it. Of course you can take pictures, but pictures are blurry, and they don’t make a sound. Also, you can buy digital versions, but look at the price, it is far beyond what I can afford!</p><p>As a programmer, I love source code. For music, the sheet is the source code, so why not write it from scratch? Once you have the “source code”, you can redistribute it in any form!</p><p>To write music sheet, apparently you need a notation software. For simple music, there is <a href="https://musescore.com/">MuseScore</a>. It is free, and good enough. However, what I have now is a full score, which is far beyond the capability of a free software. Luckily, we have <a href="https://www.avid.com/sibelius">Avid Sibelius</a>, the most powerful notation software so far.</p><p>It is easy to install and friendly to beginners. However, it took me sometime to configure and there is some tips to share during the installation of its sounds library. Besides the installation, I’ll also talk about some tips for you if you write with your computer’s keyboard.</p><hr><h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><div class="note danger flat"><p>For professional use, please purchase a license.</p></div><div class="note info flat"><p>If you just want a trial, you can get the direct download links here: <a href="https://musicednet.com/kb/kb00126?srsltid=AfmBOoq0VC332eUAUYeTH2aHnKPaU6L1iU43eKYyq2w-9ntmjP9DzN4">Sibelius 7.1 &amp; 7.5 direct download links</a>.</p></div><h2 id="Avid-Sibelius"><a href="#Avid-Sibelius" class="headerlink" title="Avid Sibelius"></a>Avid Sibelius</h2><p>The installation of Sibelius is easy, just follow the instruction. After installation, you can just start off as a composer.</p><p>You can find the downloads from the link given above. I just list it here for quick reference. Although Avid Sibelius supports Mac, I’m not talking about it as I do not have one.</p><ul><li><a href="http://cdn.avid.com/Sibelius/Sibelius_7_5/7.5.1/Sibelius_7.5.1_Win.zip">Sibelius 7.5.1 (Windows)</a></li></ul><div class="note info flat"><p>Besides versions like 7.5.1, it also has versions like 2022.9. But all should work.</p></div><h2 id="Sibelius-7-Sounds-Optional"><a href="#Sibelius-7-Sounds-Optional" class="headerlink" title="Sibelius 7 Sounds (Optional)"></a>Sibelius 7 Sounds (Optional)</h2><p>By default, Sibelius comes with MIDI output to play the music. If you don’t mind, that’s OK. But if you do want to enjoy your music, additional sounds may be required. Also, here is the download link for the sounds library.</p><ul><li><a href="http://cdn.avid.com/Sibelius/Sibelius_Sounds/7.5.0/Sibelius_Sounds_7.5.0_Win.zip">Sibelius Sounds 7.5.0 (Windows)</a></li></ul><div class="note warning flat"><p>Be warned, the sounds library is huge. You will get a roughly 23GB archive containing 34GB data!</p></div><p>You can refer to the official guide <a href="https://kb.avid.com/pkb/articles/en_US/how_to/How-to-install-Sibelius-Sounds-Windows">How to install Sibelius Sounds - Windows</a> to install the sounds. However, if the installer doesn’t work, you may need manual installation.</p><h3 id="Manual-Installation-of-Sibelius-Sounds"><a href="#Manual-Installation-of-Sibelius-Sounds" class="headerlink" title="Manual Installation of Sibelius Sounds"></a>Manual Installation of Sibelius Sounds</h3><p>If you are unable to launch the <code>Sibelius7SoundsInstaller.exe</code>, you may need to install it manually. After extraction, you will see two folders and a broken shortcut. Since the installer fails, you may ignore the <code>Installer/</code> folder.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902153723951.png" alt="image-20250902153723951" style="zoom:50%;"><p>Go to <code>InstallerData/</code> folder, select all archives and extract them to any empty folder you like. Here, my destination folder is <code>C:\Apps\Sibelius\Sibelius 7 Sounds\</code>.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154929918.png" alt="image-20250902154929918" style="zoom:50%;"><p>By the way, the default installation location is <code>C:\Program Files (x86)\Avid\Sibelius Sounds\Sibelius 7 Sounds\</code>. But if you want to extract there, you need to run the extraction tool with administrator privileges.</p><div class="note warning flat"><p>I have my specific file organization preference which is most likely not yours. So be careful when choosing the destination folder.</p></div><p>Depending on your computer’s performance, the extraction process may take quite long. So be patient. When it completes, your destination folder will look like this.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154242463.png" alt="image-20250902154242463" style="zoom:50%;"><p>Each folder contains some <code>.patch</code> files and a <code>Samples/</code> folder, which contains some more <code>.big</code> files.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154449515.png" alt="image-20250902154449515" style="zoom:50%;"><div class="note pink icon-padding flat"><i class="note-icon fas fa-bell"></i><p>Interestingly, we are seeing <code>.big</code> files here. Does it ring a <a href="https://lord-turmoil.github.io/posts/Extract-CnC3-Unit-Voices/">bell</a>?</p></div><p>Then, you need to register this path to the registry so that Sibelius knows you have a sounds library. Create a key named <code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Avid\Sibelius Sounds\Sibelius 7 Sounds\ContentPath</code> and set its default value to your installation path.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902171652292.png" alt="image-20250902171652292" style="zoom:50%;"><p>Finally, open Sibelius, and you can see there are four more options for the play configuration. Enjoy!🎉</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902171928059.png" alt="image-20250902171928059" style="zoom:50%;"><blockquote><p>I once thought that the sounds installer will do some fancy stuffs as you can see a bunch of files under <code>Installer\</code>. But all it does is simple extraction and an update in registry… Well, I know it also does checksum verification, but I still think the installer can be much more simpler.</p></blockquote><hr><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><p>If you are a professional, then you can leave now. For amateurs like me, I have some tips for you to get familiar with music writing in Avid Sibelius.</p><h2 id="Creating-a-new-score"><a href="#Creating-a-new-score" class="headerlink" title="Creating a new score"></a>Creating a new score</h2><p>Sibelius provides many templates from which you can choose. For example, you may choose “Concert Band”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903113503553.png" alt="image-20250903113503553" style="zoom:50%;"><p>Then, you are offered some configurations for your score. You can also change them after creation. I assume that you know basic music staffs, so I won’t introduce them. The only thing I would leave a comment is “House style”, which is the look of your score.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903113717098.png" alt="image-20250903113717098" style="zoom:50%;"><div class="note danger flat"><p>If you have a large number of instruments, then be careful. Sibelius may crash if your instrument won’t fit into one page. A solution is adding your instruments later.</p></div><h2 id="Basic-input"><a href="#Basic-input" class="headerlink" title="Basic input"></a>Basic input</h2><div class="note info flat"><p>Since I do not have MIDI input, so I will only talk about how to accelerate your writing with your computer’s keyboard.</p></div><h3 id="Keypad"><a href="#Keypad" class="headerlink" title="Keypad"></a>Keypad</h3><p>Before you input notes, you need to get familiar with the keypad. By default, you will see it at the bottom-right corner. It indicates your next input or current selection.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903114314237.png" alt="image-20250903114314237" style="zoom:50%;"><p>Of course, the direct way to select these is using your mouse. Or, if you have full keyboard (keyboard with numpad), you can use shortcuts. For example, you can select quarter note by pressing numpad 4, and select rhythm dot with numpad dot. When you press numpad 0, you will insert a rest with the length of the selected note.</p><p>The “1”, “2”, “3”, “4” and “All” below is the voice. Their short cuts are <code>Alt + number</code>, e.g. <code>Alt + 1</code> for voice 1.  If you have multiple instruments in one staff, you can use different voices for them. I’ll show it in the next section.</p><p>To iterate over the tabs on the top, you can use numpad <code>+</code>. And <code>Shift + +</code> will reset to the note tab.</p><p>If you happen to close the keypad panel, you can find it under “View &gt; Panels”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903114531520.png" alt="image-20250903114531520" style="zoom:50%;"><h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><p>To input notes, first you need to select a measure. Then press <code>N</code> to toggle input and view mode. When in input mode, you will see a vertical bar with color. Here the blue means voice 1, or All voices.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903115106953.png" alt="image-20250903115106953" style="zoom:50%;"><p>If you hover your pointer over the sheet, you can see a shadow of the note. But input with mouse is rather slow. So I recommend you using the keys <code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>A</code> <code>B</code> to input the notes. You can use your right hand on the numpad to control the note to input, then use your left hand on the keyboard pressing <code>C</code> to <code>B</code>. Luckily, these keys are close to each other.</p><p>The last input note will be highlighted, i.e. selected, which means you can still adjust it. If you mistype the pitch, you can use up and down arrow keys to move it up or down. Or simply hit <code>Ctrl + Z</code> to undo the input, or press backspace to delete it.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903115712594.png" alt="image-20250903115712594" style="zoom:50%;"><p>Sibelius will infer the pitch of the next note, but it is not always correct. In this case, you can use <code>Ctrl + Up</code> or <code>Ctrl + Down</code> to move the note one octave up or down.</p><h3 id="Triplets"><a href="#Triplets" class="headerlink" title="Triplets"></a>Triplets</h3><p>If you want to input triplets, you need to input the first note in the triplet, then select how many notes there are. A short cut for this is <code>Ctrl + number</code>, e.g. <code>Ctrl + 3</code> for triplets.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903120451806.png" alt="image-20250903120451806" style="zoom:50%;"><h3 id="Voices"><a href="#Voices" class="headerlink" title="Voices"></a>Voices</h3><p>When the instrument in the same staff plays different notes, you can use voices to differentiate them. Change the voice in the Keypad will also change the color of the notes. One voice will not overwrite the other.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903120910896.png" alt="image-20250903120910896" style="zoom:50%;"><p>Finally, if you don’t want this look, you can merge them by selection the measures, and click “All” in the Keypad.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903121147934.png" alt="image-20250903121147934" style="zoom:50%;"><p>However, if the notes only differ in pitch, you can input them without switching voices by holding the Shift key. To do this, you can first input the note with lower pitch, then input the higher one with Shift key held.</p><h2 id="Notations"><a href="#Notations" class="headerlink" title="Notations"></a>Notations</h2><p>Notations are more straightforward, you can change key signature, time signature or barline under “Notation” section. One thing I want to mention is that, if you want to change the key signature for only one staff, you need to select “More Options” in the drop box, and check “One staff only”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903121825484.png" alt="image-20250903121825484" style="zoom:50%;"><h2 id="Texts"><a href="#Texts" class="headerlink" title="Texts"></a>Texts</h2><p>Usually, texts are only markups for the reader. However, certain texts are recognized by Sibelius. The most common one is “Tempo” text. I think Sibelius will just parse the speed from the text. To input notes, you need to switch to music text. I only know <code>Q</code> stands for quarter note.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122057105.png" alt="image-20250903122057105" style="zoom:50%;"><h2 id="Tricks"><a href="#Tricks" class="headerlink" title="Tricks"></a>Tricks</h2><p>In this part, I’d like to show you some input tricks, which helps to make better details for your score.</p><h3 id="Beam"><a href="#Beam" class="headerlink" title="Beam"></a>Beam</h3><p>By default, Sibelius has its own rule grouping notes. However, it would be better if we group the notes based on the rhythm. For example, if we want 3-3-2 instead of 4-4, we can change the beam. Here, we can see the beam of the second C is to left. To make 3-3-2, we can change it to right. The same applies to the third C.</p><div style="text-align: center"><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122653007.png" alt="image-20250903122653007" style="zoom:50%;"><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122753851.png" alt="image-20250903122753851" style="zoom:50%;"></div><h3 id="Slur"><a href="#Slur" class="headerlink" title="Slur"></a>Slur</h3><p>Slur is common but not that convenient to input at the same time you input notes. However, you can do it after you input all notes.</p><p>There are two ways to input a slur. First, you can select the first note and the last note, then apply “Slur” from “Notation &gt; Lines”. Second, select the first note, then press <code>S</code>, which will insert a slur to the next note. Then you can press <code>Space</code> to extend the slur or <code>Shift + Space</code> to shrink.</p><h3 id="Appoggiatura-Acciaccatura"><a href="#Appoggiatura-Acciaccatura" class="headerlink" title="Appoggiatura &amp; Acciaccatura"></a>Appoggiatura &amp; Acciaccatura</h3><p>It’s a little tricky to input appoggiatura and acciaccatura. First, you need to input the main note, then select it. Then, go to the second tab to select appoggiatura (<code>/</code>) or acciaccatura (<code>*</code>).</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250906125917026.png" alt="image-20250906125917026" style="zoom:50%;"><p>Then the note you typed will be appoggiatura or acciaccatura against the note you select. And you can add slur as we talked just now.</p><h3 id="To-be-continued…"><a href="#To-be-continued…" class="headerlink" title="To be continued…"></a>To be continued…</h3><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Avid Sibelius is truly professional, and there are still much to learn. Enjoy your music journey! ᓚᘏᗢ</p>]]></content>
+        <content type="html"><![CDATA[<p style="text-align: center">    <i>&ldquo;But his voice, filled my spirit with a strange, sweet sound...</i><br>    <i>In that night there was music in my mind...</i><br>    <i>And through music my soul began to soar!</i><br>    <i>And I heard as I'd never heard before...&rdquo;</i></p><p style="text-align: right"><i>&mdash; The Phantom of the Opera</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>It seems I can only manage to post one article a month. Writing really takes much time especially when you aim for quality.</p><p>Anyway, as I finally had the chance to access the full score of the Phantom of the Opera, I wonder how I can keep it. Of course you can take pictures, but pictures are blurry, and they don’t make a sound. Also, you can buy digital versions, but look at the price, it is far beyond what I can afford!</p><p>As a programmer, I love source code. For music, the sheet is the source code, so why not write it from scratch? Once you have the “source code”, you can redistribute it in any form!</p><p>To write music sheet, apparently you need a notation software. For simple music, there is <a href="https://musescore.com/">MuseScore</a>. It is free, and good enough. However, what I have now is a full score, which is far beyond the capability of a free software. Luckily, we have <a href="https://www.avid.com/sibelius">Avid Sibelius</a>, the most powerful notation software so far.</p><p>It is easy to install and friendly to beginners. However, it took me sometime to configure and there is some tips to share during the installation of its sounds library. Besides the installation, I’ll also talk about some tips for you if you write with your computer’s keyboard.</p><hr><h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><div class="note danger flat"><p>For professional use, please purchase a license.</p></div><div class="note info flat"><p>If you just want a trial, you can get the direct download links here: <a href="https://musicednet.com/kb/kb00126?srsltid=AfmBOoq0VC332eUAUYeTH2aHnKPaU6L1iU43eKYyq2w-9ntmjP9DzN4">Sibelius 7.1 &amp; 7.5 direct download links</a>.</p></div><h2 id="Avid-Sibelius"><a href="#Avid-Sibelius" class="headerlink" title="Avid Sibelius"></a>Avid Sibelius</h2><p>The installation of Sibelius is easy, just follow the instruction. After installation, you can just start off as a composer.</p><p>You can find the downloads from the link given above. I just list it here for quick reference. Although Avid Sibelius supports Mac, I’m not talking about it as I do not have one.</p><ul><li><a href="http://cdn.avid.com/Sibelius/Sibelius_7_5/7.5.1/Sibelius_7.5.1_Win.zip">Sibelius 7.5.1 (Windows)</a></li></ul><div class="note info flat"><p>Besides versions like 7.5.1, it also has versions like 2022.9. But all should work.</p></div><h2 id="Sibelius-7-Sounds-Optional"><a href="#Sibelius-7-Sounds-Optional" class="headerlink" title="Sibelius 7 Sounds (Optional)"></a>Sibelius 7 Sounds (Optional)</h2><p>By default, Sibelius comes with MIDI output to play the music. If you don’t mind, that’s OK. But if you do want to enjoy your music, additional sounds may be required. Also, here is the download link for the sounds library.</p><ul><li><a href="http://cdn.avid.com/Sibelius/Sibelius_Sounds/7.5.0/Sibelius_Sounds_7.5.0_Win.zip">Sibelius Sounds 7.5.0 (Windows)</a></li></ul><div class="note warning flat"><p>Be warned, the sounds library is huge. You will get a roughly 23GB archive containing 34GB data!</p></div><p>You can refer to the official guide <a href="https://kb.avid.com/pkb/articles/en_US/how_to/How-to-install-Sibelius-Sounds-Windows">How to install Sibelius Sounds - Windows</a> to install the sounds. However, if the installer doesn’t work, you may need manual installation.</p><h3 id="Manual-Installation-of-Sibelius-Sounds"><a href="#Manual-Installation-of-Sibelius-Sounds" class="headerlink" title="Manual Installation of Sibelius Sounds"></a>Manual Installation of Sibelius Sounds</h3><p>If you are unable to launch the <code>Sibelius7SoundsInstaller.exe</code>, you may need to install it manually. After extraction, you will see two folders and a broken shortcut. Since the installer fails, you may ignore the <code>Installer/</code> folder.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902153723951.png" alt="image-20250902153723951" style="zoom:50%;"><p>Go to <code>InstallerData/</code> folder, select all archives and extract them to any empty folder you like. Here, my destination folder is <code>C:\Apps\Sibelius\Sibelius 7 Sounds\</code>.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154929918.png" alt="image-20250902154929918" style="zoom:50%;"><p>By the way, the default installation location is <code>C:\Program Files (x86)\Avid\Sibelius Sounds\Sibelius 7 Sounds\</code>. But if you want to extract there, you need to run the extraction tool with administrator privileges.</p><div class="note warning flat"><p>I have my specific file organization preference which is most likely not yours. So be careful when choosing the destination folder.</p></div><p>Depending on your computer’s performance, the extraction process may take quite long. So be patient. When it completes, your destination folder will look like this.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154242463.png" alt="image-20250902154242463" style="zoom:50%;"><p>Each folder contains some <code>.patch</code> files and a <code>Samples/</code> folder, which contains some more <code>.big</code> files.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902154449515.png" alt="image-20250902154449515" style="zoom:50%;"><div class="note pink icon-padding flat"><i class="note-icon fas fa-bell"></i><p>Interestingly, we are seeing <code>.big</code> files here. Does it ring a <a href="https://lord-turmoil.github.io/posts/Extract-CnC3-Unit-Voices/">bell</a>?</p></div><p>Then, you need to register this path to the registry so that Sibelius knows you have a sounds library. Create a key named <code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Avid\Sibelius Sounds\Sibelius 7 Sounds\ContentPath</code> and set its default value to your installation path.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902171652292.png" alt="image-20250902171652292" style="zoom:50%;"><p>Finally, open Sibelius, and you can see there are four more options for the play configuration. Enjoy!🎉</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250902171928059.png" alt="image-20250902171928059" style="zoom:50%;"><blockquote><p>I once thought that the sounds installer will do some fancy stuffs as you can see a bunch of files under <code>Installer\</code>. But all it does is simple extraction and an update in registry… Well, I know it also does checksum verification, but I still think the installer can be much more simpler.</p></blockquote><hr><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><p>If you are a professional, then you can leave now. For amateurs like me, I have some tips for you to get familiar with music writing in Avid Sibelius.</p><h2 id="Creating-a-new-score"><a href="#Creating-a-new-score" class="headerlink" title="Creating a new score"></a>Creating a new score</h2><p>Sibelius provides many templates from which you can choose. For example, you may choose “Concert Band”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903113503553.png" alt="image-20250903113503553" style="zoom:50%;"><p>Then, you are offered some configurations for your score. You can also change them after creation. I assume that you know basic music staffs, so I won’t introduce them. The only thing I would leave a comment is “House style”, which is the look of your score.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903113717098.png" alt="image-20250903113717098" style="zoom:50%;"><div class="note danger flat"><p>If you have a large number of instruments, then be careful. Sibelius may crash if your instrument won’t fit into one page. A solution is adding your instruments later.</p></div><h2 id="Basic-input"><a href="#Basic-input" class="headerlink" title="Basic input"></a>Basic input</h2><div class="note info flat"><p>Since I do not have MIDI input, so I will only talk about how to accelerate your writing with your computer’s keyboard.</p></div><h3 id="Keypad"><a href="#Keypad" class="headerlink" title="Keypad"></a>Keypad</h3><p>Before you input notes, you need to get familiar with the keypad. By default, you will see it at the bottom-right corner. It indicates your next input or current selection.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903114314237.png" alt="image-20250903114314237" style="zoom:50%;"><p>Of course, the direct way to select these is using your mouse. Or, if you have full keyboard (keyboard with numpad), you can use shortcuts. For example, you can select quarter note by pressing numpad 4, and select rhythm dot with numpad dot. When you press numpad 0, you will insert a rest with the length of the selected note.</p><p>The “1”, “2”, “3”, “4” and “All” below is the voice. Their short cuts are <code>Alt + number</code>, e.g. <code>Alt + 1</code> for voice 1.  If you have multiple instruments in one staff, you can use different voices for them. I’ll show it in the next section.</p><p>To iterate over the tabs on the top, you can use numpad <code>+</code>. And <code>Shift + +</code> will reset to the note tab.</p><p>If you happen to close the keypad panel, you can find it under “View &gt; Panels”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903114531520.png" alt="image-20250903114531520" style="zoom:50%;"><h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><p>To input notes, first you need to select a measure. Then press <code>N</code> to toggle input and view mode. When in input mode, you will see a vertical bar with color. Here the blue means voice 1, or All voices.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903115106953.png" alt="image-20250903115106953" style="zoom:50%;"><p>If you hover your pointer over the sheet, you can see a shadow of the note. But input with mouse is rather slow. So I recommend you using the keys <code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>A</code> <code>B</code> to input the notes. You can use your right hand on the numpad to control the note to input, then use your left hand on the keyboard pressing <code>C</code> to <code>B</code>. Luckily, these keys are close to each other.</p><p>The last input note will be highlighted, i.e. selected, which means you can still adjust it. If you mistype the pitch, you can use up and down arrow keys to move it up or down. Or simply hit <code>Ctrl + Z</code> to undo the input, or press backspace to delete it.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903115712594.png" alt="image-20250903115712594" style="zoom:50%;"><p>Sibelius will infer the pitch of the next note, but it is not always correct. In this case, you can use <code>Ctrl + Up</code> or <code>Ctrl + Down</code> to move the note one octave up or down.</p><h3 id="Triplets"><a href="#Triplets" class="headerlink" title="Triplets"></a>Triplets</h3><p>If you want to input triplets, you need to input the first note in the triplet, then select how many notes there are. A short cut for this is <code>Ctrl + number</code>, e.g. <code>Ctrl + 3</code> for triplets.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903120451806.png" alt="image-20250903120451806" style="zoom:50%;"><h3 id="Voices"><a href="#Voices" class="headerlink" title="Voices"></a>Voices</h3><p>When the instrument in the same staff plays different notes, you can use voices to differentiate them. Change the voice in the Keypad will also change the color of the notes. One voice will not overwrite the other.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903120910896.png" alt="image-20250903120910896" style="zoom:50%;"><p>Finally, if you don’t want this look, you can merge them by selection the measures, and click “All” in the Keypad.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903121147934.png" alt="image-20250903121147934" style="zoom:50%;"><p>However, if the notes only differ in pitch, you can input them without switching voices by holding the Shift key. To do this, you can first input the note with lower pitch, then input the higher one with Shift key held.</p><h2 id="Notations"><a href="#Notations" class="headerlink" title="Notations"></a>Notations</h2><p>Notations are more straightforward, you can change key signature, time signature or barline under “Notation” section. One thing I want to mention is that, if you want to change the key signature for only one staff, you need to select “More Options” in the drop box, and check “One staff only”.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903121825484.png" alt="image-20250903121825484" style="zoom:50%;"><h2 id="Texts"><a href="#Texts" class="headerlink" title="Texts"></a>Texts</h2><p>Usually, texts are only markups for the reader. However, certain texts are recognized by Sibelius. The most common one is “Tempo” text. I think Sibelius will just parse the speed from the text. To input notes, you need to switch to music text. I only know <code>Q</code> stands for quarter note.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122057105.png" alt="image-20250903122057105" style="zoom:50%;"><h2 id="Tricks"><a href="#Tricks" class="headerlink" title="Tricks"></a>Tricks</h2><p>In this part, I’d like to show you some input tricks, which helps to make better details for your score.</p><h3 id="Beam"><a href="#Beam" class="headerlink" title="Beam"></a>Beam</h3><p>By default, Sibelius has its own rule grouping notes. However, it would be better if we group the notes based on the rhythm. For example, if we want 3-3-2 instead of 4-4, we can change the beam. Here, we can see the beam of the second C is to left. To make 3-3-2, we can change it to right. The same applies to the third C.</p><div style="text-align: center"><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122653007.png" alt="image-20250903122653007" style="zoom:50%;"><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250903122753851.png" alt="image-20250903122753851" style="zoom:50%;"></div><h3 id="Slur"><a href="#Slur" class="headerlink" title="Slur"></a>Slur</h3><p>Slur is common but not that convenient to input at the same time you input notes. However, you can do it after you input all notes.</p><p>There are two ways to input a slur. First, you can select the first note and the last note, then apply “Slur” from “Notation &gt; Lines”. Second, select the first note, then press <code>S</code>, which will insert a slur to the next note. Then you can press <code>Space</code> to extend the slur or <code>Shift + Space</code> to shrink.</p><h3 id="Appoggiatura-Acciaccatura"><a href="#Appoggiatura-Acciaccatura" class="headerlink" title="Appoggiatura &amp; Acciaccatura"></a>Appoggiatura &amp; Acciaccatura</h3><p>It’s a little tricky to input appoggiatura and acciaccatura. First, you need to input the main note, then select it. Then, go to the second tab to select appoggiatura (<code>/</code>) or acciaccatura (<code>*</code>).</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250906125917026.png" alt="image-20250906125917026" style="zoom:50%;"><p>Then the note you typed will be appoggiatura or acciaccatura against the note you select. And you can add slur as we talked just now.</p><h3 id="Flipping-notes"><a href="#Flipping-notes" class="headerlink" title="Flipping notes"></a>Flipping notes</h3><p>Sometimes, you may want to flip the note head to the other side. You can do this by selecting the note and pressing <code>X</code>.</p><h3 id="Adjust-Sounds"><a href="#Adjust-Sounds" class="headerlink" title="Adjust Sounds"></a>Adjust Sounds</h3><div class="note info flat"><p>I think there is no one mentioning this on the Internet by the time of this post.</p></div><p>In reality, when a bass instrument plays with treble clef, it plays at its own pitch, which is low. However, in Sebelius, the default pitch is unified to a much higher level, although you can input notes in transposed score. But it is not convenient as transposing will also change the key signature for non C instruments.</p><p>So, one solution is to adjust the sounds for non-transposing score. You can do this by edit the instrument, and changing the sounds for middle C. Take baritone saxophone as an example. By default, the middle C sounds as C4, which is too high. The correct sound should be C2.</p><img src="/posts/Music-Notation-with-Avid-Sibelius/image-20250915192921178.png" alt="image-20250915192921178" style="zoom:50%;"><h3 id="To-be-continued…"><a href="#To-be-continued…" class="headerlink" title="To be continued…"></a>To be continued…</h3><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Avid Sibelius is truly professional, and there are still much to learn. Enjoy your music journey! ᓚᘏᗢ</p>]]></content>
       
       
       <categories>
@@ -345,9 +345,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Concurrency </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Sanitizer </tag>
             
@@ -376,9 +376,9 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -427,9 +427,9 @@
           
           <category> Tools &amp; Utilities </category>
           
-          <category> Programming Languages </category>
-          
           <category> Analysis Tools </category>
+          
+          <category> Programming Languages </category>
           
           <category> C/C++ </category>
           
@@ -918,9 +918,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> Repo Available </tag>
+            
+            <tag> C# </tag>
             
             <tag> Fluent API </tag>
             
@@ -1071,9 +1071,9 @@
       
         <tags>
             
-            <tag> ASP.NET Core </tag>
-            
             <tag> Tutorial </tag>
+            
+            <tag> ASP.NET Core </tag>
             
             <tag> Elasticsearch </tag>
             
@@ -1106,9 +1106,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> Repo Available </tag>
+            
+            <tag> C# </tag>
             
             <tag> Concurrency </tag>
             
@@ -1436,9 +1436,9 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -1949,11 +1949,11 @@
       
         <tags>
             
+            <tag> Deployment </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Deployment </tag>
             
         </tags>
       
@@ -2071,9 +2071,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Deployment </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Deployment </tag>
             
             <tag> Linux </tag>
             
@@ -2141,9 +2141,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> OS </tag>
             
@@ -2489,11 +2489,11 @@
       
         <tags>
             
+            <tag> Deployment </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Deployment </tag>
             
         </tags>
       
@@ -2586,9 +2586,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
             
@@ -2619,9 +2619,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
             
@@ -2652,9 +2652,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
             
@@ -2685,9 +2685,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
             
@@ -2751,9 +2751,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> BUAA </tag>
             
