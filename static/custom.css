@@ -54,14 +54,20 @@ html {
     --font-selima: 'Selima', cursive;
 }
 
-#site-title {
+#page-header #site-title {
     font-family: var(--font-phantom);
-    font-size: 4em;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
+    font-size: 2.85em;
 }
 
 #site-title .first-letter {
     font-size: 1.3em;
+}
+
+@media screen and (min-width: 768px) {
+    #page-header #site-title {
+        font-size: 4em !important;
+    }
 }
 
 .site-name {
