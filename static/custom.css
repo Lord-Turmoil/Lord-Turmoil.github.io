@@ -57,8 +57,11 @@ html {
 #site-title {
     font-family: var(--font-phantom);
     font-size: 4em;
-    font-weight: lighter;
     letter-spacing: 0.1em;
+}
+
+#site-title .first-letter {
+    font-size: 1.4em;
 }
 
 .site-name {
