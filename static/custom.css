@@ -1,0 +1,129 @@
+/* https://www.cleancss.com/css-minify/ */
+
+@font-face {
+    font-family: 'Selima';
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Selima.eot');
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Selima.eot?#iefix') format('embedded-opentype'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Selima.woff2') format('woff2'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Selima.woff') format('woff'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Selima.svg#Selima') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Lucida Handwriting';
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/LucidaHandwriting-Italic.eot');
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/LucidaHandwriting-Italic.eot?#iefix') format('embedded-opentype'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/LucidaHandwriting-Italic.woff2') format('woff2'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/LucidaHandwriting-Italic.woff') format('woff'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/LucidaHandwriting-Italic.svg#LucidaHandwriting-Italic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Consolas';
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Consolas.eot');
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Consolas.eot?#iefix') format('embedded-opentype'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Consolas.woff2') format('woff2'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Consolas.woff') format('woff'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/Consolas.svg#Consolas') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PhantomoftheOpera';
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/PhantomoftheOpera.eot');
+    src: url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/PhantomoftheOpera.eot?#iefix') format('embedded-opentype'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/PhantomoftheOpera.woff2') format('woff2'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/PhantomoftheOpera.woff') format('woff'),
+        url('https://tonys-studio-1308383348.cos.ap-beijing.myqcloud.com/blog/static/source/fonts/PhantomoftheOpera.svg#PhantomoftheOpera') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    --font-phantom: 'PhantomoftheOpera', 'Selima', 'Lucida Handwriting', sans-serif;
+    --font-lucida: 'Lucida Handwriting', cursive;
+    --font-selima: 'Selima', cursive;
+}
+
+#site-title {
+    font-family: var(--font-phantom);
+    font-size: 4em;
+    font-weight: lighter;
+    letter-spacing: 0.1em;
+}
+
+.site-name {
+    font-family: var(--font-lucida);
+}
+
+.author-info-description {
+    font-family: var(--font-selima);
+    font-size: 1.3em;
+}
+
+.article-title {
+    font-family: var(--font-lucida);
+    font-size: 1.8em;
+    letter-spacing: 0.02em;
+}
+
+.post header .post-title {
+    font-family: var(--font-lucida);
+    font-size: 3em;
+    letter-spacing: 0.02em;
+}
+
+#article-container p {
+    text-align: justify;
+}
+
+.footer_custom_text {
+    font-family: var(--font-selima);
+    font-size: 1.5em;
+}
+
+.copyright .author {
+    font-family: var(--font-selima);
+    font-size: 1.5em;
+}
+
+/* Friend link */
+.flink h2 {
+    font-family: var(--font-lucida);
+}
+
+.skill td {
+    vertical-align: top !important;
+}
+
+/* Site Icon */
+#blog-info img.site-icon {
+    transform: rotate(0deg);
+    transition: transform 20s;
+}
+
+#blog-info:hover img.site-icon {
+    transform: rotate(72000deg) scale(1.1);
+}
+
+/* Announcement card */
+.announcement_content {
+    text-align: justify;
+}
+
+.announcement_content li {
+    list-style: inside;
+}
+
+.github-badge img {
+    border-radius: 4px;
+}
