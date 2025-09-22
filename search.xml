@@ -821,9 +821,9 @@
             
             <tag> Repo Available </tag>
             
-            <tag> CUDA </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> CUDA </tag>
             
             <tag> CMake </tag>
             
@@ -2168,9 +2168,9 @@
             
             <tag> C/C++ </tag>
             
-            <tag> OS </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> OS </tag>
             
         </tags>
       
