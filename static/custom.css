@@ -61,6 +61,10 @@ html {
     font-variant-caps: small-caps;
 }
 
+.type-404 .error-content .error-info .error_title {
+    font-family: var(--font-phantom);
+}
+
 @media screen and (min-width: 768px) {
     #page-header #site-title {
         font-size: 5.25em !important;
