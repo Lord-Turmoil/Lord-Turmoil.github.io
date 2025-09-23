@@ -370,9 +370,9 @@
       
         <tags>
             
-            <tag> C/C++ </tag>
-            
             <tag> Concurrency </tag>
+            
+            <tag> C/C++ </tag>
             
             <tag> Sanitizer </tag>
             
@@ -947,9 +947,9 @@
             
             <tag> C# </tag>
             
-            <tag> Fluent API </tag>
-            
             <tag> Design </tag>
+            
+            <tag> Fluent API </tag>
             
         </tags>
       
@@ -2567,9 +2567,9 @@
           
           <category> Game &amp; Hobby </category>
           
-          <category> Game Development </category>
-          
           <category> Personal Projects </category>
+          
+          <category> Game Development </category>
           
       </categories>
       
