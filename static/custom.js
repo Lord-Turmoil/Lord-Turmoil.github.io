@@ -12,6 +12,18 @@ const TITLE_MAP = {
     "/": "Tony's Studio"
 };
 
+const ANNOUNCEMENT = `
+<div>
+It won't be long before the armies of the Republic track us here.<br>
+You can visit this site at both:
+<ul>
+<li><a href="http://blog.tonys-studio.top/" target="_blank">Main Site</a></li>
+<li><a href="http://blog.zhengyaoliu.com/" target="_blank">Vercel Mirror Site</a></li>
+<li><a href="https://lord-turmoil.github.io/" target="_blank">Github Mirror Site</a></li>
+</ul>
+</div>
+`;
+
 document.addEventListener("DOMContentLoaded", function () {
     var siteTitle = document.getElementById('site-title');
     if (siteTitle != null) {
@@ -32,4 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var badges = document.getElementById("ghbdages");   // bad spelling >:(
     var footerOther = footer.getElementsByClassName("footer-other")[0];
     footerOther.appendChild(badges);
+
+    document.querySelectorAll('div.announcement_content').forEach(function (element) {
+        element.innerHTML = ANNOUNCEMENT;
+    });
 });
