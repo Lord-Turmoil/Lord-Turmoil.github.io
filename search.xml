@@ -370,9 +370,9 @@
       
         <tags>
             
-            <tag> Concurrency </tag>
-            
             <tag> C/C++ </tag>
+            
+            <tag> Concurrency </tag>
             
             <tag> Sanitizer </tag>
             
@@ -1322,9 +1322,9 @@
           
           <category> BUAA </category>
           
-          <category> OS </category>
-          
           <category> Linux </category>
+          
+          <category> OS </category>
           
       </categories>
       
@@ -2567,9 +2567,9 @@
           
           <category> Game &amp; Hobby </category>
           
-          <category> Personal Projects </category>
-          
           <category> Game Development </category>
+          
+          <category> Personal Projects </category>
           
       </categories>
       
