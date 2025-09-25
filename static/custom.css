@@ -93,10 +93,6 @@ html {
     letter-spacing: 0.02em;
 }
 
-#article-container p {
-    text-align: justify;
-}
-
 .footer_custom_text {
     font-family: var(--font-selima);
     font-size: 1.5em;
