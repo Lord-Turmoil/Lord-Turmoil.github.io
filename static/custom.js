@@ -16,8 +16,8 @@ const ANNOUNCEMENT = `
 <div>
 It won't be long before the armies of the Republic track us here.<br>
 You can visit this site at:
-<li><a href="http://blog.tonys-studio.top/" target="_blank">Main Site</a></li>
-<li><a href="http://blog.zhengyaoliu.com/" target="_blank">Vercel Mirror Site</a></li>
+<li><a href="https://blog.tonys-studio.top/" target="_blank">Main Site</a></li>
+<li><a href="https://blog.zhengyaoliu.com/" target="_blank">Vercel Mirror Site</a></li>
 <li><a href="https://lord-turmoil.github.io/" target="_blank">Github Mirror Site</a></li>
 </div>
 `;
