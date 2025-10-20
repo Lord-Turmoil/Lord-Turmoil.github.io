@@ -5002,7 +5002,7 @@ figure.highlight pre .javascript .function {
   text-align: center;
 }
 #pagination .page-number.current {
-  background: #871798;
+  background: var(--paginator-color);
   color: var(--white);
 }
 #pagination .full-width {
@@ -5133,7 +5133,7 @@ figure.highlight pre .javascript .function {
   text-align: justify;
 }
 .container a {
-  color: #ad1dc3;
+  color: var(--link-color);
 }
 .container a:hover {
   text-decoration: underline;
@@ -8025,6 +8025,7 @@ blockquote.pullquote.right {
   -webkit-align-items: center;
   align-items: center;
   margin-right: 6px;
+  margin-top: 3px;
   min-width: 24px;
   color: #871798;
   content: attr(value) '.';
@@ -8172,7 +8173,7 @@ blockquote.pullquote.right {
   font-size: 12px;
 }
 .search-dialog .ais-Pagination .ais-Pagination-item--selected .ais-Pagination-link {
-  background: #871798;
+  background: var(--paginator-color);
   font-weight: 600;
   cursor: default;
 }
