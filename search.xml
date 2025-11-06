@@ -881,9 +881,9 @@
             
             <tag> Visual Studio </tag>
             
-            <tag> CMake </tag>
-            
             <tag> CUDA </tag>
+            
+            <tag> CMake </tag>
             
         </tags>
       
@@ -2625,9 +2625,9 @@
           
           <category> Game &amp; Hobby </category>
           
-          <category> Game Development </category>
-          
           <category> Personal Projects </category>
+          
+          <category> Game Development </category>
           
       </categories>
       
