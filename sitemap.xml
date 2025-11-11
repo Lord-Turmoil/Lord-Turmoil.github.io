@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.tonys-studio.top/gallery/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/link/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -12,51 +21,6 @@
   
   <url>
     <loc>https://blog.tonys-studio.top/tags/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/about/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/gallery/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/gallery/2023/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/gallery/2024/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -92,6 +56,42 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/about/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/gallery/2023/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/gallery/2024/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/posts/Vim/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -119,24 +119,6 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Understanding-TypeScript-Philosophy/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/posts/Uninstall-JetBrains-Products/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/posts/Tips-on-Nginx-Configuration/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -147,6 +129,24 @@
   
   <url>
     <loc>https://blog.tonys-studio.top/posts/Troubleshoot-High-CPU-Usage-by-the-System-Process/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/posts/Understanding-TypeScript-Philosophy/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/posts/Uninstall-JetBrains-Products/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -182,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/SonarQube-Web-API/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Shell-Programming/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Shell-Programming/</loc>
+    <loc>https://blog.tonys-studio.top/posts/SonarQube-Web-API/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -380,7 +380,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Meet-Linux/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Linux-Programming/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Linux-Programming/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Meet-Linux/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -506,6 +506,15 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/posts/Introduction-to-C-Game-Development/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/posts/Inter-Process-Communication/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -533,7 +542,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Introduction-to-C-Game-Development/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Getting-Started-with-Docker/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -552,15 +561,6 @@
   
   <url>
     <loc>https://blog.tonys-studio.top/posts/Ingest-Data-from-MySQL-to-Elasticsearch/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/posts/Getting-Started-with-Docker/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -776,6 +776,15 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/posts/Cookies-in-ASP-NET-Core/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/posts/Create-Click-to-Run-JAR-Executable/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -803,25 +812,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Cookies-in-ASP-NET-Core/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/posts/Connecting-to-JumpServer-with-VSCode/</loc>
-    
-    <lastmod>2025-11-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/posts/Configure-Swap-Space-for-Linux-Server/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -839,7 +830,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Configure-Remote-Interpreter-in-PyCharm/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Configure-Swap-Space-for-Linux-Server/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -857,7 +848,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/C-Object-Lifecycle/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Configure-Remote-Interpreter-in-PyCharm/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -875,6 +866,15 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/posts/C-Object-Lifecycle/</loc>
+    
+    <lastmod>2025-11-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/posts/Bulk-Task-Optimization-in-C/</loc>
     
     <lastmod>2025-11-11</lastmod>
@@ -884,7 +884,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Basic-Serving-and-Proxying-in-Nginx/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Build-a-Blog-with-Hexo/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -893,7 +893,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/posts/Build-a-Blog-with-Hexo/</loc>
+    <loc>https://blog.tonys-studio.top/posts/Basic-Serving-and-Proxying-in-Nginx/</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -1005,6 +1005,27 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/tags/ASP-NET-Core/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/tags/C/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/tags/Axios/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/tags/SonarQube/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -1061,21 +1082,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/tags/C/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/tags/Concurrency/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/tags/C-C/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1152,14 +1159,14 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/tags/OS/</loc>
+    <loc>https://blog.tonys-studio.top/tags/C-C/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/tags/ASP-NET-Core/</loc>
+    <loc>https://blog.tonys-studio.top/tags/OS/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1411,13 +1418,6 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/tags/Axios/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/tags/DI/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -1595,7 +1595,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Blog/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Web-Development/Web-Servers-Deployment/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1609,63 +1609,14 @@
   </url>
   
   <url>
+    <loc>https://blog.tonys-studio.top/categories/Blog/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.tonys-studio.top/categories/Software-Engineering/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/Tools-Utilities/Analysis-Tools/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/Tools-Utilities/Development-Tools/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/Web-Development/Frontend/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/DevOps-Deployment/Docker/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/DevOps-Deployment/Server-Management/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/Web-Development/Web-Servers-Deployment/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.tonys-studio.top/categories/BUAA/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1679,14 +1630,56 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Operating-Systems/Linux/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Web-Development/Frontend/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Software-Engineering/Best-Practices/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Tools-Utilities/Analysis-Tools/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/DevOps-Deployment/Server-Management/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/DevOps-Deployment/Docker/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Tools-Utilities/Development-Tools/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/BUAA/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Operating-Systems/Linux/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1700,7 +1693,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/C-C/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Software-Engineering/Best-Practices/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1708,6 +1701,13 @@
   
   <url>
     <loc>https://blog.tonys-studio.top/categories/DevOps-Deployment/Database/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Software-Engineering/Design-Patterns/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1728,13 +1728,6 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/Python/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/categories/Tools-Utilities/Design-Multimedia/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -1743,6 +1736,20 @@
   
   <url>
     <loc>https://blog.tonys-studio.top/categories/Game-Hobby/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/Python/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.tonys-studio.top/categories/Programming-Languages/C-C/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1784,13 +1791,6 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Course/</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.tonys-studio.top/categories/BUAA/Database/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -1798,7 +1798,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Personal-Projects/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Course/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1812,7 +1812,7 @@
   </url>
   
   <url>
-    <loc>https://blog.tonys-studio.top/categories/Software-Engineering/Design-Patterns/</loc>
+    <loc>https://blog.tonys-studio.top/categories/Personal-Projects/</loc>
     <lastmod>2025-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
