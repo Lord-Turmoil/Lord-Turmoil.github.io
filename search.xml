@@ -39,7 +39,7 @@
       <link href="/posts/A-Fancy-And-Practical-Zsh-Configuration/"/>
       <url>/posts/A-Fancy-And-Practical-Zsh-Configuration/</url>
       
-        <content type="html"><![CDATA[<html><head></head><body><p style="text-align: center">    <i>“Design is not just what it looks like and feels like.</i><br>    <i>Design is how it works.”</i></p><p style="text-align: right"><i>— Steve Jobs</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>Hey there! Well, as a loyal Windows user, it is a bit weired to mention <a href="https://www.zsh.org/">Zsh</a>. We have <a href="https://learn.microsoft.com/powershell/scripting/overview">PowerShell</a>, and we can have <a href="https://www.gnu.org/software/bash/">Bash</a> with <a href="https://learn.microsoft.com/en-us/windows/wsl/">WSL</a>. But Zsh? Why there is Zsh?</p><p>Well, I have to confess, I bought a MacBook, and for MacOS, the default shell is Zsh. To be honest, I hate MacOS as I can’t get used to its user interface. To make myself more confortable, I have to do extensive customization, but still it is no comparable to Windows. And as a developer, you just pay more attention to what you are more familiar with — the shell. With Mac’s key bindings, the experience is terrible, a nightmare, especially for a formal, and current, Windows player.</p><p>This is not a serious article, just for sharing my configuration of Zsh. I’ll talk about how to configure Zsh, including plugins, themes and key bindings. In addition, I’ll also share a pretty cool configuration for your terminal.</p><p>Hope you like it, enjoy!</p><div class="note success flat"><p>Maybe I should mention that this post is intended for Mac users? Although you can have Zsh on other systems as well.</p></div><hr><h1 id="Shell-Configuration"><a href="#Shell-Configuration" class="headerlink" title="Shell Configuration"></a>Shell Configuration</h1><p>So, let’s talk about shell first. Before we start, I assume that you have basic knowledge about Bash.</p><h2 id="The-Missing-Homebrew"><a href="#The-Missing-Homebrew" class="headerlink" title="The Missing Homebrew"></a>The Missing Homebrew</h2><p>I don’t know why Homebrew is not bundled. But you can simply install it via one command.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">"<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>"</span></span><br></pre></td></tr></tbody></table></figure><h2 id="Oh-My-Zsh"><a href="#Oh-My-Zsh" class="headerlink" title="Oh My Zsh"></a>Oh My Zsh</h2><p>Zsh is famous for its customizability. But customization leads to more complexity. Therefore, <a href="https://github.com/ohmyzsh/ohmyzsh">Oh My Zsh</a> is here to help you manage the complexity. That is to say, it is a configuration manager for Zsh.</p><div class="note info flat"><p>Zsh is the default shell doesn’t mean you don’t have Bash. You still have it on your system. </p></div><p>To install On My Zsh, just run one line of command. In Zsh, we have an equivalence for <code>.bashrc</code> — <code>.zshrc</code>. It will prompt to backup or update your <code>.zshrc</code>. If you have other configurations before, remember to transfer them.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="subst">$(curl -fsSL https://install.ohmyz.sh/)</span>"</span></span><br></pre></td></tr></tbody></table></figure><p>You can check the new <code>.zshrc</code>. It’s long, but you only need to pay attention to several keys. You may also add user configurations at the bottom of the file.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=...</span><br><span class="line">plugins=(...)</span><br><span class="line"><span class="comment"># User configuration</span></span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure><h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>Well, the first thing to configure is without doubt, the <a href="https://github.com/ohmyzsh/ohmyzsh?tab=readme-ov-file#themes">theme</a>. For me, I choose <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster">agnoster</a>, one of the most fancy ones. To use a theme, just set the <code>ZSH_THEME</code> variable in <code>.zshrc</code>. For agnoster, if you don’t like the default context color (for username@host), you can also set it manually.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AGNOSTER_CONTEXT_FG=yellow</span><br><span class="line">ZSH_THEME=<span class="string">"agnoster"</span></span><br></pre></td></tr></tbody></table></figure><div class="note warning flat"><p>Note that the repository <a href="https://github.com/agnoster/agnoster-zsh-theme">agnoster/agnoster-zsh-theme</a> is not the bundled one, and I think is not maintained anymore. You should check the bundled <a href="https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/agnoster.zsh-theme">agnoster.zsh-theme</a> in the Oh My Zsh repository.</p></div><p>In order to be fancy, some themes will use <a href="https://github.com/powerline/fonts">Powerline Font</a> or a <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Font</a> for special characters, so you should either install them, or enable the corresponding options in your terminal. Later I will mention how to enable Powerline Font in <a href="https://iterm2.com/">iTerm2</a>.</p><div class="note warning flat"><p>Well, I failed to setup Powerline Font in the default Mac terminal.</p></div><h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p>Following theme, some plugins can boost your productivity, and also make your terminal prettier. Here’s a list of plugins that I prefer. Too many plugins may not be a good option.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">zsh-syntax-highlighting</span><br><span class="line">zsh-autosuggestions</span><br><span class="line">zsh-shift-select</span><br><span class="line">git</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a>: providing syntax highlighting for your commands</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a>: enable inline history completion like PowerShell</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/jirutka/zsh-shift-select">zsh-shift-select</a>: allow you select text in commands like in Windows</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jirutka/zsh-shift-select.git <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-shift-select</span><br></pre></td></tr></tbody></table></figure><p>Finally, <code>git</code> is a built-in plugin. It displays git status in the prompt.</p><h2 id="Key-Bindings"><a href="#Key-Bindings" class="headerlink" title="Key Bindings"></a>Key Bindings</h2><p>Now your Zsh is pretty, but is hard to use. You find yourself unable to move the cursor by word, and unable to delete characters by word, which is annoying. </p><h2 id="Fun-Commands"><a href="#Fun-Commands" class="headerlink" title="Fun Commands"></a>Fun Commands</h2><p>The configuration should end here. But due to my strong personal affection, I have to introduce my favorite commandline combo to you.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install cowsay fortune</span><br></pre></td></tr></tbody></table></figure><p>Then, you can add these aliases to your <code>.zshrc</code>.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> csay=<span class="string">"fortune | cowsay -n"</span></span><br><span class="line"><span class="built_in">alias</span> cthink=<span class="string">"fortune | cowthink -n"</span></span><br></pre></td></tr></tbody></table></figure><p>Now, you can have this lovely cow in your shell!</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; csay</span><br><span class="line"> _____________________________________</span><br><span class="line">&lt; Your code should be more efficient! &gt;</span><br><span class="line"> -------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br></pre></td></tr></tbody></table></figure><hr><h1 id="Terminal-Configuration"><a href="#Terminal-Configuration" class="headerlink" title="Terminal Configuration"></a>Terminal Configuration</h1><p>Well, your shell is pretty now, but still you feel something is missing. Well, you cannot start it via a shortcut! And the default terminal is a little shabby.</p><p>Here, as many others do, I recommend you <a href="https://iterm2.com/">iTerm2</a>. It is fancier, and have a workaround for the shortcut issue.</p><h2 id="Hotkey-Window"><a href="#Hotkey-Window" class="headerlink" title="Hotkey Window"></a>Hotkey Window</h2><p>In iTerm2, you can define hotkey window, which is activated by a custom hotkey. You can find it in Settings &gt; Profiles.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250926215640749.png" alt="image-20250926215640749" style="zoom:33%;"><div class="note warning flat"><p>But it does not completely solve the problem, as it requires iTerm2 to be in the background, i.e. unable to remove it from the Dock.</p></div><h2 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h2><p>You can continue customize your terminal under Settings &gt; Profiles. For me, I prefer “Tango Dark” theme.</p><p>If you selected a fancy Oh My Zsh theme which requires Powerline Font or Nerd Fonts, the simplest way is to check the “Use built-in” Powerline glyphs.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250926215739230.png" alt="image-20250926215739230" style="zoom: 33%;"><h2 id="Key-Bindings-Again"><a href="#Key-Bindings-Again" class="headerlink" title="Key Bindings Again"></a>Key Bindings Again</h2><p>In iTerm2, you don’t need to add key bindings in your <code>.zshrc</code>. Instead, it can be solved rather easily by adding the “Natural Text Editing” preset in Settings &gt; Profiles &gt; Keys &gt; Key Bindings.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250929212413152.png" alt="image-20250929212413152" style="zoom:33%;"><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Now, you have this fancy shell interface.🎉</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250929213025557.png" alt="image-20250929213025557" style="zoom:33%;"><p>However, no matter how nice it looks, it is incomparable to Windows. ᓚᘏᗢ</p></body></html>]]></content>
+        <content type="html"><![CDATA[<html><head></head><body><p style="text-align: center">    <i>“Design is not just what it looks like and feels like.</i><br>    <i>Design is how it works.”</i></p><p style="text-align: right"><i>— Steve Jobs</i></p><h1 id="Prologue"><a href="#Prologue" class="headerlink" title="Prologue"></a>Prologue</h1><p>Hey there! Well, as a loyal Windows user, it is a bit weired to mention <a href="https://www.zsh.org/">Zsh</a>. We have <a href="https://learn.microsoft.com/powershell/scripting/overview">PowerShell</a>, and we can have <a href="https://www.gnu.org/software/bash/">Bash</a> with <a href="https://learn.microsoft.com/en-us/windows/wsl/">WSL</a>. But Zsh? Why there is Zsh?</p><p>Well, I have to confess, I bought a MacBook, and for MacOS, the default shell is Zsh. To be honest, I hate MacOS as I can’t get used to its user interface. To make myself more confortable, I have to do extensive customization, but still it is no comparable to Windows. And as a developer, you just pay more attention to what you are more familiar with — the shell. With Mac’s key bindings, the experience is terrible, a nightmare, especially for a formal, and current, Windows player.</p><p>This is not a serious article, just for sharing my configuration of Zsh. I’ll talk about how to configure Zsh, including plugins, themes and key bindings. In addition, I’ll also share a pretty cool configuration for your terminal.</p><p>Hope you like it, enjoy!</p><div class="note success flat"><p>Maybe I should mention that this post is intended for Mac users? Although you can have Zsh on other systems as well.</p></div><hr><h1 id="Shell-Configuration"><a href="#Shell-Configuration" class="headerlink" title="Shell Configuration"></a>Shell Configuration</h1><p>So, let’s talk about shell first. Before we start, I assume that you have basic knowledge about Bash.</p><div class="note info flat"><p>Zsh is the default shell doesn’t mean you don’t have Bash. You still have it on your system. </p></div><h2 id="The-Missing-Homebrew"><a href="#The-Missing-Homebrew" class="headerlink" title="The Missing Homebrew"></a>The Missing Homebrew</h2><p>I don’t know why Homebrew is not bundled. But you can simply install it via one command.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">"<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>"</span></span><br></pre></td></tr></tbody></table></figure><h2 id="Oh-My-Zsh"><a href="#Oh-My-Zsh" class="headerlink" title="Oh My Zsh"></a>Oh My Zsh</h2><p>Zsh is famous for its customizability. But customization leads to more complexity. Therefore, <a href="https://github.com/ohmyzsh/ohmyzsh">Oh My Zsh</a> is here to help you manage the complexity. That is to say, it is a configuration manager for Zsh.</p><p>To install On My Zsh, just run one line of command. In Zsh, we have an equivalence for <code>.bashrc</code> — <code>.zshrc</code>. It will prompt to backup or update your <code>.zshrc</code>. If you have other configurations before, remember to transfer them.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="subst">$(curl -fsSL https://install.ohmyz.sh/)</span>"</span></span><br></pre></td></tr></tbody></table></figure><p>You can check the new <code>.zshrc</code>. It’s long, but you only need to pay attention to several keys. You may also add user configurations at the bottom of the file.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=...</span><br><span class="line">plugins=(...)</span><br><span class="line"><span class="comment"># User configuration</span></span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure><h2 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h2><p>Well, the first thing to configure is without doubt, the <a href="https://github.com/ohmyzsh/ohmyzsh?tab=readme-ov-file#themes">theme</a>. For me, I choose <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster">agnoster</a>, one of the most fancy ones. To use a theme, just set the <code>ZSH_THEME</code> variable in <code>.zshrc</code>. For agnoster, if you don’t like the default context color (for username@host), you can also set it manually.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AGNOSTER_CONTEXT_FG=yellow</span><br><span class="line">ZSH_THEME=<span class="string">"agnoster"</span></span><br></pre></td></tr></tbody></table></figure><div class="note warning flat"><p>Note that the repository <a href="https://github.com/agnoster/agnoster-zsh-theme">agnoster/agnoster-zsh-theme</a> is not the bundled one, and I think is not maintained anymore. You should check the bundled <a href="https://github.com/ohmyzsh/ohmyzsh/blob/master/themes/agnoster.zsh-theme">agnoster.zsh-theme</a> in the Oh My Zsh repository.</p></div><p>In order to be fancy, some themes will use <a href="https://github.com/powerline/fonts">Powerline Font</a> or a <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Font</a> for special characters, so you should either install them, or enable the corresponding options in your terminal. Later I will mention how to enable Powerline Font in <a href="https://iterm2.com/">iTerm2</a>.</p><div class="note warning flat"><p>Well, I failed to setup Powerline Font in the default Mac terminal.</p></div><h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p>Following theme, some plugins can boost your productivity, and also make your terminal prettier. Here’s a list of plugins that I prefer. Too many plugins may not be a good option.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plugins=(</span><br><span class="line">zsh-syntax-highlighting</span><br><span class="line">zsh-autosuggestions</span><br><span class="line">zsh-shift-select</span><br><span class="line">git</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a>: providing syntax highlighting for your commands</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a>: enable inline history completion like PowerShell</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-autosuggestions</span><br></pre></td></tr></tbody></table></figure><p><a href="https://github.com/jirutka/zsh-shift-select">zsh-shift-select</a>: allow you select text in commands like in Windows</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/jirutka/zsh-shift-select.git <span class="variable">${ZSH_CUSTOM:-~/.oh-my-zsh/custom}</span>/plugins/zsh-shift-select</span><br></pre></td></tr></tbody></table></figure><p>Finally, <code>git</code> is a built-in plugin. It displays git status in the prompt.</p><h2 id="Key-Bindings"><a href="#Key-Bindings" class="headerlink" title="Key Bindings"></a>Key Bindings</h2><p>Now your Zsh is pretty, but is hard to use. You find yourself unable to move the cursor by word, and unable to delete characters by word, which is annoying. </p><h2 id="Fun-Commands"><a href="#Fun-Commands" class="headerlink" title="Fun Commands"></a>Fun Commands</h2><p>The configuration should end here. But due to my strong personal affection, I have to introduce my favorite commandline combo to you.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install cowsay fortune</span><br></pre></td></tr></tbody></table></figure><p>Then, you can add these aliases to your <code>.zshrc</code>.</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> csay=<span class="string">"fortune | cowsay -n"</span></span><br><span class="line"><span class="built_in">alias</span> cthink=<span class="string">"fortune | cowthink -n"</span></span><br></pre></td></tr></tbody></table></figure><p>Now, you can have this lovely cow in your shell!</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; csay</span><br><span class="line"> _____________________________________</span><br><span class="line">&lt; Your code should be more efficient! &gt;</span><br><span class="line"> -------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br></pre></td></tr></tbody></table></figure><hr><h1 id="Terminal-Configuration"><a href="#Terminal-Configuration" class="headerlink" title="Terminal Configuration"></a>Terminal Configuration</h1><p>Well, your shell is pretty now, but still you feel something is missing. Well, you cannot start it via a shortcut! And the default terminal is a little shabby.</p><p>Here, as many others do, I recommend you <a href="https://iterm2.com/">iTerm2</a>. It is fancier, and have a workaround for the shortcut issue.</p><h2 id="Hotkey-Window"><a href="#Hotkey-Window" class="headerlink" title="Hotkey Window"></a>Hotkey Window</h2><p>In iTerm2, you can define hotkey window, which is activated by a custom hotkey. You can find it in Settings &gt; Profiles.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250926215640749.png" alt="image-20250926215640749" style="zoom:33%;"><div class="note warning flat"><p>But it does not completely solve the problem, as it requires iTerm2 to be in the background, i.e. unable to remove it from the Dock.</p></div><h2 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h2><p>You can continue customize your terminal under Settings &gt; Profiles. For me, I prefer “Tango Dark” theme.</p><p>If you selected a fancy Oh My Zsh theme which requires Powerline Font or Nerd Fonts, the simplest way is to check the “Use built-in” Powerline glyphs.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250926215739230.png" alt="image-20250926215739230" style="zoom: 33%;"><h2 id="Key-Bindings-Again"><a href="#Key-Bindings-Again" class="headerlink" title="Key Bindings Again"></a>Key Bindings Again</h2><p>In iTerm2, you don’t need to add key bindings in your <code>.zshrc</code>. Instead, it can be solved rather easily by adding the “Natural Text Editing” preset in Settings &gt; Profiles &gt; Keys &gt; Key Bindings.</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250929212413152.png" alt="image-20250929212413152" style="zoom:33%;"><hr><h1 id="Epilogue"><a href="#Epilogue" class="headerlink" title="Epilogue"></a>Epilogue</h1><p>Now, you have this fancy shell interface.🎉</p><img src="/posts/A-Fancy-And-Practical-Zsh-Configuration/image-20250929213025557.png" alt="image-20250929213025557" style="zoom:33%;"><p>However, no matter how nice it looks, it is incomparable to Windows. ᓚᘏᗢ</p></body></html>]]></content>
       
       
       <categories>
@@ -459,9 +459,9 @@
       
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -1220,9 +1220,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
             <tag> .NET Core </tag>
             
@@ -1519,9 +1519,9 @@
       
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -1614,9 +1614,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
         </tags>
       
@@ -1643,9 +1643,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
             <tag> Axios </tag>
             
@@ -1738,9 +1738,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
         </tags>
       
@@ -1771,9 +1771,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
         </tags>
       
@@ -1800,9 +1800,9 @@
       
         <tags>
             
-            <tag> C# </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> C# </tag>
             
             <tag> EF Core </tag>
             
@@ -2032,11 +2032,11 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -2154,11 +2154,11 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Nginx </tag>
             
             <tag> Django </tag>
             
@@ -2572,11 +2572,11 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
