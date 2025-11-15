@@ -459,9 +459,9 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -1519,9 +1519,9 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -2032,11 +2032,11 @@
       
         <tags>
             
+            <tag> Deployment </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Deployment </tag>
             
         </tags>
       
@@ -2154,11 +2154,11 @@
             
             <tag> Tutorial </tag>
             
+            <tag> Nginx </tag>
+            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
-            
-            <tag> Nginx </tag>
             
             <tag> Django </tag>
             
@@ -2572,11 +2572,11 @@
       
         <tags>
             
+            <tag> Deployment </tag>
+            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
-            
-            <tag> Deployment </tag>
             
         </tags>
       
@@ -2625,9 +2625,9 @@
           
           <category> Game &amp; Hobby </category>
           
-          <category> Personal Projects </category>
-          
           <category> Game Development </category>
+          
+          <category> Personal Projects </category>
           
       </categories>
       
