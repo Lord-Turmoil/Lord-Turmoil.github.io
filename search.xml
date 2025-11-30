@@ -393,9 +393,9 @@
       
         <tags>
             
-            <tag> TypeScript </tag>
-            
             <tag> Design </tag>
+            
+            <tag> TypeScript </tag>
             
         </tags>
       
@@ -533,13 +533,13 @@
       
       <categories>
           
-          <category> Programming Languages </category>
-          
           <category> Tools &amp; Utilities </category>
           
-          <category> C/C++ </category>
+          <category> Programming Languages </category>
           
           <category> Analysis Tools </category>
+          
+          <category> C/C++ </category>
           
       </categories>
       
@@ -716,11 +716,11 @@
             
             <tag> Repo Available </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Kubernetes </tag>
             
@@ -749,9 +749,9 @@
       
         <tags>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
@@ -1059,11 +1059,11 @@
       
         <tags>
             
-            <tag> VSCode </tag>
+            <tag> Linux </tag>
             
             <tag> OS </tag>
             
-            <tag> Linux </tag>
+            <tag> VSCode </tag>
             
         </tags>
       
@@ -1416,9 +1416,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> OS </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> OS </tag>
             
             <tag> BUAA </tag>
             
@@ -2148,9 +2148,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
@@ -2570,9 +2570,9 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> SonarQube </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
