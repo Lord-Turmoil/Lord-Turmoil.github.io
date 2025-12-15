@@ -535,9 +535,9 @@
           
           <category> Tools &amp; Utilities </category>
           
-          <category> Analysis Tools </category>
-          
           <category> Programming Languages </category>
+          
+          <category> Analysis Tools </category>
           
           <category> C/C++ </category>
           
@@ -716,11 +716,11 @@
             
             <tag> Repo Available </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
             <tag> Kubernetes </tag>
             
@@ -749,9 +749,9 @@
       
         <tags>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
@@ -1030,9 +1030,9 @@
             
             <tag> C# </tag>
             
-            <tag> Fluent API </tag>
-            
             <tag> Design </tag>
+            
+            <tag> Fluent API </tag>
             
         </tags>
       
@@ -1059,11 +1059,11 @@
       
         <tags>
             
-            <tag> VSCode </tag>
-            
             <tag> Linux </tag>
             
             <tag> OS </tag>
+            
+            <tag> VSCode </tag>
             
         </tags>
       
@@ -1405,9 +1405,9 @@
           
           <category> BUAA </category>
           
-          <category> OS </category>
-          
           <category> Linux </category>
+          
+          <category> OS </category>
           
       </categories>
       
@@ -1752,9 +1752,9 @@
           
           <category> Web Development </category>
           
-          <category> ASP.NET </category>
-          
           <category> Software Engineering </category>
+          
+          <category> ASP.NET </category>
           
           <category> Best Practices </category>
           
@@ -1785,9 +1785,9 @@
           
           <category> Web Development </category>
           
-          <category> ASP.NET </category>
-          
           <category> Software Engineering </category>
+          
+          <category> ASP.NET </category>
           
           <category> Design Patterns </category>
           
@@ -2148,9 +2148,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Docker </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
