@@ -716,11 +716,11 @@
             
             <tag> Repo Available </tag>
             
+            <tag> Docker </tag>
+            
             <tag> Deployment </tag>
             
             <tag> Linux </tag>
-            
-            <tag> Docker </tag>
             
             <tag> Kubernetes </tag>
             
@@ -749,9 +749,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -1030,9 +1030,9 @@
             
             <tag> C# </tag>
             
-            <tag> Design </tag>
-            
             <tag> Fluent API </tag>
+            
+            <tag> Design </tag>
             
         </tags>
       
@@ -1059,11 +1059,11 @@
       
         <tags>
             
+            <tag> VSCode </tag>
+            
             <tag> Linux </tag>
             
             <tag> OS </tag>
-            
-            <tag> VSCode </tag>
             
         </tags>
       
@@ -2148,9 +2148,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Linux </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
