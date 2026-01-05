@@ -484,9 +484,9 @@
       
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -1026,9 +1026,9 @@
       
         <tags>
             
-            <tag> Repo Available </tag>
-            
             <tag> C# </tag>
+            
+            <tag> Repo Available </tag>
             
             <tag> Fluent API </tag>
             
@@ -1179,9 +1179,9 @@
       
         <tags>
             
-            <tag> Tutorial </tag>
-            
             <tag> ASP.NET Core </tag>
+            
+            <tag> Tutorial </tag>
             
             <tag> Elasticsearch </tag>
             
@@ -1214,9 +1214,9 @@
       
         <tags>
             
-            <tag> Repo Available </tag>
-            
             <tag> C# </tag>
+            
+            <tag> Repo Available </tag>
             
             <tag> Concurrency </tag>
             
@@ -1544,9 +1544,9 @@
       
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
       
@@ -1752,9 +1752,9 @@
           
           <category> Web Development </category>
           
-          <category> Software Engineering </category>
-          
           <category> ASP.NET </category>
+          
+          <category> Software Engineering </category>
           
           <category> Best Practices </category>
           
@@ -1785,9 +1785,9 @@
           
           <category> Web Development </category>
           
-          <category> Software Engineering </category>
-          
           <category> ASP.NET </category>
+          
+          <category> Software Engineering </category>
           
           <category> Design Patterns </category>
           
@@ -2057,11 +2057,11 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
@@ -2179,9 +2179,9 @@
             
             <tag> Tutorial </tag>
             
-            <tag> Nginx </tag>
-            
             <tag> Deployment </tag>
+            
+            <tag> Nginx </tag>
             
             <tag> Linux </tag>
             
@@ -2251,9 +2251,9 @@
             
             <tag> C/C++ </tag>
             
-            <tag> Visual Studio </tag>
-            
             <tag> OS </tag>
+            
+            <tag> Visual Studio </tag>
             
         </tags>
       
@@ -2597,11 +2597,11 @@
       
         <tags>
             
-            <tag> Deployment </tag>
-            
             <tag> Hexo </tag>
             
             <tag> Blog </tag>
+            
+            <tag> Deployment </tag>
             
         </tags>
       
